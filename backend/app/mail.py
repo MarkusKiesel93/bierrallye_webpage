@@ -7,8 +7,6 @@ fast_mail = FastMail(settings.mail_config)
 
 
 async def send_email(email: str, subject: str, body: str, fast_mail: FastMail = fast_mail):
-    # todo: remove after testing
-    # email = 'markus.kiesel@tuta.io'
     message = MessageSchema(
         subject=subject,
         recipients=[email],

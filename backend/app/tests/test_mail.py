@@ -10,3 +10,9 @@ async def test_send_email(fm):
     with fm.record_messages() as outbox:
         await send_email(email, subject, body, fm)
         assert len(outbox) == 1
+
+# todo: test registration mail
+#   what to exactly test there ?
+
+# todo: test deregistration mail
+#   what to exactly test there ?
