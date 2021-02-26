@@ -1,8 +1,3 @@
-"""
-This module is used to set environment variables in the
-Mainly we have to decide between production and development mode
-"""
-
 import os
 from fastapi_mail import ConnectionConfig
 from pydantic import BaseSettings
