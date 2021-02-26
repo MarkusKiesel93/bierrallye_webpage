@@ -9,7 +9,7 @@ services:
     volumes:
       - ./backend:/code
     env_file:
-      - ./settings.env
+      - ./.env
     command: ['./scripts/start.sh']
     ports:
       - ${BACKEND_PORT}:${BACKEND_PORT}

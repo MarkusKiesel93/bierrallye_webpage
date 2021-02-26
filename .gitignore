@@ -1,5 +1,5 @@
-# created files by runserver
-settings.env
+# created files by run script
+.env
 nginx.frontend.conf
 nginx.backend.conf
 

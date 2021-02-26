@@ -9,7 +9,7 @@ import sys
 REPO_PATH = Path(__file__).parent
 DEPLOY_PATH = REPO_PATH / 'deploy'
 CONFIGS = REPO_PATH / 'configs.yml'
-DOCKER_ENV_FILE = REPO_PATH / 'settings.env'
+DOCKER_ENV_FILE = REPO_PATH / '.env'
 VUE_ENV_FILE = REPO_PATH / 'frontend' / '.env'
 
 
@@ -32,7 +32,7 @@ def run_production(configs):
     create_env_files(configs)
     # todo set scret key and mail password
     fill_templates(configs)
-    sp.run(['docker-compose', '--env-file', 'settings.env', 'up', '--build', '--detach'])
+    sp.run(['docker-compose', '--env-file', '.env', 'up', '--build', '--detach'])
 
 
 def run_development(configs):
@@ -40,21 +40,21 @@ def run_development(configs):
     create_env_files(configs)
     fill_templates(configs)
     sp.run(['npm', 'install'], cwd='./frontend/')
-    sp.run(['docker-compose', '--file', 'docker-compose.dev.yml', '--env-file', 'settings.env', 'up', '--build'])
+    sp.run(['docker-compose', '--file', 'docker-compose.dev.yml', '--env-file', '.env', 'up', '--build'])
 
 
 def run_backend(configs):
     print(f'RUN BACKEND FOR: {configs["project_name"]}')
     create_env_files(configs)
     fill_templates(configs)
-    sp.run(['docker-compose', '--file', 'docker-compose.backend.yml', '--env-file', 'settings.env', 'up', '--build'])
+    sp.run(['docker-compose', '--file', 'docker-compose.backend.yml', '--env-file', '.env', 'up', '--build'])
 
 
 def run_frontend(configs):
     print(f'RUN FRONTEND FOR: {configs["project_name"]}')
     create_env_files(configs)
     fill_templates(configs)
-    sp.run(['docker-compose', '--file', 'docker-compose.frontend.yml', '--env-file', 'settings.env', 'up', '--build'])
+    sp.run(['docker-compose', '--file', 'docker-compose.frontend.yml', '--env-file', '.env', 'up', '--build'])
 
 
 def stop_containers(configs):

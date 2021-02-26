@@ -10,7 +10,7 @@ services:
     volumes:
       - static:/home/app_user/code/static
     env_file:
-      - ./settings.env
+      - ./.env
     command: ['./scripts/start.sh']
     expose:
       - 8000
