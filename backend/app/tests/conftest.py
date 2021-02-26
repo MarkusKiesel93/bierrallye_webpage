@@ -1,40 +1,14 @@
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
+from fastapi_mail import FastMail
 import pytest
 from typing import Generator
 
 from app.api import router
+from app.mail import fast_mail
 
-# from ..database import engine, SessionLocal
-# from ..models import Base
-# from ..main import app
-# from ..config import Settings
-
-# @pytest.fixture(scope="module")
-# def client(monkeypatch):
-#     monkeypatch.setenv('DATABASE', 'test.db')
-#     from ..main import app
-#     return TestClient(app)
-
-
-# @pytest.fixture(scope='module')
-# def settings() -> Settings:
-#     settings = Settings()
-#     settings.database = 'test.db'
-#     return settings
-
-# @pytest.fixture(scope="module")
-# def get_db():
-#     settings = Settings(
-#         database='test.db',
-#         app_name='TEST APP'
-#     )
-#     db = SessionLocal(engine(settings))
-#     try:
-#         yield db
-#     finally:
-#         db.close()
-
+# todo: how do I need different scopes ?
+# monkeypatch and scope module cant be used
 
 @pytest.fixture()
 def client(monkeypatch) -> Generator:
@@ -45,3 +19,10 @@ def client(monkeypatch) -> Generator:
 
     with TestClient(app) as client:
         yield client
+
+
+@pytest.fixture(scope='module')
+def fm() -> FastMail:
+    fm = fast_mail
+    fm.config.SUPPRESS_SEND = 1
+    yield fm

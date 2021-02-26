@@ -3,11 +3,10 @@ from fastapi_mail import FastMail, MessageSchema
 
 from app.config import settings
 
+fast_mail = FastMail(settings.mail_config)
 
-# todo Unit tests can be done with mocking output described at https://sabuhish.github.io/fastapi-mail/example/
 
-
-async def send_email(email: str, subject: str, body: str):
+async def send_email(email: str, subject: str, body: str, fast_mail: FastMail = fast_mail):
     # todo: remove after testing
     # email = 'markus.kiesel@tuta.io'
     message = MessageSchema(
@@ -16,8 +15,7 @@ async def send_email(email: str, subject: str, body: str):
         body=body,
         subtype="html"
         )
-    fm = FastMail(settings.mail_config)
-    await fm.send_message(message)
+    await fast_mail.send_message(message)
 
 
 async def registration_mail(team: TeamCreated):
