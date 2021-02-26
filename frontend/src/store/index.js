@@ -16,10 +16,14 @@ export default new Vuex.Store({
   state: {
     team: {
       email: '',
-      firstName1: '',
-      lastName1: '',
-      firstName2: '',
-      lastName2: '',
+      player1: {
+        firstName: '',
+        lastName: '',
+      },
+      player2: {
+        firstName: '',
+        lastName: '',
+      },
       drinkPref: '',
       timePref: '',
     },
@@ -39,6 +43,14 @@ export default new Vuex.Store({
       for (let [key, value] of Object.entries(obj)) {
         state.team[key] = value
       }
+    },
+    setPlayer1: function (state, player) {
+      state.team.player1.firstName = player.firstName
+      state.team.player1.lastName = player.lastName
+    },
+    setPlayer2: function (state, player) {
+      state.team.player2.firstName = player.firstName
+      state.team.player2.lastName = player.lastName
     },
     setDeregisterEmail: function (state, value) {
       state.deregisterEmail = value

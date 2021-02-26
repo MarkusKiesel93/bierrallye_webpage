@@ -1,58 +1,16 @@
 <template>
   <validation-observer ref="observer" v-slot="{ invalid }">
     <v-form @submit.prevent="submit">
-      <validation-provider
-        v-slot="{ errors }"
-        name="Vorname"
-        rules="required"
-      >
-        <v-text-field
-          label="Spieler 1: Vorname"
-          v-model="firstName1"
-          :counter="20"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
-      <validation-provider
-        v-slot="{ errors }"
-        name="Zuname"
-        rules="required"
-      >
-        <v-text-field
-          label="Spieler 1: Zuname"
-          v-model="lastName1"
-          :counter="20"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
-      <validation-provider
-        v-slot="{ errors }"
-        name="Vorname"
-        rules="required"
-      >
-        <v-text-field
-          label="Spieler 2: Vorname"
-          v-model="firstName2"
-          :counter="20"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
-      <validation-provider
-        v-slot="{ errors }"
-        name="Zuname"
-        rules="required"
-      >
-        <v-text-field
-          label="Spieler 2: Zuname"
-          v-model="lastName2"
-          :counter="20"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
+      <h3> Spieler 1 </h3>
+      <InputName
+        :value="player1"
+        :setter="player1Setter"
+      />
+      <h3> Spieler 2 </h3>
+      <InputName
+        :value="player2"
+        :setter="player2Setter"
+      />
       <v-btn
         color="primary"
         class="mr-4 mt-4"
@@ -74,54 +32,33 @@
 <script>
 import {
   ValidationObserver,
-  ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
 import './validation'
 
 setInteractionMode('lazy')
 
+import { mapState, mapMutations } from 'vuex'
+import InputName from '@/components/InputName'
+
+
 export default {
   name: 'PlayerForm',
   components: {
-    ValidationProvider,
     ValidationObserver,
+    InputName,
   },
   computed: {
-    firstName1: {
-      get () {
-        return this.$store.state.team.firstName1
-      },
-      set (value) {
-        this.$store.commit('setTeamValues', {'firstName1': value})
-      }
-    },
-    lastName1: {
-      get () {
-        return this.$store.state.team.lastName1
-      },
-      set (value) {
-        this.$store.commit('setTeamValues', {'lastName1': value})
-      }
-    },
-    firstName2: {
-      get () {
-        return this.$store.state.team.firstName2
-      },
-      set (value) {
-        this.$store.commit('setTeamValues', {'firstName2': value})
-      }
-    },
-    lastName2: {
-      get () {
-        return this.$store.state.team.lastName2
-      },
-      set (value) {
-        this.$store.commit('setTeamValues', {'lastName2': value})
-      }
-    },
+    ...mapState({
+      player1: (state) => state.team.player1,
+      player2: (state) => state.team.player2,
+    }),
   },
   methods: {
+    ...mapMutations({
+      player1Setter: 'setPlayer1',
+      player2Setter: 'setPlayer2',
+    }),
     submit() {
       this.$refs.observer.validate();
       this.$emit('next-step');
