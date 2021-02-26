@@ -66,7 +66,7 @@ export default new Vuex.Store({
       state.deregisterEmail = value
     },
     setDeregisterHash: function (state, value) {
-      state.deregisterHash = value
+      state.deregisterHash = value.toUpperCase()
     },
     setStatus: function(state, obj) {
       let key = Object.keys(obj)[0]

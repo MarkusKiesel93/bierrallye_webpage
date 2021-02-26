@@ -5,19 +5,12 @@
         :value="email"
         :setter="emailSetter"
       />
-      <validation-provider
-        v-slot="{ errors }"
-        name="Stornocode"
-        rules="required|hash"
-      >
-        <v-text-field
-          label="Stornocode"
-          v-model="hash"
-          :counter="6"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
+      <InputCode
+        :value="hash"
+        :setter="hashSetter"
+        label="Stornocode"
+        counter="6"
+      />
       <v-btn
         color="primary"
         class="mr-4 mt-4"
@@ -40,39 +33,33 @@
 // todo: add information for Stornocode and where to find it
 import {
   ValidationObserver,
-  ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
 import './validation'
 
 import { mapState, mapMutations } from 'vuex'
 import InputEmail from '@/components/InputEmail'
+import InputCode from '@/components/InputCode'
 
 setInteractionMode('lazy');
 
 export default {
   name: "DeregistrationForm",
   components: {
-    ValidationProvider,
     ValidationObserver,
     InputEmail,
+    InputCode,
   },
   computed: {
     ...mapState({
-      email: (state) => state.team.email
+      email: (state) => state.team.email,
+      hash: (state) => state.deregisterHash,
     }),
-    hash: {
-      get () {
-        return this.$store.state.deregisterHash
-      },
-      set (value) {
-        this.$store.commit('setDeregisterHash', value.toUpperCase())
-      }
-    },
   },
   methods: {
     ...mapMutations({
-      emailSetter: 'setDeregisterEmail'
+      emailSetter: 'setDeregisterEmail',
+      hashSetter: 'setDeregisterHash',
     }),
     submit() {
       this.$refs.observer.validate();
