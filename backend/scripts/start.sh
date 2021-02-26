@@ -2,7 +2,7 @@
 
 set -e
 
-pytest ./app
+pytest -s ./app
 
 if [[ ${DEPLOY_MODE} -eq "production" ]]; then
     uvicorn app.main:app --reload --host 0.0.0.0 --port ${BACKEND_PORT}
