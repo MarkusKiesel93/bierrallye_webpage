@@ -73,19 +73,13 @@
 
 <script>
 import {
-  extend,
   ValidationObserver,
   ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
-import { required } from 'vee-validate/dist/rules';
+import './validation'
 
-setInteractionMode('lazy');
-
-extend('required', {
-  ...required,
-  message: '{_field_} ist erforderlich!',
-});
+setInteractionMode('lazy')
 
 export default {
   name: 'PlayerForm',

@@ -34,24 +34,14 @@
 
 <script>
 import {
-  extend,
   ValidationObserver,
   ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
+import './validation'
 
 setInteractionMode('lazy');
 
-extend('required', {
-  ...required,
-  message: 'E-Mail ist erforderlich!',
-});
-
-extend('email', {
-    ...email,
-    message: 'Gültige E-Mail Adresse angeben!',
-  })
 
 export default {
   name: 'ContactForm',

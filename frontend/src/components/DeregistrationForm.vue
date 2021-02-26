@@ -48,32 +48,13 @@
 <script>
 // todo: add information for Stornocode and where to find it
 import {
-  extend,
   ValidationObserver,
   ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
-import { required, email } from 'vee-validate/dist/rules';
+import './validation'
 
 setInteractionMode('lazy');
-
-extend('required', {
-  ...required,
-  message: '{_field_} ist erforderlich!',
-})
-
-extend('email', {
-  ...email,
-  message: 'Gültige E-Mail Adresse angeben!',
-})
-
-extend('hash', {
-  validate: value => {
-    let upperLettersDigits = true
-    return value.length === 6 && upperLettersDigits
-  },
-  message: 'Stornocode besteht genau aus 6 Zeichen (Ziffern und Buchstaben)!',
-});
 
 export default {
   name: "DeregistrationForm",

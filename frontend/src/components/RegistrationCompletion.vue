@@ -43,20 +43,13 @@
 
 <script>
 import {
-  extend,
   ValidationObserver,
   ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
+import './validation'
 
 setInteractionMode('lazy');
-
-extend('checked', {
-  validate: value => {
-    return value
-  },
-  message: '{_field_} muss akzeptiert werden!',
-});
 
 export default {
   name: 'RegistrationCompletion',
