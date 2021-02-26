@@ -21,16 +21,16 @@ class Settings(BaseSettings):
     database: str
 
     mail_config: object = ConnectionConfig(
-        MAIL_USERNAME='markuskiesel@gmx.at',
-        # Todo import password from secret in os 
-        MAIL_PASSWORD='',
-        MAIL_FROM='markuskiesel@gmx.at',
+        MAIL_USERNAME=os.getenv('EMAIL_ADDRESS'),
+        MAIL_PASSWORD=os.getenv('EMAIL_PASSWORD'),
+        MAIL_FROM=os.getenv('EMAIL_ADDRESS'),
         MAIL_PORT=587,
         MAIL_SERVER='mail.gmx.net',
         MAIL_FROM_NAME='Bierralley Irnfritz',
         MAIL_TLS=True,
         MAIL_SSL=False,
     )
+    print(mail_config.MAIL_USERNAME)
 
     secret_key: str
 

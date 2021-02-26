@@ -31,6 +31,7 @@ def load_configs(deploy_mode):
 def run_production(configs):
     print(f'RUN PRODUCTION SERVER FOR: {configs["project_name"]}')
     create_env_files(configs)
+    create_env_secrets(configs)
     fill_templates(configs)
     sp.run(['docker-compose', '--env-file', '.env', 'up', '--build', '--detach'])
 
@@ -38,6 +39,7 @@ def run_production(configs):
 def run_development(configs):
     print(f'RUN DEVELOPMENT SERVER FOR: {configs["project_name"]}')
     create_env_files(configs)
+    create_env_secrets(configs)
     fill_templates(configs)
     sp.run(['npm', 'install'], cwd='./frontend/')
     sp.run(['docker-compose', '--file', 'docker-compose.dev.yml', '--env-file', '.env', 'up', '--build'])
@@ -46,6 +48,7 @@ def run_development(configs):
 def run_backend(configs):
     print(f'RUN BACKEND FOR: {configs["project_name"]}')
     create_env_files(configs)
+    create_env_secrets(configs)
     fill_templates(configs)
     sp.run(['docker-compose', '--file', 'docker-compose.backend.yml', '--env-file', '.env', 'up', '--build'])
 
@@ -53,6 +56,7 @@ def run_backend(configs):
 def run_frontend(configs):
     print(f'RUN FRONTEND FOR: {configs["project_name"]}')
     create_env_files(configs)
+    create_env_secrets(configs)
     fill_templates(configs)
     sp.run(['docker-compose', '--file', 'docker-compose.frontend.yml', '--env-file', '.env', 'up', '--build'])
 
@@ -77,14 +81,15 @@ def create_env_files(configs):
         for config, value in configs.items():
             env_file.write(f'VUE_APP_{config.upper()}={value}\n')
 
-    # secret configs for production
-    if configs['deploy_mode'] == 'production':
-        with open(SECRET_CONFIGS, 'r') as cfg_file:
-            cfg = yaml.safe_load(cfg_file)
-            cfg = cfg[configs['project_name']]
-        with open(DOCKER_ENV_FILE, 'a') as env_file:
-            for config, value in cfg.items():
-                env_file.write(f'{config.upper()}={value}\n')
+
+def create_env_secrets(configs):
+    # secret configs for mail and secret keys
+    with open(SECRET_CONFIGS, 'r') as cfg_file:
+        cfg = yaml.safe_load(cfg_file)
+        cfg = cfg[configs['project_name']][configs['deploy_mode']]
+    with open(DOCKER_ENV_FILE, 'a') as env_file:
+        for config, value in cfg.items():
+            env_file.write(f'{config.upper()}={value}\n')
 
 
 def fill_templates(configs):
