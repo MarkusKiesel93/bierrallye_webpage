@@ -55,7 +55,7 @@ export default {
         return this.value
       },
       set (value) {
-        this.setter(this.name)
+        this.setter(value)
       }
     }
   }

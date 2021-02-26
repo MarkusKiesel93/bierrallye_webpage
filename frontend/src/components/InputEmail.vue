@@ -42,7 +42,7 @@ export default {
         return this.value
       },
       set (value) {
-        this.setter({'email': value})
+        this.setter(value)
       }
     }
   }

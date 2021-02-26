@@ -38,7 +38,7 @@ import './validation'
 
 setInteractionMode('lazy')
 
-import { mapState, mapMutations } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import InputName from '@/components/InputName'
 
 
@@ -49,9 +49,9 @@ export default {
     InputName,
   },
   computed: {
-    ...mapState({
-      player1: (state) => state.team.player1,
-      player2: (state) => state.team.player2,
+    ...mapGetters({
+      player1: 'getPlayer1',
+      player2: 'getPlayer2',
     }),
   },
   methods: {

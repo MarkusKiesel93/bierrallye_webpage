@@ -16,14 +16,10 @@ export default new Vuex.Store({
   state: {
     team: {
       email: '',
-      player1: {
-        firstName: '',
-        lastName: '',
-      },
-      player2: {
-        firstName: '',
-        lastName: '',
-      },
+      firstNamePlayer1: '',
+      lastNamePlayer1: '',
+      firstNamePlayer2: '',
+      lastNamePlayer2: '',
       drinkPref: '',
       timePref: '',
     },
@@ -38,19 +34,33 @@ export default new Vuex.Store({
     deleteStatus: null,
     deleteInfo: '',
   },
+  getters: {
+    getPlayer1: function (state) {
+      let player = {
+        firstName: state.team.firstNamePlayer1,
+        lastName: state.team.lastNamePlayer1,
+      } 
+      return player
+    },
+    getPlayer2: function (state) {
+      let player = {
+        firstName: state.team.firstNamePlayer2,
+        lastName: state.team.lastNamePlayer12
+      } 
+      return player
+    },
+  },
   mutations: {
-    setTeamValues: function (state, obj) {
-      for (let [key, value] of Object.entries(obj)) {
-        state.team[key] = value
-      }
+    setTeamEmail: function (state, email) {
+      state.team.email = email
     },
     setPlayer1: function (state, player) {
-      state.team.player1.firstName = player.firstName
-      state.team.player1.lastName = player.lastName
+      state.team.firstNamePlayer1 = player.firstName
+      state.team.lastNamePlayer1 = player.lastName
     },
     setPlayer2: function (state, player) {
-      state.team.player2.firstName = player.firstName
-      state.team.player2.lastName = player.lastName
+      state.team.firstNamePlayer2 = player.firstName
+      state.team.lastNamePlayer2 = player.lastName
     },
     setDeregisterEmail: function (state, value) {
       state.deregisterEmail = value

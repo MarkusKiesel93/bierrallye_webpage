@@ -72,7 +72,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      emailSetter: 'setTeamValues'
+      emailSetter: 'setDeregisterEmail'
     }),
     submit() {
       this.$refs.observer.validate();

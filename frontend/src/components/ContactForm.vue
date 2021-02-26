@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     ...mapMutations({
-      emailSetter: 'setTeamValues'
+      emailSetter: 'setTeamEmail'
     }),
     submit() {
       this.$refs.observer.validate();
