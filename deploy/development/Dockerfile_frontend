@@ -1,0 +1,14 @@
+# base image
+FROM node:12.20-alpine
+
+# set working directory
+WORKDIR /app
+
+# copy both 'package.json' and 'package-lock.json'
+COPY ./frontend/package*.json ./
+
+# install project dependencies
+RUN npm install
+
+# install vue cli service
+RUN npm install @vue/cli -g

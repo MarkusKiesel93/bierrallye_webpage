@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  frontend:
+    container_name: ${PROJECT_NAME}_frontend
+    build:
+      context: .
+      dockerfile: deploy/development/Dockerfile_frontend
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    volumes:
+      - './frontend:/app'
+      - './frontend/node_modules:/app/node_modules'
+    command: ['npm', 'run', 'serve']

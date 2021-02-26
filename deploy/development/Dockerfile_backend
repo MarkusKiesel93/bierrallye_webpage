@@ -1,0 +1,20 @@
+# base image
+FROM python:3.8-slim-buster
+
+# format the standard output of python
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+# Change the working directory. 
+# Every command after this will be run from the /code directory.
+WORKDIR /code
+
+# uvicorn and fastapi
+RUN pip install --no-cache-dir "uvicorn[standard]" fastapi
+
+# copy requirements to WORKDIR
+COPY ./backend/requirements.txt ./
+
+# install project dependencies
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir -r requirements.txt

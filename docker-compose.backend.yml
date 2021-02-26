@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  backend:
+    container_name: ${PROJECT_NAME}_backend
+    build:
+      context: .
+      dockerfile: deploy/development/Dockerfile_backend
+    volumes:
+      - ./backend:/code
+    env_file:
+      - ./settings.env
+    command: ['./scripts/start.sh']
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}

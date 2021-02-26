@@ -1,0 +1,18 @@
+general:
+  project_name: bierralley
+  app_name: Bierrealley Irnfritz
+  version: 0.1
+production:
+  backend_domain: api.bier.kiesel.tech
+  frontend_domain: bier.kiesel.tech
+  backend_port: 8008
+  database: database.db
+  #: todo set secret key somewhere else with mail password
+  secret_key: asdfjklöasdfjklö
+development:
+  frontend_domain: http://localhost:8080/
+  backend_port: 8000
+  server_port: 8008
+  frontend_port: 8080
+  database: dev_sqlite.db
+  secret_key: NOT REALLY A SECRET

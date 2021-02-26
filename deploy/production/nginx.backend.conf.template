@@ -1,0 +1,29 @@
+upstream backend {
+	server backend:8000;
+}
+
+server {
+    include mime.types;
+
+	listen {{backend_port}};
+
+    server_name {{backend_domain}} www.{{backend_domain}};
+
+    charset utf-8;
+    client_max_body_size 512M;
+
+    location / {
+      try_files $uri @proxy_to_app;
+    }
+
+    location /static/ {
+    	alias /files/static/;
+    }
+
+    # Finally, send all non-media requests to the backend.
+    location @proxy_to_app {
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header Host $host;
+        proxy_pass http://backend;
+    }
+}

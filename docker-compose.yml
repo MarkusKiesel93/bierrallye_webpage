@@ -1,0 +1,65 @@
+version: '3'
+
+services:
+  backend:
+    container_name: ${PROJECT_NAME}_backend
+    build:
+      context: .
+      dockerfile: deploy/production/Dockerfile_backend
+    # set volume for staticfiles to be deployed by nginx
+    volumes:
+      - static:/home/app_user/code/static
+    env_file:
+      - ./settings.env
+    command: ['./scripts/start.sh']
+    expose:
+      - 8000
+    restart: unless-stopped
+    networks:
+      - intern_backend
+  server:
+    container_name: ${PROJECT_NAME}_server
+    build:
+      context: .
+      dockerfile: deploy/production/Dockerfile_server
+    # brauche ich das wirklich ?
+    expose:
+      - ${BACKEND_PORT}
+    volumes:
+      - static:/files/static/
+    depends_on:
+      - backend
+    environment:
+      - VIRTUAL_HOST=${BACKEND_DOMAIN},www.${BACKEND_DOMAIN}
+      - VIRTUAL_PORT=${BACKEND_PORT}
+      - LETSENCRYPT_HOST=${BACKEND_DOMAIN},www.${BACKEND_DOMAIN}
+    restart: unless-stopped
+    networks:
+      - proxy
+      - intern_backend
+  frontend:
+    container_name: ${PROJECT_NAME}_frontend
+    build:
+      context: .
+      dockerfile: deploy/production/Dockerfile_frontend
+    command: ["nginx", "-g", "daemon off;"]
+    expose:
+      - 80
+    restart: unless-stopped
+    networks:
+      - proxy
+    environment:
+      - VIRTUAL_HOST=${FRONTEND_DOMAIN},www.${FRONTEND_DOMAIN}
+      - LETSENCRYPT_HOST=${FRONTEND_DOMAIN},www.${FRONTEND_DOMAIN}
+    depends_on:
+      - backend
+      - server
+
+volumes:
+  static:
+
+networks:
+  proxy:
+    external: true
+  intern_backend:
+    external: false

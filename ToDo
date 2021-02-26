@@ -1,0 +1,28 @@
+Frontend
+    https://github.com/vuejs/vue-cli/issues/5690
+    change favicon in public/index.html
+    team data to vuex store 
+    write api connection
+    validate everything at once
+
+Backend
+    automatic mails
+        https://www.geeksforgeeks.org/sending-email-using-fastapi-framework-in-python/
+        https://github.com/sabuhish/fastapi-mail
+        create templates
+    store timestemp when email sent
+        give this timestemp back for errors
+
+Deploy
+    static files
+    development files build on one and another
+
+Allgemein
+    4 Blöcke
+    Rückmeldung das ein gewisser Block schon voll ist und nicht mehr ausgewählt werden kann
+    inform me for the next years event
+
+Logging
+    how to log uvicorn
+    how to log gunicorn
+    how to log fast api

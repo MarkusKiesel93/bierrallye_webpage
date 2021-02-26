@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+  backend:
+    container_name: ${PROJECT_NAME}_backend
+    build:
+      context: .
+      dockerfile: deploy/development/Dockerfile_backend
+    volumes:
+      - ./backend:/code
+    env_file:
+      - ./settings.env
+    command: ['./scripts/start.sh']
+    ports:
+      - ${BACKEND_PORT}:${BACKEND_PORT}
+  server:
+    container_name: ${PROJECT_NAME}_server
+    build:
+      context: .
+      dockerfile: deploy/development/Dockerfile_server
+    environment:
+      - SERVER_PORT=${SERVER_PORT}
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    depends_on:
+      - backend
+  frontend:
+    container_name: ${PROJECT_NAME}_frontend
+    build:
+      context: .
+      dockerfile: deploy/development/Dockerfile_frontend
+    ports:
+      - ${FRONTEND_PORT}:${FRONTEND_PORT}
+    volumes:
+      - './frontend:/app'
+      - './frontend/node_modules:/app/node_modules'
+    command: ['npm', 'run', 'serve']
+    depends_on:
+      - backend
+      - server

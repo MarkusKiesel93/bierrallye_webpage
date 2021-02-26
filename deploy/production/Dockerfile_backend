@@ -1,0 +1,40 @@
+# https://github.com/tiangolo/uvicorn-gunicorn-docker/blob/master/docker-images/python3.6-alpine3.8.dockerfile
+
+# base image
+FROM python:3.8-slim-buster
+
+# format the standard output of python
+ENV PYTHONUNBUFFERED 1
+ENV PYTHONDONTWRITEBYTECODE 1
+
+
+# Create an app user (more secure for production)
+# uid 1000 to resolve permission errors with staticfiles
+RUN adduser --system --uid="1000" app_user
+
+# Tell docker that all future commands should run as the app user
+USER app_user
+
+# Change the working directory, every command after this will be run from the WORKDIR
+RUN mkdir /home/app_user/code
+WORKDIR /home/app_user/code
+
+# Set the PATH ENV variable to point to the user bin
+ENV PATH="/home/app_user/.local/bin:${PATH}"
+
+# copy requirements to WORKDIR
+COPY ./backend/requirements.txt ./
+
+# install python dependencys
+RUN pip install --upgrade pip
+RUN pip install --no-cache-dir "uvicorn[standard]" gunicorn fastapi
+RUN pip install --no-cache-dir -r requirements.txt
+
+# copy source code to WORKDIR
+RUN mkdir -p app
+COPY backend/ ./app
+
+# grant ownership to prevent perimssion errors.
+USER root:root
+RUN chown -R app_user:app_user /home/app_user/code
+USER app_user
