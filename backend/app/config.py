@@ -30,7 +30,6 @@ class Settings(BaseSettings):
         MAIL_TLS=True,
         MAIL_SSL=False,
     )
-    print(mail_config.MAIL_USERNAME)
 
     secret_key: str
 
