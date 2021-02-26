@@ -18,11 +18,15 @@ export default new Vuex.Store({
       email: '',
       firstNamePlayer1: '',
       lastNamePlayer1: '',
+      drinkPrefPlayer1: '',
       firstNamePlayer2: '',
       lastNamePlayer2: '',
-      drinkPref: '',
+      drinkPrefPlayer2: '',
       timePref: '',
     },
+
+    drinks_options: ['Bier', 'Wein', 'Gemischt', 'wissen wir noch nicht'],
+    times_options: ['zu Beginn', 'mittendrin', 'zu Ende', 'ist uns egal'],
 
     createStatus: null,
     createInfo: '',
@@ -35,14 +39,14 @@ export default new Vuex.Store({
     deleteInfo: '',
   },
   getters: {
-    getPlayer1: function (state) {
+    getPlayer1Name: function (state) {
       let player = {
         firstName: state.team.firstNamePlayer1,
         lastName: state.team.lastNamePlayer1,
       } 
       return player
     },
-    getPlayer2: function (state) {
+    getPlayer2Name: function (state) {
       let player = {
         firstName: state.team.firstNamePlayer2,
         lastName: state.team.lastNamePlayer12
@@ -55,12 +59,29 @@ export default new Vuex.Store({
       state.team.email = email
     },
     setPlayer1: function (state, player) {
-      state.team.firstNamePlayer1 = player.firstName
-      state.team.lastNamePlayer1 = player.lastName
+      if (player.firstName) {
+        state.team.firstNamePlayer1 = player.firstName
+      }
+      if (player.lastName) {
+        state.team.lastNamePlayer1 = player.lastName
+      }
+      if (player.drinkPref) {
+        state.team.drinkPrefPlayer1 = player.drinkPref
+      }
     },
     setPlayer2: function (state, player) {
-      state.team.firstNamePlayer2 = player.firstName
-      state.team.lastNamePlayer2 = player.lastName
+      if (player.firstName) {
+        state.team.firstNamePlayer2 = player.firstName
+      }
+      if (player.lastName) {
+        state.team.lastNamePlayer2 = player.lastName
+      }
+      if (player.drinkPref) {
+        state.team.drinkPrefPlayer2 = player.drinkPref
+      }
+    },
+    setTimePref: function (state, timePref) {
+      state.team.timePref = timePref
     },
     setDeregisterEmail: function (state, value) {
       state.deregisterEmail = value
