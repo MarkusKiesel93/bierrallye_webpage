@@ -1,6 +1,6 @@
 from hashlib import sha256
 
-from .config import settings
+from app.config import settings
 
 
 def hash_email(email):

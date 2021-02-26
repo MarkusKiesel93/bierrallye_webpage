@@ -1,7 +1,7 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
-from .hashing import hash_email
+from app import models, schemas
+from app.hashing import hash_email
 
 
 def create_team(db: Session, team: schemas.Team):

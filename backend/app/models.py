@@ -1,9 +1,7 @@
 
 from sqlalchemy import Column, String
 
-from .database import Base, engine
-
-from .config import settings
+from app.database import Base, engine
 
 
 class Team(Base):

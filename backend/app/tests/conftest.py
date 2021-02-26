@@ -3,7 +3,7 @@ from fastapi.testclient import TestClient
 import pytest
 from typing import Generator
 
-from ..api import router
+from app.api import router
 
 # from ..database import engine, SessionLocal
 # from ..models import Base

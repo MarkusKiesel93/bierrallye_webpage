@@ -1,7 +1,7 @@
 from .schemas import Team, TeamCreated
 from fastapi_mail import FastMail, MessageSchema
 
-from .config import settings
+from app.config import settings
 
 
 # todo Unit tests can be done with mocking output described at https://sabuhish.github.io/fastapi-mail/example/

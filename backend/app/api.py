@@ -1,9 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.orm import Session
 
-from . import crud, schemas
-from .database import get_db
-from .mail import registration_mail, deregistration_mail
+from app import crud, schemas
+from app.database import get_db
+from app.mail import registration_mail, deregistration_mail
 
 router = APIRouter()
 

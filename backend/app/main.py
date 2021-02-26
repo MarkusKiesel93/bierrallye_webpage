@@ -2,10 +2,10 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 
-from .config import settings, Settings
-from .models import create_models
-from .api import router
-from .logging import simple_logging
+from app.config import settings, Settings
+from app.models import create_models
+from app.api import router
+from app.logging import simple_logging
 
 
 create_models()
