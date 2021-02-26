@@ -6,9 +6,10 @@ import argparse as ap
 import yaml
 import sys
 
-REPO_PATH = Path(__file__).parent
+REPO_PATH = Path(__file__).parent.resolve()
 DEPLOY_PATH = REPO_PATH / 'deploy'
 CONFIGS = REPO_PATH / 'configs.yml'
+SECRET_CONFIGS = REPO_PATH.parent / 'secret_configs.yml'
 DOCKER_ENV_FILE = REPO_PATH / '.env'
 VUE_ENV_FILE = REPO_PATH / 'frontend' / '.env'
 
@@ -30,7 +31,6 @@ def load_configs(deploy_mode):
 def run_production(configs):
     print(f'RUN PRODUCTION SERVER FOR: {configs["project_name"]}')
     create_env_files(configs)
-    # todo set scret key and mail password
     fill_templates(configs)
     sp.run(['docker-compose', '--env-file', '.env', 'up', '--build', '--detach'])
 
@@ -65,15 +65,26 @@ def stop_containers(configs):
 
 
 def create_env_files(configs):
+    # environment file to use with docker
     with open(DOCKER_ENV_FILE, 'w') as env_file:
         for config, value in configs.items():
             env_file.write(f'{config.upper()}={value}\n')
 
+    # environment file to use with vue
+    # 'VUE_APP_' needed to be used by process.env
+    # todo: is there a better way to do this ?
     with open(VUE_ENV_FILE, 'w') as env_file:
-        # todo: is there a better way to do this ?
-        # 'VUE_APP_' needed to be used by process.env
         for config, value in configs.items():
             env_file.write(f'VUE_APP_{config.upper()}={value}\n')
+
+    # secret configs for production
+    if configs['deploy_mode'] == 'production':
+        with open(SECRET_CONFIGS, 'r') as cfg_file:
+            cfg = yaml.safe_load(cfg_file)
+            cfg = cfg[configs['project_name']]
+        with open(DOCKER_ENV_FILE, 'a') as env_file:
+            for config, value in cfg.items():
+                env_file.write(f'{config.upper()}={value}\n')
 
 
 def fill_templates(configs):
@@ -86,7 +97,7 @@ def fill_templates(configs):
             new_file.write(template)
 
 
-if __name__ == "__main__":   
+if __name__ == "__main__":
     parser = ap.ArgumentParser(prog='Run Webpage', description='Script to run development or production server')
     parser.add_argument('-dev', '--development', action='store_true', help='run development server')
     parser.add_argument('-prod', '--production', action='store_true', help='run production server')
