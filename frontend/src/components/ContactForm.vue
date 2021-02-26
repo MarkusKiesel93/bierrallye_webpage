@@ -1,19 +1,11 @@
 <template>
   <validation-observer ref="observer" v-slot="{ invalid }">
     <v-form @submit.prevent="submit">
-      <validation-provider
-        v-slot="{ errors }"
-        name="E-Mail"
-        rules="required|email"
-      >
-        <v-text-field
-          label="E-Mail"
-          v-model="email"
-          :counter="100"
-          :error-messages="errors"
-          required
-        ></v-text-field>
-      </validation-provider>
+      <InputEmail
+        :value="email"
+        :setter="emailSetter"
+      />
+      
       <v-btn
         color="primary"
         class="mr-4 mt-4"
@@ -35,10 +27,12 @@
 <script>
 import {
   ValidationObserver,
-  ValidationProvider,
   setInteractionMode,
 } from 'vee-validate';
 import './validation'
+
+import { mapState, mapMutations } from 'vuex'
+import InputEmail from '@/components/InputEmail'
 
 setInteractionMode('lazy');
 
@@ -46,20 +40,18 @@ setInteractionMode('lazy');
 export default {
   name: 'ContactForm',
   components: {
-    ValidationProvider,
     ValidationObserver,
+    InputEmail,
   },
   computed: {
-    email: {
-      get () {
-        return this.$store.state.team.email
-      },
-      set (value) {
-        this.$store.commit('setTeamValues', {'email': value})
-      }
-    }
+    ...mapState({
+      email: (state) => state.team.email
+    }),
   },
   methods: {
+    ...mapMutations({
+      emailSetter: 'setTeamValues'
+    }),
     submit() {
       this.$refs.observer.validate();
       this.$emit('next-step');
