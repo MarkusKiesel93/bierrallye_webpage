@@ -3,6 +3,7 @@
     <v-alert
       :type='type'
       :value="value"
+      :dismissible='dismissible'
     >
       <v-row>
         <div> {{ row1 }} </div>
@@ -25,6 +26,10 @@ export default {
     value: {
       type: Boolean,
       default: false,
+    },
+    dismissible: {
+      type: Boolean,
+      default: true,
     },
     row1: {
       type: String,
