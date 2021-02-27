@@ -96,6 +96,7 @@
             />
             <ButtonsNextBack
               :disabled="invalid"
+              nextLabel="Anmelden"
               v-on:click-next='sumbit'
               v-on:click-back='lastStep'
             />

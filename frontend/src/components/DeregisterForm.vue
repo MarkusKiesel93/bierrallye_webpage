@@ -40,6 +40,7 @@
         />
         <ButtonsNextBack
           :disabled="invalid"
+          nextLabel="Abmelden"
           v-on:click-next='sumbit'
           v-on:click-back='lastStep'
         />
