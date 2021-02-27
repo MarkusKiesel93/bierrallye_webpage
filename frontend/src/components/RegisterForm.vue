@@ -31,6 +31,7 @@
             />
             <InputSelectBox
               label="Getränke"
+              :value="drinkPrefPlayer1"
               :items="drinksOptions"
               :setter="drinkPref1Setter"
             />
@@ -43,6 +44,7 @@
             />
             <InputSelectBox
               label="Getränke"
+              :value="drinkPrefPlayer2"
               :items="drinksOptions"
               :setter="drinkPref2Setter"
             />
@@ -58,6 +60,7 @@
         <v-stepper-content step='3'>
           <InputSelectBox
               label="Startblock"
+              :value="timePref"
               :items="timesOptions"
               :setter="timeSetter"
             />
@@ -94,10 +97,20 @@
               {{ info }}
             </v-row>
           </v-alert>
-          <RegistrationCompletion
-            v-on:complete-registration='completeRegistration'
-            v-on:last-step='lastStep'
-          />
+          <validation-observer ref="observer" v-slot="{ invalid }">
+            <InputCheckbox
+              :value="acceptedDataLaws"
+              :setter="checkboxSetter"
+              fieldName="Datenschutzerklärung"
+              text="Datenschutzerklärung"
+              :routerTo="{ name: 'DataProtectionView' }"
+            />
+            <ButtonsNextBack
+              :disabled="invalid"
+              v-on:click-next='completeRegistration'
+              v-on:click-back='lastStep'
+            />
+          </validation-observer>
         </v-stepper-content>
       </v-stepper>
     </v-form>
@@ -109,10 +122,10 @@ import { ValidationObserver, setInteractionMode } from 'vee-validate'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import InfoItems from '@/components/InfoItems'
-import RegistrationCompletion from '@/components/RegistrationCompletion'
 import InputName from '@/components/InputName'
 import InputEmail from '@/components/InputEmail'
 import InputSelectBox from '@/components/InputSelectBox'
+import InputCheckbox from '@/components/InputCheckbox'
 import ButtonsNextBack from '@/components/ButtonsNextBack'
 
 setInteractionMode('lazy')
@@ -127,7 +140,7 @@ export default {
     InputSelectBox,
     ButtonsNextBack,
     InfoItems,
-    RegistrationCompletion,
+    InputCheckbox,
   },
   computed: {
     ...mapState({
@@ -141,6 +154,7 @@ export default {
       timePref: (state) => state.team.timePref,
       drinksOptions: (state) => state.drinksOptions,
       timesOptions: (state) => state.timesOptions,
+      acceptedDataLaws: (state) => state.acceptedDataLaws,
       info: (state) => state.createInfo,
     }),
     ...mapGetters({
@@ -171,6 +185,7 @@ export default {
       lastName2Setter: 'setLastNamePlayer2',
       drinkPref2Setter: 'setDrinkPrefPlayer2',
       timeSetter: 'setTimePref',
+      checkboxSetter: 'setAcceptedDataLaws',
     }),
     ...mapActions({
       createTeam: 'createTeam',

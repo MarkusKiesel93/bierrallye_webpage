@@ -18,11 +18,11 @@ export default new Vuex.Store({
       email: '',
       firstNamePlayer1: '',
       lastNamePlayer1: '',
-      drinkPrefPlayer1: '',
+      drinkPrefPlayer1: 'unentschlossen',
       firstNamePlayer2: '',
       lastNamePlayer2: '',
-      drinkPrefPlayer2: '',
-      timePref: '',
+      drinkPrefPlayer2: 'unentschlossen',
+      timePref: 'allzeit bereit',
     },
 
     drinksOptions: [
@@ -33,11 +33,14 @@ export default new Vuex.Store({
       'Almweiss',
     ],
     timesOptions: [
+      'allzeit bereit',
       'Block 1',
       'Block 2',
       'Block 3',
       'Block 4',
     ],
+
+    acceptedDataLaws: false,
 
     createStatus: null,
     createInfo: '',
@@ -104,6 +107,9 @@ export default new Vuex.Store({
     },
     setTimePref: function (state, timePref) {
       state.team.timePref = timePref
+    },
+    setAcceptedDataLaws: function (state, checkbox) {
+      state.acceptedDataLaws = checkbox
     },
     setDeregisterEmail: function (state, value) {
       state.deregisterEmail = value
