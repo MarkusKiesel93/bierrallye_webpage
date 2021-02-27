@@ -21,7 +21,7 @@ async def registration_mail(team: TeamCreated):
     print(deregistration_link)
     subject = 'Anmeldung Bierralley Irnfritez 2021'
     body = (
-        f'<h3> Hallo {team.first_name_1} und {team.first_name_2}, </h3>'
+        f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
         '<p> Ihr habt euch erfolgreich für die Bierralley Irnfritz 2021 angemeldet. </p>'
         '<p> Hier nochmals ein Kurzer Überblick der Eckdaten: </p>'
@@ -38,7 +38,7 @@ async def registration_mail(team: TeamCreated):
 async def deregistration_mail(team: Team):
     subject = 'Abmeldung Bierralley Irnfritez 2021'
     body = (
-        f'<h3> Hallo {team.first_name_1} und {team.first_name_2}, </h3>'
+        f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
         '<p> Ihr habt euch erfolgreich für die Bierralley Irnfritz 2021 abgemeldet. </p>'
     )
