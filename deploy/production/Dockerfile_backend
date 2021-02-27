@@ -30,8 +30,7 @@ RUN pip install --no-cache-dir "uvicorn[standard]" gunicorn fastapi
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source code to WORKDIR
-RUN mkdir -p app
-COPY ./backend/* ./app/
+COPY ./backend/* ./
 
 # grant ownership to prevent perimssion errors.
 USER root:root
