@@ -74,29 +74,6 @@
         <v-stepper-step step='4'> Daten bestätigen </v-stepper-step>
         <v-stepper-content step='4'>
           <InfoItems :items="infoItems" />
-          <v-alert
-            type='success'
-            :value="successAlert"
-          >
-            <v-row>
-              <div> Du hast dein Team für die <strong>Bierralley 2021</strong> erfolgreich angebeldet </div>
-            </v-row>
-            <v-row>
-              <div> Eine Bestätigung bekommst du in den nächsten Minuten an: <strong>{{ info }}</strong> </div>
-            </v-row>
-          </v-alert>
-          <v-alert
-            type='error'
-            dismissible
-            :value="failedAlert"
-          >
-            <v-row>
-              <div> Es gab einen <strong>Fehler</strong> bei der Anmeldung: </div>
-            </v-row>
-            <v-row>
-              {{ info }}
-            </v-row>
-          </v-alert>
           <validation-observer ref="observer" v-slot="{ invalid }">
             <InputCheckbox
               :value="acceptedDataLaws"
@@ -104,6 +81,18 @@
               fieldName="Datenschutzerklärung"
               text="Datenschutzerklärung"
               :routerTo="{ name: 'DataProtectionView' }"
+            />
+            <AlertField
+              type="success"
+              :value="success"
+              row1="Du hast dein Team für die Bierrallye 2021 erfolgreich angebeldet"
+              :row2="successMessage"
+            />
+            <AlertField
+              type="error"
+              :value="error"
+              row1="Es gab einen Fehler bei der Anmeldung:"
+              :row2="errorMessage"
             />
             <ButtonsNextBack
               :disabled="invalid"
@@ -127,6 +116,7 @@ import InputEmail from '@/components/InputEmail'
 import InputSelectBox from '@/components/InputSelectBox'
 import InputCheckbox from '@/components/InputCheckbox'
 import ButtonsNextBack from '@/components/ButtonsNextBack'
+import AlertField from '@/components/AlertField'
 
 setInteractionMode('lazy')
 
@@ -141,6 +131,7 @@ export default {
     ButtonsNextBack,
     InfoItems,
     InputCheckbox,
+    AlertField,
   },
   computed: {
     ...mapState({
@@ -155,25 +146,18 @@ export default {
       drinksOptions: (state) => state.drinksOptions,
       timesOptions: (state) => state.timesOptions,
       acceptedDataLaws: (state) => state.acceptedDataLaws,
-      info: (state) => state.createInfo,
+      success: (state) => state.createSuccess,
+      error: (state) => state.createError,
+      errorMessage: (state) => state.createErrorMessage,
     }),
     ...mapGetters({
-      infoItems: 'getRegistrationInfo'
+      infoItems: 'getRegistrationInfo',
+      successMessage: 'getSuccessMessage',
     }),
-    status: {
-      get () {
-        return this.$store.state.createStatus
-      },
-      set (value) {
-        this.$store.commit('setStatus', {'createStatus': value})
-      }
-    },
   },
   data: () => ({
     step: 1,
     invalid: null,
-    successAlert: false,
-    failedAlert: false,
   }),
   methods: {
     ...mapMutations({
@@ -186,6 +170,8 @@ export default {
       drinkPref2Setter: 'setDrinkPrefPlayer2',
       timeSetter: 'setTimePref',
       checkboxSetter: 'setAcceptedDataLaws',
+      setCreateSuccess: 'setCreateSuccess',
+      setCreateError: 'setCreateError',
     }),
     ...mapActions({
       createTeam: 'createTeam',
@@ -200,26 +186,20 @@ export default {
       }
     },
     completeRegistration() {
-      if (!this.status) {
+      if (!this.success) {
         this.createTeam()
       } 
     },
     handleSuccess() {
-      this.status = null
-      this.successAlert = false
+      this.setCreateSuccess(false)
       this.$router.push({ name: 'HomeView' })
     },
   },
   watch: {
-    status: function() {
-      if (this.status == 'success') {
-        this.successAlert = true
-        this.failedAlert = false
-        setTimeout(this.handleSuccess, 4000)
-      } else if (this.status == 'failed') {
-        this.successAlert = false
-        this.failedAlert = true
-        this.status = null
+    success: function() {
+      if (this.success) {
+        this.setCreateError(false)
+        setTimeout(this.handleSuccess(), 4000)
       }
     },
   }

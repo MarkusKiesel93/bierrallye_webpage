@@ -42,12 +42,13 @@ export default new Vuex.Store({
 
     acceptedDataLaws: false,
 
-    createStatus: null,
-    createInfo: '',
+    createSuccess: false,
+    createError: false,
+
+    createErrorMessage: '',
 
     deregisterEmail: '',
     deregisterHash: '',
-
 
     deleteStatus: null,
     deleteInfo: '',
@@ -82,6 +83,9 @@ export default new Vuex.Store({
       ]
       return items
     },
+    getSuccessMessage: function (state) {
+      return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.team.email}`
+    },
   },
   mutations: {
     setTeamEmail: function (state, email) {
@@ -111,6 +115,12 @@ export default new Vuex.Store({
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
     },
+    setCreateSuccess: function (state, status) {
+      state.createSuccess = status
+    },
+    setCreateError: function (state, status) {
+      state.createError = status
+    },
     setDeregisterEmail: function (state, value) {
       state.deregisterEmail = value
     },
@@ -123,12 +133,15 @@ export default new Vuex.Store({
       state[key] = value
     },
     'TEAM_CREATED': function (state, response) {
-      state.createStatus = 'success'
-      state.createInfo = response.data.email
+      if (response.data.email == state.team.email) {
+        state.createSuccess = true
+      }
     },
     'FAILED_CREATION': function (state, error) {
-      state.createStatus = 'failed'
-      state.createInfo = error.response.data.detail
+      state.createError = true
+      if (error.response.data.detail) {
+        state.createErrorMessage = error.response.data.detail
+      }
     },
     'TEAM_DELETED': function (state, response) {
       state.deleteStatus = 'success'
