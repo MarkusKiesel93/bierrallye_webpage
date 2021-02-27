@@ -40,8 +40,8 @@ export default {
       required: true,
     },
     counter: {
-      type: Number,
-      default: 0,
+      type: String,
+      default: "0",
     }
   },
   computed: {

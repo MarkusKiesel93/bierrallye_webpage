@@ -44,14 +44,14 @@ export default new Vuex.Store({
 
     createSuccess: false,
     createError: false,
-
     createErrorMessage: '',
 
     deregisterEmail: '',
     deregisterHash: '',
 
-    deleteStatus: null,
-    deleteInfo: '',
+    deleteSuccess: false,
+    deleteError: false,
+    deleteErrorMessage: '',
   },
   getters: {
     getRegistrationInfo: function (state) {
@@ -83,9 +83,25 @@ export default new Vuex.Store({
       ]
       return items
     },
-    getSuccessMessage: function (state) {
+    getCreateSuccessMessage: function (state) {
       return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.team.email}`
     },
+    getDeregistrationInfo: function (state) {
+      let items = [
+        {
+          label: 'E-Mail',
+          value: state.deregisterEmail,
+        },
+        {
+          label: 'Stornonummer',
+          value: state.deregisterHash,
+        }
+      ]
+      return items
+    },
+    getDeleteSuccessMessage: function (state) {
+      return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.deregisterEmail}`
+    }
   },
   mutations: {
     setTeamEmail: function (state, email) {
@@ -127,10 +143,11 @@ export default new Vuex.Store({
     setDeregisterHash: function (state, value) {
       state.deregisterHash = value.toUpperCase()
     },
-    setStatus: function(state, obj) {
-      let key = Object.keys(obj)[0]
-      let value = Object.values(obj)[0]
-      state[key] = value
+    setDeleteSuccess: function (state, status) {
+      state.deleteSuccess = status
+    },
+    setDeleteError: function (state, status) {
+      state.deleteError = status
     },
     'TEAM_CREATED': function (state, response) {
       if (response.data.email == state.team.email) {
@@ -144,12 +161,15 @@ export default new Vuex.Store({
       }
     },
     'TEAM_DELETED': function (state, response) {
-      state.deleteStatus = 'success'
-      state.deleteInfo = response.data.email
+      if (response.data.email == state.deregisterEmail) {
+        state.deleteSuccess = true
+      }
     },
     'FAILED_DELETION': function (state, error) {
-      state.deleteStatus = 'failed'
-      state.deleteInfo = error.response.data.detail
+      state.deleteError = true
+      if (error.response.data.detail) {
+        state.deleteErrorMessage = error.response.data.detail
+      }
     },
   },
   actions: {
@@ -158,6 +178,7 @@ export default new Vuex.Store({
         .then((response) => store.commit('TEAM_CREATED', response))
         .catch((error) => store.commit('FAILED_CREATION', error))
     },
+    // todo: change to not use path but send an object {emal: .., hash: ..}
     deleteTeam: function (store) {
       return axios.delete(`${BASE_PATH}/teams/${store.state.deregisterEmail}/${store.state.deregisterHash}/`)
         .then((response) => store.commit('TEAM_DELETED', response))
