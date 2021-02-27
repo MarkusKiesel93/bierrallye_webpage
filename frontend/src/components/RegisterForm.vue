@@ -96,7 +96,7 @@
             />
             <ButtonsNextBack
               :disabled="invalid"
-              v-on:click-next='completeRegistration'
+              v-on:click-next='sumbit'
               v-on:click-back='lastStep'
             />
           </validation-observer>
@@ -152,7 +152,7 @@ export default {
     }),
     ...mapGetters({
       infoItems: 'getRegistrationInfo',
-      successMessage: 'getSuccessMessage',
+      successMessage: 'getCreateSuccessMessage',
     }),
   },
   data: () => ({
@@ -185,7 +185,7 @@ export default {
         this.$router.push({ name: 'HomeView' })
       }
     },
-    completeRegistration() {
+    sumbit() {
       if (!this.success) {
         this.createTeam()
       } 
