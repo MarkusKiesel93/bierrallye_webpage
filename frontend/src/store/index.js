@@ -154,14 +154,6 @@ export default new Vuex.Store({
     'TEAM_CREATED': function (state, response) {
       if (response.data.email == state.team.email) {
         state.createSuccess = true
-        // state.team.email = ''
-        // state.team.firstNamePlayer1 = ''
-        // state.team.lastNamePlayer1 = ''
-        // state.team.drinkPrefPlayer1 = 'unentschlossen'
-        // state.team.firstNamePlayer2 = ''
-        // state.team.lastNamePlayer2 = ''
-        // state.team.drinkPrefPlayer2 = 'unentschlossen'
-        // state.team.timePref = 'allzeit bereit'
       }
     },
     'FAILED_CREATION': function (state, error) {
@@ -173,8 +165,6 @@ export default new Vuex.Store({
     'TEAM_DELETED': function (state, response) {
       if (response.data.email == state.deregister.email) {
         state.deleteSuccess = true
-        // state.deregister.email = ''
-        // state.deregister.hash = ''
       }
     },
     'FAILED_DELETION': function (state, error) {
