@@ -7,7 +7,7 @@
     >
       <v-text-field
         label="Vorname"
-        v-model="name.firstName"
+        v-model="first"
         :counter="20"
         :error-messages="errors"
         required
@@ -20,7 +20,7 @@
     >
       <v-text-field
         label="Zuname"
-        v-model="name.lastName"
+        v-model="last"
         :counter="20"
         :error-messages="errors"
         required
@@ -40,24 +40,40 @@ export default {
     ValidationProvider,
   },
   props: {
-    value: {
-      type: Object,
+    firstName: {
+      type: String,
       required: true,
     },
-    setter: {
+    lastName: {
+      type: String,
+      required: true,
+    },
+    firstNameSetter: {
+      type: Function,
+      required: true,
+    },
+    lastNameSetter: {
       type: Function,
       required: true,
     }
   },
   computed: {
-    name: {
+    first: {
       get () {
-        return this.value
+        return this.firstName
       },
       set (value) {
-        this.setter(value)
+        this.firstNameSetter(value)
       }
-    }
+    },
+    last: {
+      get () {
+        return this.lastName
+      },
+      set (value) {
+        this.lastNameSetter(value)
+      }
+    },
   }
 }
 </script>

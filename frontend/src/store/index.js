@@ -25,8 +25,19 @@ export default new Vuex.Store({
       timePref: '',
     },
 
-    drinks_options: ['Bier', 'Wein', 'Gemischt', 'wissen wir noch nicht'],
-    times_options: ['zu Beginn', 'mittendrin', 'zu Ende', 'ist uns egal'],
+    drinksOptions: [
+      'unentschlossen',
+      'Bier',
+      'Spritzer',
+      'Kaiserspritzer',
+      'Almweiss',
+    ],
+    timesOptions: [
+      'Block 1',
+      'Block 2',
+      'Block 3',
+      'Block 4',
+    ],
 
     createStatus: null,
     createInfo: '',
@@ -39,46 +50,57 @@ export default new Vuex.Store({
     deleteInfo: '',
   },
   getters: {
-    getPlayer1Name: function (state) {
-      let player = {
-        firstName: state.team.firstNamePlayer1,
-        lastName: state.team.lastNamePlayer1,
-      } 
-      return player
-    },
-    getPlayer2Name: function (state) {
-      let player = {
-        firstName: state.team.firstNamePlayer2,
-        lastName: state.team.lastNamePlayer12
-      } 
-      return player
+    getRegistrationInfo: function (state) {
+      let items = [
+        {
+          label: 'Kontakt',
+          value: state.team.email,
+        },
+        {
+          label: 'Name Spieler 1',
+          value: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`
+        },
+        {
+          label: 'Getränk Spieler 1',
+          value: state.team.drinkPrefPlayer1,
+        },
+        {
+          label: 'Name Spieler 2',
+          value: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`
+        },
+        {
+          label: 'Getränk Spieler 2',
+          value: state.team.drinkPrefPlayer2,
+        },
+        {
+          label: 'Startzeit',
+          value: state.team.timePref,
+        }
+      ]
+      return items
     },
   },
   mutations: {
     setTeamEmail: function (state, email) {
       state.team.email = email
     },
-    setPlayer1: function (state, player) {
-      if (player.firstName) {
-        state.team.firstNamePlayer1 = player.firstName
-      }
-      if (player.lastName) {
-        state.team.lastNamePlayer1 = player.lastName
-      }
-      if (player.drinkPref) {
-        state.team.drinkPrefPlayer1 = player.drinkPref
-      }
+    setFirstNamePayer1: function (state, firstName) {
+      state.team.firstNamePlayer1 = firstName
     },
-    setPlayer2: function (state, player) {
-      if (player.firstName) {
-        state.team.firstNamePlayer2 = player.firstName
-      }
-      if (player.lastName) {
-        state.team.lastNamePlayer2 = player.lastName
-      }
-      if (player.drinkPref) {
-        state.team.drinkPrefPlayer2 = player.drinkPref
-      }
+    setLastNamePlayer1: function (state, lastName) {
+      state.team.lastNamePlayer1 = lastName
+    },
+    setDrinkPrefPlayer1: function (state, drinkPref) {
+      state.team.drinkPrefPlayer1 = drinkPref
+    },
+    setFirstNamePayer2: function (state, firstName) {
+      state.team.firstNamePlayer2 = firstName
+    },
+    setLastNamePlayer2: function (state, lastName) {
+      state.team.lastNamePlayer2 = lastName
+    },
+    setDrinkPrefPlayer2: function (state, drinkPref) {
+      state.team.drinkPrefPlayer2 = drinkPref
     },
     setTimePref: function (state, timePref) {
       state.team.timePref = timePref
