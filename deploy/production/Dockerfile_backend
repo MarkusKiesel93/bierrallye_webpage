@@ -15,7 +15,7 @@ RUN adduser --system --uid="1000" app_user
 USER app_user
 
 # Change the working directory, every command after this will be run from the WORKDIR
-RUN mkdir /home/app_user/code
+RUN mkdir -p /home/app_user/code
 WORKDIR /home/app_user/code
 
 # Set the PATH ENV variable to point to the user bin
@@ -30,8 +30,7 @@ RUN pip install --no-cache-dir "uvicorn[standard]" gunicorn fastapi
 RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source code to WORKDIR
-COPY ./backend/app/ ./
-COPY ./backend/scripts/ ./
+COPY ./backend ./
 
 # grant ownership to prevent perimssion errors.
 USER root:root
