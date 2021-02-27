@@ -11,7 +11,7 @@ services:
       - static:/home/app_user/code/static
     env_file:
       - ./.env
-    command: ['./scripts/start.sh']
+    command: ls -la # ['./scripts/start.sh']
     expose:
       - 8000
     restart: unless-stopped
