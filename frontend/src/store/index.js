@@ -46,8 +46,10 @@ export default new Vuex.Store({
     createError: false,
     createErrorMessage: '',
 
-    deregisterEmail: '',
-    deregisterHash: '',
+    deregister: {
+      email: '',
+      hash: '',
+    },
 
     deleteSuccess: false,
     deleteError: false,
@@ -90,17 +92,17 @@ export default new Vuex.Store({
       let items = [
         {
           label: 'E-Mail',
-          value: state.deregisterEmail,
+          value: state.deregister.email,
         },
         {
           label: 'Stornonummer',
-          value: state.deregisterHash,
+          value: state.deregister.hash,
         }
       ]
       return items
     },
     getDeleteSuccessMessage: function (state) {
-      return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.deregisterEmail}`
+      return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.deregister.email}`
     }
   },
   mutations: {
@@ -138,10 +140,10 @@ export default new Vuex.Store({
       state.createError = status
     },
     setDeregisterEmail: function (state, value) {
-      state.deregisterEmail = value
+      state.deregister.email = value
     },
     setDeregisterHash: function (state, value) {
-      state.deregisterHash = value.toUpperCase()
+      state.deregister.hash = value.toUpperCase()
     },
     setDeleteSuccess: function (state, status) {
       state.deleteSuccess = status
@@ -152,7 +154,14 @@ export default new Vuex.Store({
     'TEAM_CREATED': function (state, response) {
       if (response.data.email == state.team.email) {
         state.createSuccess = true
-        // todo: set team values to empty
+        // state.team.email = ''
+        // state.team.firstNamePlayer1 = ''
+        // state.team.lastNamePlayer1 = ''
+        // state.team.drinkPrefPlayer1 = 'unentschlossen'
+        // state.team.firstNamePlayer2 = ''
+        // state.team.lastNamePlayer2 = ''
+        // state.team.drinkPrefPlayer2 = 'unentschlossen'
+        // state.team.timePref = 'allzeit bereit'
       }
     },
     'FAILED_CREATION': function (state, error) {
@@ -162,9 +171,10 @@ export default new Vuex.Store({
       }
     },
     'TEAM_DELETED': function (state, response) {
-      if (response.data.email == state.deregisterEmail) {
+      if (response.data.email == state.deregister.email) {
         state.deleteSuccess = true
-        // todo: set values to empty
+        // state.deregister.email = ''
+        // state.deregister.hash = ''
       }
     },
     'FAILED_DELETION': function (state, error) {
@@ -180,9 +190,8 @@ export default new Vuex.Store({
         .then((response) => store.commit('TEAM_CREATED', response))
         .catch((error) => store.commit('FAILED_CREATION', error))
     },
-    // todo: change to not use path but send an object {emal: .., hash: ..}
     deleteTeam: function (store) {
-      return axios.delete(`${BASE_PATH}/teams/${store.state.deregisterEmail}/${store.state.deregisterHash}/`)
+      return axios.delete(`${BASE_PATH}/teams/${store.state.deregister.email}/${store.state.deregister.hash}/`)
         .then((response) => store.commit('TEAM_DELETED', response))
         .catch((error) => store.commit('FAILED_DELETION', error))
     },

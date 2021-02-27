@@ -74,8 +74,8 @@ export default {
   },
   computed: {
     ...mapState({
-      email: (state) => state.deregisterEmail,
-      hash: (state) => state.deregisterHash,
+      email: (state) => state.deregister.email,
+      hash: (state) => state.deregister.hash,
       success: (state) => state.deleteSuccess,
       error: (state) => state.deleteError,
       errorMessage: (state) => state.deleteErrorMessage,
