@@ -122,7 +122,7 @@ export default {
     success: function() {
       if (this.success) {
         this.setDeleteError(false)
-        setTimeout(this.handleSuccess(), 4000)
+        setTimeout(this.handleSuccess, 5000)
       }
     },
   }

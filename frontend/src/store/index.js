@@ -152,6 +152,7 @@ export default new Vuex.Store({
     'TEAM_CREATED': function (state, response) {
       if (response.data.email == state.team.email) {
         state.createSuccess = true
+        // todo: set team values to empty
       }
     },
     'FAILED_CREATION': function (state, error) {
@@ -163,6 +164,7 @@ export default new Vuex.Store({
     'TEAM_DELETED': function (state, response) {
       if (response.data.email == state.deregisterEmail) {
         state.deleteSuccess = true
+        // todo: set values to empty
       }
     },
     'FAILED_DELETION': function (state, error) {
