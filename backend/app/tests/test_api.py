@@ -11,12 +11,6 @@ TEST_DATA = Path(__file__).parent / 'data' / 'input.csv'
 # look if this is possible for sqlalchemy
 
 
-def test_read_main(client: TestClient):
-    response = client.get("/")
-    assert response.status_code == 200
-    assert response.json() == {"msg": "Hello World"}
-
-
 # def test_settings(settings: Settings):
 #     print(type(settings))
 #     assert settings.database == 'test.db'
