@@ -22,7 +22,7 @@ def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Sessi
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Team mit dieser Email bereits registriert!')
     new_team = crud.create_team(db, team)
-    # todo: remove after testing
+    # todo: uncomment after testing
     # background_tasks.add_task(registration_mail, new_team)
     return new_team
 
@@ -39,5 +39,6 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f'Stornocode ist nicht gültig! Überprüfe den Code den wir dir an {db_team.email} gesendet haben.')
     deleted_team = crud.delete_team(db, email)
-    background_tasks.add_task(deregistration_mail, deleted_team)
+    # todo: uncomment after testing
+    # background_tasks.add_task(deregistration_mail, deleted_team)
     return deleted_team
