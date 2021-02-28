@@ -27,16 +27,13 @@
       <v-stepper-content step="2">
         <InfoItems :items="infoItems" />
         <AlertField
-          type="success"
-          :value="success"
-          row1="Du hast dein Team abgemeldet"
-          :row2="successMessage"
-        />
-        <AlertField
           type="error"
           :value="error"
           row1="Es gab einen Fehler bei der Abmeldung:"
           :row2="errorMessage"
+        />
+        <LoadingCircle
+          :show="loading"
         />
         <ButtonsNextBack
           :disabled="invalid"
@@ -58,6 +55,7 @@ import InputEmail from '@/components/InputEmail'
 import InputCode from '@/components/InputCode'
 import ButtonsNextBack from '@/components/ButtonsNextBack'
 import AlertField from '@/components/AlertField'
+import LoadingCircle from '@/components/LoadingCircle'
 
 setInteractionMode('lazy');
 
@@ -70,7 +68,8 @@ export default {
     InputCode,
     InfoItems,
     ButtonsNextBack,
-    AlertField
+    AlertField,
+    LoadingCircle,
   },
   computed: {
     ...mapState({
@@ -82,18 +81,17 @@ export default {
     }),
     ...mapGetters({
       infoItems: 'getDeregistrationInfo',
-      successMessage: 'getDeleteSuccessMessage',
     }),
   },
   data: () => ({
     step: 1,
     invalid: null,
+    loading: false,
   }),
   methods: {
     ...mapMutations({
       emailSetter: 'setDeregisterEmail',
       hashSetter: 'setDeregisterHash',
-      setDeleteSuccess: 'setDeleteSuccess',
       setDeleteError: 'setDeleteError',
     }),
     ...mapActions({
@@ -109,22 +107,23 @@ export default {
       }
     },
     sumbit() {
-      if (!this.success) {
-        this.deleteTeam()
-      } 
-    },
-    handleSuccess() {
-      this.setDeleteSuccess(false)
-      this.$router.push({ name: 'HomeView' })
+      this.loading = true
+      this.deleteTeam()
     },
   },
   watch: {
     success: function() {
       if (this.success) {
         this.setDeleteError(false)
-        setTimeout(this.handleSuccess, 5000)
+        this.loading = false
+        this.$router.push({ name: 'DeregisterSuccessView' })
       }
     },
+    error: function() {
+      if (this.error) {
+        this.loading = false
+      }
+    }
   }
 }
 </script>

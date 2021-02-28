@@ -46,6 +46,12 @@ const routes = [
     component: () =>
       import('@/views/DeregisterView.vue')
   },
+  {
+    path: '/deregister/success',
+    name: 'DeregisterSuccessView',
+    component: () =>
+      import('@/views/DeregisterSuccessView.vue')
+  },
 ]
 
 const router = new VueRouter({

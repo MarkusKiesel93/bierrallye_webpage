@@ -142,9 +142,6 @@ export default new Vuex.Store({
     setDeregisterHash: function (state, value) {
       state.deregister.hash = value.toUpperCase()
     },
-    setDeleteSuccess: function (state, status) {
-      state.deleteSuccess = status
-    },
     setDeleteError: function (state, status) {
       state.deleteError = status
     },
