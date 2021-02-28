@@ -1,2 +1,2 @@
-# Webpage Bierralley Irnfritz
+# Webpage Bierrallye Irnfritz
 

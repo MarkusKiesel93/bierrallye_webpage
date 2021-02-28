@@ -5,7 +5,9 @@
         app
         color="primary"
         >
-        <v-app-bar-title class="white--text"> Bierralley Irnfritz 2021 </v-app-bar-title>
+        <router-link :to="{ name: 'HomeView' }">
+          <v-app-bar-title class="white--text"> Bierrallye Irnfritz 2021 </v-app-bar-title>
+        </router-link>
         <v-spacer> </v-spacer>
         <router-link :to="{ name: 'HomeView' }">
           <v-icon large color="white"> mdi-home</v-icon>
