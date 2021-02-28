@@ -133,9 +133,6 @@ export default new Vuex.Store({
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
     },
-    setCreateSuccess: function (state, status) {
-      state.createSuccess = status
-    },
     setCreateError: function (state, status) {
       state.createError = status
     },

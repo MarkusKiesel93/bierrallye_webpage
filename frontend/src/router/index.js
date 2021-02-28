@@ -11,10 +11,28 @@ const routes = [
     component: HomeView
   },
   {
+    path: '/legal-notice',
+    name: 'LegalNoticeView',
+    component: () =>
+      import('@/views/LegalNoticeView.vue')
+  },
+  {
+    path: '/data-privacy',
+    name: 'DataProtectionView',
+    component: () =>
+      import('@/views/DataProtectionView.vue')
+  },
+  {
     path: '/register',
     name: 'RegisterView',
     component: () =>
       import('@/views/RegisterView.vue')
+  },
+  {
+    path: '/register/success',
+    name: 'RegisterSuccessView',
+    component: () =>
+      import('@/views/RegisterSuccessView.vue')
   },
   {
     path: '/deregister',
@@ -28,18 +46,6 @@ const routes = [
     component: () =>
       import('@/views/DeregisterView.vue')
   },
-  {
-    path: '/legal-notice',
-    name: 'LegalNoticeView',
-    component: () =>
-      import('@/views/LegalNoticeView.vue')
-  },
-  {
-    path: '/data-privacy',
-    name: 'DataProtectionView',
-    component: () =>
-      import('@/views/DataProtectionView.vue')
-  }
 ]
 
 const router = new VueRouter({

@@ -83,17 +83,14 @@
               :routerTo="{ name: 'DataProtectionView' }"
             />
             <AlertField
-              type="success"
-              :value="success"
-              row1="Du hast dein Team für die Bierrallye 2021 erfolgreich angebeldet"
-              :row2="successMessage"
-            />
-            <AlertField
               type="error"
               :value="error"
               row1="Es gab einen Fehler bei der Anmeldung:"
               :row2="errorMessage"
             />
+            <LoadingCircle
+              :show="loading"
+            >
             <ButtonsNextBack
               :disabled="invalid"
               nextLabel="Anmelden"
@@ -118,6 +115,7 @@ import InputSelectBox from '@/components/InputSelectBox'
 import InputCheckbox from '@/components/InputCheckbox'
 import ButtonsNextBack from '@/components/ButtonsNextBack'
 import AlertField from '@/components/AlertField'
+import LoadingCircle from '@/components/LoadingCircle'
 
 setInteractionMode('lazy')
 
@@ -133,6 +131,7 @@ export default {
     InfoItems,
     InputCheckbox,
     AlertField,
+    LoadingCircle,
   },
   computed: {
     ...mapState({
@@ -153,12 +152,12 @@ export default {
     }),
     ...mapGetters({
       infoItems: 'getRegistrationInfo',
-      successMessage: 'getCreateSuccessMessage',
     }),
   },
   data: () => ({
     step: 1,
     invalid: null,
+    loading: false,
   }),
   methods: {
     ...mapMutations({
@@ -171,7 +170,6 @@ export default {
       drinkPref2Setter: 'setDrinkPrefPlayer2',
       timeSetter: 'setTimePref',
       checkboxSetter: 'setAcceptedDataLaws',
-      setCreateSuccess: 'setCreateSuccess',
       setCreateError: 'setCreateError',
     }),
     ...mapActions({
@@ -187,20 +185,16 @@ export default {
       }
     },
     sumbit() {
-      if (!this.success) {
-        this.createTeam()
-      } 
-    },
-    handleSuccess() {
-      this.setCreateSuccess(false)
-      this.$router.push({ name: 'HomeView' })
+      this.loading = true
+      this.createTeam()
     },
   },
   watch: {
     success: function() {
       if (this.success) {
         this.setCreateError(false)
-        setTimeout(this.handleSuccess, 5000)
+        this.loading = false
+        this.$router.push({ name: 'RegisterSuccessView' })
       }
     },
   }
