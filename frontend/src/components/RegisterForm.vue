@@ -90,7 +90,7 @@
             />
             <LoadingCircle
               :show="loading"
-            >
+            />
             <ButtonsNextBack
               :disabled="invalid"
               nextLabel="Anmelden"
@@ -197,6 +197,11 @@ export default {
         this.$router.push({ name: 'RegisterSuccessView' })
       }
     },
+    error: function() {
+      if (this.error) {
+        this.loading = false
+      }
+    }
   }
 }
 </script>

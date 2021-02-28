@@ -7,8 +7,11 @@
       row1="Du hast dein Team für die Bierrallye 2021 erfolgreich angebeldet"
       :row2="successMessage"
     />
-    <v-btn color="primary">
-      Zurück zur Startseite
+    <v-btn
+      color="primary"
+      @click="$router.push({ name: 'HomeView' })"
+    >
+      Startseite
     </v-btn>
 
   </v-container>
