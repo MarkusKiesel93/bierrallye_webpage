@@ -27,7 +27,7 @@ export default {
   components: {
     AlertField,
   },
-  computes: {
+  computed: {
     ...mapGetters({
       successMessage: 'getCreateSuccessMessage',
     })

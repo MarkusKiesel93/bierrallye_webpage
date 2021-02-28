@@ -63,19 +63,19 @@ export default new Vuex.Store({
           value: state.team.email,
         },
         {
-          label: 'Name Spieler 1',
+          label: 'Spieler 1',
           value: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`
         },
         {
-          label: 'Getränk Spieler 1',
+          label: 'Spieler 1 Getränk',
           value: state.team.drinkPrefPlayer1,
         },
         {
-          label: 'Name Spieler 2',
+          label: 'Spieler 2',
           value: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`
         },
         {
-          label: 'Getränk Spieler 2',
+          label: 'Spieler 2 Getränk',
           value: state.team.drinkPrefPlayer2,
         },
         {

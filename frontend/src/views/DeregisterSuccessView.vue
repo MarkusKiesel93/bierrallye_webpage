@@ -4,7 +4,7 @@
       type="success"
       :value="true"
       :dismissible="false"
-      row1="Du hast dein Team für die Bierrallye 2021 erfolgreich abgemeldet"
+      row1="Du hast dein Team erfolgreich abgemeldet von der Bierrallye"
       :row2="successMessage"
     />
     <v-btn 
@@ -27,7 +27,7 @@ export default {
   components: {
     AlertField,
   },
-  computes: {
+  computed: {
     ...mapGetters({
       successMessage: 'getDeleteSuccessMessage',
     })

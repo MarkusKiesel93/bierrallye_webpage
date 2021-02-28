@@ -1,10 +1,5 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Abmeldung
-    </v-card-title>
-    <DeregisterForm />
-  </v-card>
+  <DeregisterForm />
 </template>
 
 <script>

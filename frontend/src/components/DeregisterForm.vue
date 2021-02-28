@@ -1,47 +1,52 @@
 <template>
   <v-form>
-    <v-stepper v-model="step" vertical>
-      <v-stepper-step step="1" :complete="step > 1"> Abmeldung angeben </v-stepper-step>
-      <v-stepper-content step="1">
-        <validation-observer ref="observer" v-slot="{ invalid }">
-          <InputEmail
-            :value="email"
-            :setter="emailSetter"
+    <v-stepper v-model="step">
+      <v-stepper-header>
+        <v-stepper-step step="1" :complete="step > 1"> Abmeldung angeben </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step="2"> Abmeldung abschicken  </v-stepper-step>
+      </v-stepper-header>
+
+      <v-stepper-items>
+        <v-stepper-content step="1">
+          <validation-observer ref="observer" v-slot="{ invalid }">
+            <InputEmail
+              :value="email"
+              :setter="emailSetter"
+            />
+            <InputCode
+              :value="hash"
+              :setter="hashSetter"
+              label="Stornocode"
+              counter="6"
+            />
+            <ButtonsNextBack
+              v-on:click-next='nextStep'
+              v-on:click-back='lastStep'
+              :disabled="invalid"
+            />
+          </validation-observer>
+        </v-stepper-content>
+
+        <v-stepper-content step="2">
+          <InfoItems :items="infoItems" />
+          <AlertField
+            type="error"
+            :value="error"
+            row1="Es gab einen Fehler bei der Abmeldung:"
+            :row2="errorMessage"
           />
-          <InputCode
-            :value="hash"
-            :setter="hashSetter"
-            label="Stornocode"
-            counter="6"
+          <LoadingCircle
+            :show="loading"
           />
           <ButtonsNextBack
-            v-on:click-next='nextStep'
-            v-on:click-back='lastStep'
             :disabled="invalid"
+            nextLabel="Abmelden"
+            v-on:click-next='sumbit'
+            v-on:click-back='lastStep'
           />
-        </validation-observer>
-      </v-stepper-content>
-
-      <v-stepper-step step="2"> Abmeldung bestätigen </v-stepper-step>
-
-      <v-stepper-content step="2">
-        <InfoItems :items="infoItems" />
-        <AlertField
-          type="error"
-          :value="error"
-          row1="Es gab einen Fehler bei der Abmeldung:"
-          :row2="errorMessage"
-        />
-        <LoadingCircle
-          :show="loading"
-        />
-        <ButtonsNextBack
-          :disabled="invalid"
-          nextLabel="Abmelden"
-          v-on:click-next='sumbit'
-          v-on:click-back='lastStep'
-        />
-      </v-stepper-content>
+        </v-stepper-content>
+      </v-stepper-items>
     </v-stepper>
   </v-form>
 </template>

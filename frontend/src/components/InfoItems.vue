@@ -4,7 +4,7 @@
       v-for="item in items"
       :key="item.label"
       :item="item">
-      <v-col cols=3>
+      <v-col cols=12 sm=4>
         <strong> {{ item.label }}: </strong>
       </v-col>
       <v-col>

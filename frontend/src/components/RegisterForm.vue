@@ -1,10 +1,17 @@
 <template>
-  <v-card>
-    <v-card-title> Anmeldung </v-card-title>
-    <v-form>
-      <v-stepper v-model='step' vertical>
-
+  <v-form>
+    <v-stepper v-model='step'>
+      <v-stepper-header>
         <v-stepper-step step='1' :complete='step > 1'> Kontakt </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step='2' :complete='step > 2'> Spieler </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step='3' :complete='step > 3'> Startzeit </v-stepper-step>
+        <v-divider></v-divider>
+        <v-stepper-step step='4'> Anmeldung abschicken </v-stepper-step>
+      </v-stepper-header>
+
+      <v-stepper-items>
         <v-stepper-content step='1'>
           <validation-observer ref="observer" v-slot="{ invalid }">
             <InputEmail
@@ -19,7 +26,6 @@
           </validation-observer>
         </v-stepper-content>
 
-        <v-stepper-step step='2' :complete='step > 2'> Spieler </v-stepper-step>
         <v-stepper-content step='2'>
           <validation-observer ref="observer" v-slot="{ invalid }">
             <h3> Spieler 1 </h3>
@@ -56,7 +62,6 @@
           </validation-observer>
         </v-stepper-content>
 
-        <v-stepper-step step='3' :complete='step > 3'> Startblock </v-stepper-step>
         <v-stepper-content step='3'>
           <InputSelectBox
               label="Startblock"
@@ -71,7 +76,6 @@
           />
         </v-stepper-content>
 
-        <v-stepper-step step='4'> Daten bestätigen </v-stepper-step>
         <v-stepper-content step='4'>
           <InfoItems :items="infoItems" />
           <validation-observer ref="observer" v-slot="{ invalid }">
@@ -99,9 +103,9 @@
             />
           </validation-observer>
         </v-stepper-content>
-      </v-stepper>
-    </v-form>
-  </v-card>
+      </v-stepper-items>
+    </v-stepper>
+  </v-form>
 </template>
 
 <script>

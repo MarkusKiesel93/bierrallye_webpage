@@ -1,18 +1,16 @@
 <template>
-  <v-container fluid>
-    <v-alert
-      :type='type'
-      :value="value"
-      :dismissible='dismissible'
-    >
-      <v-row>
-        <div> {{ row1 }} </div>
-      </v-row>
-      <v-row>
-        <div> {{ row2 }} </div>
-      </v-row>
-    </v-alert>
-  </v-container>
+  <v-alert
+    :type='type'
+    :value="value"
+    :dismissible='dismissible'
+  >
+    <v-row>
+      <div> {{ row1 }} </div>
+    </v-row>
+    <v-row>
+      <div> {{ row2 }} </div>
+    </v-row>
+  </v-alert>
 </template>
 
 <script>
