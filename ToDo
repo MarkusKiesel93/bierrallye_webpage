@@ -1,5 +1,6 @@
 Frontend
     https://github.com/vuejs/vue-cli/issues/5690
+    catch all 404 route not found
 
 Backend
     automatic mails
