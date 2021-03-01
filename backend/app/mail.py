@@ -17,7 +17,7 @@ async def send_email(email: str, subject: str, body: str, fast_mail: FastMail = 
 
 
 async def registration_mail(team: TeamCreated):
-    deregistration_link = f'{settings.frontend_domain}/deregister/{team.email}/{team.hash}'
+    deregistration_link = f'{settings.frontend_domain}deregister/{team.email}/{team.hash}'
     print(deregistration_link)
     subject = 'Anmeldung Bierralley Irnfritez 2021'
     body = (
