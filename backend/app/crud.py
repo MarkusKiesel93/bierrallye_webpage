@@ -1,4 +1,5 @@
 from sqlalchemy.orm import Session
+from datetime import date
 
 from app import models, schemas
 from app.hashing import hash_email
@@ -6,7 +7,8 @@ from app.hashing import hash_email
 
 def create_team(db: Session, team: schemas.Team):
     hash = hash_email(team.email)
-    db_team = models.Team(**team.dict(), hash=hash)
+    reg_date = str(date.today().strftime('%d.%m.%Y'))
+    db_team = models.Team(**team.dict(), hash=hash, registration_date=reg_date)
     db.add(db_team)
     db.commit()
     db.refresh(db_team)

@@ -16,6 +16,7 @@ class Team(Base):
     drink_pref_player_2 = Column(String)
     time_pref = Column(String)
     hash = Column(String)
+    registration_date = Column(String)
 
 
 def create_models():
