@@ -34,3 +34,8 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
     deleted_team = crud.delete_team(db, email)
     background_tasks.add_task(deregistration_mail, deleted_team)
     return deleted_team
+
+
+@router.get('/times')
+def get_places_left(db: Session = Depends(get_db)):
+    return crud.get_places_left(db)
