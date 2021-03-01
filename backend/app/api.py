@@ -8,7 +8,7 @@ from app.mail import registration_mail, deregistration_mail
 router = APIRouter()
 
 
-@router.post('/teams/', response_model=schemas.TeamCreated, status_code=status.HTTP_201_CREATED)
+@router.post('/team/', response_model=schemas.TeamCreated, status_code=status.HTTP_201_CREATED)
 def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     db_team = crud.get_team_by_email(db, team.email)
     if db_team:
@@ -20,7 +20,7 @@ def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Sessi
     return new_team
 
 
-@router.delete('/teams/{email}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
+@router.delete('/team/{email}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
 def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
     db_team = crud.get_team_by_email(db, email)
     if not db_team:

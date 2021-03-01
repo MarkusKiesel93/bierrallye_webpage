@@ -173,13 +173,13 @@ export default new Vuex.Store({
   actions: {
     createTeam: function (store) {
       store.state.loading = true
-      return axios.post(`${BASE_PATH}/teams/`, store.state.team)
+      return axios.post(`${BASE_PATH}/team/`, store.state.team)
         .then((response) => store.commit('TEAM_CREATED', response))
         .catch((error) => store.commit('FAILED_CREATION', error))
     },
     deleteTeam: function (store) {
       store.state.loading = true
-      return axios.delete(`${BASE_PATH}/teams/${store.state.deregister.email}/${store.state.deregister.hash}/`)
+      return axios.delete(`${BASE_PATH}/team/${store.state.deregister.email}/${store.state.deregister.hash}/`)
         .then((response) => store.commit('TEAM_DELETED', response))
         .catch((error) => store.commit('FAILED_DELETION', error))
     },
