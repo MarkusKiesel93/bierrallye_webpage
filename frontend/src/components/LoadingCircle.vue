@@ -4,7 +4,7 @@
     v-if="show"
   >
     <v-progress-circular
-      :size="50"
+      :size="30"
       color="primary"
       indeterminate
     ></v-progress-circular>
