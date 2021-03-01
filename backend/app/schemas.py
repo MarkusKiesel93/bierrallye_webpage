@@ -25,3 +25,4 @@ class Team(BaseModel):
 
 class TeamCreated(Team):
     hash: str
+    registration_date: str
