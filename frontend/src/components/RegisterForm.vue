@@ -63,6 +63,7 @@
         </v-stepper-content>
 
         <v-stepper-content step='3'>
+          <InfoItems :items="timeInfo" />
           <InputSelectBox
               label="Startblock"
               :value="timePref"
@@ -160,6 +161,7 @@ export default {
       loading: (state) => state.loading,
     }),
     ...mapGetters({
+      timeInfo: 'getTimeInfo',
       infoItems: 'getRegistrationInfo',
     }),
   },
@@ -178,9 +180,13 @@ export default {
     }),
     ...mapActions({
       createTeam: 'createTeam',
+      getPlacesTaken: 'getPlacesTaken',
     }),
     nextStep() {
       this.step += 1
+      if (this.step === 3) {
+        this.getPlacesTaken()
+      }
     },
     lastStep() {
       this.step -= 1

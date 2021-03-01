@@ -1,8 +1,9 @@
 Frontend
     https://github.com/vuejs/vue-cli/issues/5690
-    catch all 404 route not found
+    only allow submit if one thing is selected
 
 Backend
+    do calculation of available places in backend
     automatic mails
         create templates
         store timestemp when email sent

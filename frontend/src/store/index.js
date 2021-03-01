@@ -16,28 +16,42 @@ export default new Vuex.Store({
   state: {
     team: {
       email: '',
-      firstNamePlayer1: '',
-      lastNamePlayer1: '',
-      drinkPrefPlayer1: 'unentschlossen',
-      firstNamePlayer2: '',
-      lastNamePlayer2: '',
-      drinkPrefPlayer2: 'unentschlossen',
-      timePref: 'allzeit bereit',
+      firstNamePlayer1: 'asdfdf',
+      lastNamePlayer1: 'asdfdf',
+      drinkPrefPlayer1: 'asdfdf',
+      firstNamePlayer2: 'asdfadsf',
+      lastNamePlayer2: 'asdfdf',
+      drinkPrefPlayer2: 'asdfdf',
+      timePref: '',
     },
 
     drinksOptions: [
-      'unentschlossen',
       'Bier',
       'Spritzer',
       'Kaiserspritzer',
       'Almweiss',
     ],
     timesOptions: [
-      'allzeit bereit',
-      'Block 1',
-      'Block 2',
-      'Block 3',
-      'Block 4',
+      {
+        value: 'block1',
+        text: 'Block 1',
+        places: 30
+      },
+      {
+        value: 'block2',
+        text: 'Block 2',
+        places: 30
+      },
+      {
+        value: 'block3',
+        text: 'Block 3',
+        places: 30
+      },
+      {
+        value: 'block4',
+        text: 'Block 4',
+        places: 30
+      }
     ],
 
     acceptedDataLaws: false,
@@ -56,33 +70,60 @@ export default new Vuex.Store({
     deleteSuccess: false,
     deleteError: false,
     deleteErrorMessage: '',
+
+    placesAvailable: 0,
   },
   getters: {
+    getTimeInfo: function (state) {
+      let items = [
+        {
+          label: 'Block 1',
+          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
+          row2: `${state.timesOptions[0].places} / 30 Plätze`,
+        },
+        {
+          label: 'Block 2',
+          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
+          row2: `${state.timesOptions[1].places} / 30 Plätze`,
+        },
+        {
+          label: 'Block 3',
+          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
+          row2: `${state.timesOptions[2].places} / 30 Plätze`,
+        },
+        {
+          label: 'Block 4',
+          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
+          row2: `${state.timesOptions[3].places} / 30 Plätze`,
+        },
+      ]
+      return items
+    },
     getRegistrationInfo: function (state) {
       let items = [
         {
           label: 'Kontakt',
-          value: state.team.email,
+          row1: state.team.email,
         },
         {
           label: 'Spieler 1',
-          value: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`
+          row1: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`
         },
         {
           label: 'Spieler 1 Getränk',
-          value: state.team.drinkPrefPlayer1,
+          row1: state.team.drinkPrefPlayer1,
         },
         {
           label: 'Spieler 2',
-          value: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`
+          row1: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`
         },
         {
           label: 'Spieler 2 Getränk',
-          value: state.team.drinkPrefPlayer2,
+          row1: state.team.drinkPrefPlayer2,
         },
         {
           label: 'Startzeit',
-          value: state.team.timePref,
+          row1: state.team.timePref,
         }
       ]
       return items
@@ -94,11 +135,11 @@ export default new Vuex.Store({
       let items = [
         {
           label: 'E-Mail',
-          value: state.deregister.email,
+          row1: state.deregister.email,
         },
         {
           label: 'Stornonummer',
-          value: state.deregister.hash,
+          row1: state.deregister.hash,
         }
       ]
       return items
@@ -131,6 +172,7 @@ export default new Vuex.Store({
     },
     setTimePref: function (state, timePref) {
       state.team.timePref = timePref
+      console.log(state.team.timePref)
     },
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
@@ -169,20 +211,48 @@ export default new Vuex.Store({
       }
       state.loading = false
     },
+    'PLACES_FREE': function (state, response) {
+      let placesAvailable = 150
+      const data = response.data
+      for (let timeOpt of state.timesOptions) {
+        if (data[timeOpt.value]) {
+          timeOpt.places -= data[timeOpt.value]
+          placesAvailable -= data[timeOpt.value]
+        }
+      }
+      state.placesAvailable = placesAvailable
+    },
+    'FAILED': function (state, error) {
+      console.log(error)
+    }
   },
   actions: {
-    createTeam: function (store) {
+    createTeam: async (store) => {
       store.state.loading = true
-      return axios.post(`${BASE_PATH}/team/`, store.state.team)
-        .then((response) => store.commit('TEAM_CREATED', response))
-        .catch((error) => store.commit('FAILED_CREATION', error))
+      try {
+        const response = await axios.post(`${BASE_PATH}/team/`, store.state.team)
+        return store.commit('TEAM_CREATED', response)
+      } catch (error) {
+        return store.commit('FAILED_CREATION', error)
+      }
     },
-    deleteTeam: function (store) {
+    deleteTeam: async (store) => {
       store.state.loading = true
-      return axios.delete(`${BASE_PATH}/team/${store.state.deregister.email}/${store.state.deregister.hash}/`)
-        .then((response) => store.commit('TEAM_DELETED', response))
-        .catch((error) => store.commit('FAILED_DELETION', error))
+      try {
+        const response = await axios.delete(`${BASE_PATH}/team/${store.state.deregister.email}/${store.state.deregister.hash}/`)
+        return store.commit('TEAM_DELETED', response)
+      } catch (error) {
+        return store.commit('FAILED_DELETION', error)
+      }
     },
+    getPlacesTaken: async (store) => {
+      try {
+        const response = await axios.get(`${BASE_PATH}/places/taken/`)
+        return store.commit('PLACES_FREE', response)
+      } catch (error) {
+        return store.commit('FAILED', error)
+      }
+    }
   },
   modules: {}
 })

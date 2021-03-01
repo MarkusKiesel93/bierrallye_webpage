@@ -4,7 +4,7 @@
     :value="value"
     :dismissible='dismissible'
   >
-    <v-row>
+    <v-row class="mb-4">
       <div> {{ row1 }} </div>
     </v-row>
     <v-row>
