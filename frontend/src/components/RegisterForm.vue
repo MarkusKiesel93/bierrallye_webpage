@@ -98,7 +98,7 @@
             <ButtonsNextBack
               :disabled="invalid"
               nextLabel="Anmelden"
-              v-on:click-next='sumbit'
+              v-on:click-next='createTeam'
               v-on:click-back='lastStep'
             />
           </validation-observer>
@@ -137,6 +137,10 @@ export default {
     AlertField,
     LoadingCircle,
   },
+  data: () => ({
+    step: 1,
+    invalid: null,
+  }),
   computed: {
     ...mapState({
       email: (state) => state.team.email,
@@ -153,16 +157,12 @@ export default {
       success: (state) => state.createSuccess,
       error: (state) => state.createError,
       errorMessage: (state) => state.createErrorMessage,
+      loading: (state) => state.loading,
     }),
     ...mapGetters({
       infoItems: 'getRegistrationInfo',
     }),
   },
-  data: () => ({
-    step: 1,
-    invalid: null,
-    loading: false,
-  }),
   methods: {
     ...mapMutations({
       emailSetter: 'setTeamEmail',
@@ -188,24 +188,13 @@ export default {
         this.$router.push({ name: 'HomeView' })
       }
     },
-    sumbit() {
-      this.loading = true
-      this.createTeam()
-    },
   },
   watch: {
     success: function() {
       if (this.success) {
-        this.setCreateError(false)
-        this.loading = false
         this.$router.push({ name: 'RegisterSuccessView' })
       }
     },
-    error: function() {
-      if (this.error) {
-        this.loading = false
-      }
-    }
   }
 }
 </script>

@@ -42,7 +42,7 @@
           <ButtonsNextBack
             :disabled="invalid"
             nextLabel="Abmelden"
-            v-on:click-next='sumbit'
+            v-on:click-next='deleteTeam'
             v-on:click-back='lastStep'
           />
         </v-stepper-content>
@@ -76,6 +76,10 @@ export default {
     AlertField,
     LoadingCircle,
   },
+  data: () => ({
+    step: 1,
+    invalid: null,
+  }),
   computed: {
     ...mapState({
       email: (state) => state.deregister.email,
@@ -83,16 +87,12 @@ export default {
       success: (state) => state.deleteSuccess,
       error: (state) => state.deleteError,
       errorMessage: (state) => state.deleteErrorMessage,
+      loading: (state) => state.loading,
     }),
     ...mapGetters({
       infoItems: 'getDeregistrationInfo',
     }),
   },
-  data: () => ({
-    step: 1,
-    invalid: null,
-    loading: false,
-  }),
   methods: {
     ...mapMutations({
       emailSetter: 'setDeregisterEmail',
@@ -111,24 +111,13 @@ export default {
         this.$router.push({ name: 'HomeView' })
       }
     },
-    sumbit() {
-      this.loading = true
-      this.deleteTeam()
-    },
   },
   watch: {
     success: function() {
       if (this.success) {
-        this.setDeleteError(false)
-        this.loading = false
         this.$router.push({ name: 'DeregisterSuccessView' })
       }
     },
-    error: function() {
-      if (this.error) {
-        this.loading = false
-      }
-    }
   }
 }
 </script>

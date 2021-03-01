@@ -42,6 +42,8 @@ export default new Vuex.Store({
 
     acceptedDataLaws: false,
 
+    loading: false,
+
     createSuccess: false,
     createError: false,
     createErrorMessage: '',
@@ -133,21 +135,17 @@ export default new Vuex.Store({
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
     },
-    setCreateError: function (state, status) {
-      state.createError = status
-    },
     setDeregisterEmail: function (state, value) {
       state.deregister.email = value
     },
     setDeregisterHash: function (state, value) {
       state.deregister.hash = value.toUpperCase()
     },
-    setDeleteError: function (state, status) {
-      state.deleteError = status
-    },
     'TEAM_CREATED': function (state, response) {
       if (response.data.email == state.team.email) {
+        state.createError = false
         state.createSuccess = true
+        state.loading = false
       }
     },
     'FAILED_CREATION': function (state, error) {
@@ -155,10 +153,13 @@ export default new Vuex.Store({
       if (error.response.data.detail) {
         state.createErrorMessage = error.response.data.detail
       }
+      state.loading = false
     },
     'TEAM_DELETED': function (state, response) {
       if (response.data.email == state.deregister.email) {
+        state.deleteError = false
         state.deleteSuccess = true
+        state.loading = false
       }
     },
     'FAILED_DELETION': function (state, error) {
@@ -166,15 +167,18 @@ export default new Vuex.Store({
       if (error.response.data.detail) {
         state.deleteErrorMessage = error.response.data.detail
       }
+      state.loading = false
     },
   },
   actions: {
     createTeam: function (store) {
+      store.state.loading = true
       return axios.post(`${BASE_PATH}/teams/`, store.state.team)
         .then((response) => store.commit('TEAM_CREATED', response))
         .catch((error) => store.commit('FAILED_CREATION', error))
     },
     deleteTeam: function (store) {
+      store.state.loading = true
       return axios.delete(`${BASE_PATH}/teams/${store.state.deregister.email}/${store.state.deregister.hash}/`)
         .then((response) => store.commit('TEAM_DELETED', response))
         .catch((error) => store.commit('FAILED_DELETION', error))
