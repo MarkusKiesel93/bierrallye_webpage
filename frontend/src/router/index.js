@@ -52,6 +52,12 @@ const routes = [
     component: () =>
       import('@/views/DeregisterSuccessView.vue')
   },
+  {
+    path: '*',
+    name: 'PageErrorView',
+    component: () => 
+      import('@/views/PageErrorView.vue')
+  }
 ]
 
 const router = new VueRouter({
