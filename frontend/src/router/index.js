@@ -35,6 +35,12 @@ const routes = [
       import('@/views/RegisterSuccessView.vue')
   },
   {
+    path: '/verify/:email/:hash',
+    name: 'VerificationView',
+    component: () =>
+      import('@/views/VerificationView.vue')
+  },
+  {
     path: '/deregister',
     name: 'DeregisterView',
     component: () =>

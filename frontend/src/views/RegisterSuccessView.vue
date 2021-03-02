@@ -4,7 +4,7 @@
       type="success"
       :value="true"
       :dismissible="false"
-      row1="Du hast dein Team für die Bierrallye 2021 erfolgreich angebeldet"
+      row1="Gratulation, fast geschafft"
       :row2="successMessage"
     />
     <v-btn

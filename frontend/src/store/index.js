@@ -31,6 +31,7 @@ export default new Vuex.Store({
       'Kaiserspritzer',
       'Almweiss',
     ],
+
     timesOptions: [
       {
         value: 'block1',
@@ -57,6 +58,15 @@ export default new Vuex.Store({
     createSuccess: false,
     createError: false,
     createErrorMessage: '',
+
+    verify: {
+      email: '',
+      hash: '',
+    },
+
+    verificationSuccess: false,
+    verificationError: false,
+    verificationErrorMessage: '',
 
     deregister: {
       email: '',
@@ -131,7 +141,10 @@ export default new Vuex.Store({
       return items
     },
     getCreateSuccessMessage: function (state) {
-      return `Eine Bestätigung bekommst du in den nächsten Minuten an: ${state.team.email}`
+      return `Verifiziere noch deine Email adresse ${state.team.email} um die Anmldung abzuschließen`
+    },
+    getVerifySuccessMessage: function (state) {
+      return `Eine Bestätigung mit allen Eckdaten bekommst du in den nächsten Minuten an: ${state.verify.email}`
     },
     getDeregistrationInfo: function (state) {
       let items = [
@@ -178,6 +191,12 @@ export default new Vuex.Store({
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
     },
+    setVerifyEmail: function (state, email) {
+      state.verify.email = email
+    },
+    setVerifyHash: function (state, hash) {
+      state.verify.hash = hash
+    },
     setDeregisterEmail: function (state, value) {
       state.deregister.email = value
     },
@@ -195,6 +214,22 @@ export default new Vuex.Store({
       state.createError = true
       if (error.response.data.detail) {
         state.createErrorMessage = error.response.data.detail
+      }
+      state.loading = false
+    },
+    'TEAM_VARIFIED': function (state, response) {
+      if (response.data.email == state.verify.email) {
+        state.verificationError = false
+        state.verificationSuccess = true
+        state.loading = false
+      }
+    },
+    'FAILED_VERIFY': function (state, error) {
+      state.verificationError = true
+      if (error.response.status === 409) {
+        state.verificationErrorMessage = error.response.data.detail
+      } else {
+        state.verificationErrorMessage = 'Wir werden uns darum kümmern, probiere es später nochmal.'
       }
       state.loading = false
     },
@@ -221,7 +256,7 @@ export default new Vuex.Store({
       state.placesAvailable = placesAvailable
     },
     'FAILED': function (state, error) {
-      console.log(error)
+      console.log(error.response.data)
     }
   },
   actions: {
@@ -232,6 +267,15 @@ export default new Vuex.Store({
         return store.commit('TEAM_CREATED', response)
       } catch (error) {
         return store.commit('FAILED_CREATION', error)
+      }
+    },
+    verifyTeam: async (store) => {
+      store.state.loading = true
+      try {
+        const response = await axios.post(`${BASE_PATH}/team/verify`, store.state.verify)
+        return store.commit('TEAM_VARIFIED', response)
+      } catch (error) {
+        return store.commit('FAILED_VERIFY', error)
       }
     },
     deleteTeam: async (store) => {
@@ -252,5 +296,4 @@ export default new Vuex.Store({
       }
     }
   },
-  modules: {}
 })
