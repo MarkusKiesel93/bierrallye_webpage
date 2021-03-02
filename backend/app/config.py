@@ -9,14 +9,11 @@ class Settings(BaseSettings):
     frontend_domain: str
 
     cors_allowed_origins: list = [
-        os.getenv('FRONTEND_DOMAIN'),
-        f'www.{os.getenv("FRONTEND_DOMAIN")}',
+        f'http://{os.getenv("FRONTEND_DOMAIN")}',
+        f'https://{os.getenv("FRONTEND_DOMAIN")}',   
     ]
     cors_allowed_methods: list = ['POST', 'DELETE']
     cors_allowed_headers: list = ['*']
-
-    if os.getenv('DEPLOY_MODE') == 'development':
-        cors_allowed_origins: list = ['*']
 
     database: str
 
@@ -32,6 +29,9 @@ class Settings(BaseSettings):
     )
 
     secret_key: str
+
+    if os.getenv('DEPLOY_MODE') == 'development':
+        cors_allowed_origins: list = ['*']
 
 
 settings = Settings()
