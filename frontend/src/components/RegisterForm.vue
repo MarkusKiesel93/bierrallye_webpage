@@ -36,7 +36,7 @@
               :lastNameSetter="lastName1Setter"
             />
             <InputSelectBox
-              label="Getränke"
+              label="Getränk"
               :value="drinkPrefPlayer1"
               :items="drinksOptions"
               :setter="drinkPref1Setter"
@@ -49,7 +49,7 @@
               :lastNameSetter="lastName2Setter"
             />
             <InputSelectBox
-              label="Getränke"
+              label="Getränk"
               :value="drinkPrefPlayer2"
               :items="drinksOptions"
               :setter="drinkPref2Setter"
@@ -63,18 +63,20 @@
         </v-stepper-content>
 
         <v-stepper-content step='3'>
-          <InfoItems :items="timeInfo" />
-          <InputSelectBox
-              label="Startblock"
-              :value="timePref"
-              :items="timesOptions"
-              :setter="timeSetter"
+          <validation-observer ref="observer" v-slot="{ invalid }">
+            <InfoItems :items="timeInfo" />
+            <InputSelectBox
+                label="Startblock"
+                :value="timePref"
+                :items="timesOptions"
+                :setter="timeSetter"
+              />
+            <ButtonsNextBack
+              :disabled="invalid"
+              v-on:click-next='nextStep'
+              v-on:click-back='lastStep'
             />
-          <ButtonsNextBack
-            :disabled="invalid"
-            v-on:click-next='nextStep'
-            v-on:click-back='lastStep'
-          />
+          </validation-observer>
         </v-stepper-content>
 
         <v-stepper-content step='4'>

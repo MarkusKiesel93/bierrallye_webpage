@@ -1,8 +1,6 @@
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
-    registration:
-        only allow submit if one option from select box selected
     data:
         mail dot on end of registration alert
     

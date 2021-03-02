@@ -1,16 +1,29 @@
 <template>
   <v-container fluid>
-    <v-select
-      v-model="selected"
-      :items="items"
-      :label="label"
-    ></v-select>
+    <validation-provider
+      v-slot="{ errors }"
+      :name="label"
+      rules="required"
+    >
+      <v-select
+        v-model="selected"
+        :items="items"
+        :label="label"
+        :error-messages="errors"
+      ></v-select>
+    </validation-provider>
   </v-container>
 </template>
 
 <script>
+import { ValidationProvider } from 'vee-validate';
+import './validation'
+
 export default {
   name: 'InputSelectBox',
+  components: {
+    ValidationProvider,
+  },
   props: {
     value: {
       type: String,
