@@ -24,4 +24,18 @@ class Team(BaseModel):
 
 class TeamCreated(Team):
     hash: str
+
+
+class Verify(BaseModel):
+    email: str
+    hash: str
+
+
+class Verified(BaseModel):
+    email: str
     registration_date: str
+
+    class Config:
+        orm_mode = True
+        alias_generator = to_camel
+        allow_population_by_field_name = True

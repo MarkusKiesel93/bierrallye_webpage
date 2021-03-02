@@ -1,7 +1,10 @@
-
 from sqlalchemy import Column, String
 
 from app.database import Base, engine
+
+
+def create_models():
+    Base.metadata.create_all(bind=engine)
 
 
 class Team(Base):
@@ -16,8 +19,10 @@ class Team(Base):
     drink_pref_player_2 = Column(String)
     time_pref = Column(String)
     hash = Column(String)
+
+
+class Verified(Base):
+    __tablename__ = "veriefied"
+
+    email = Column(String, primary_key=True, unique=True, index=True)
     registration_date = Column(String)
-
-
-def create_models():
-    Base.metadata.create_all(bind=engine)
