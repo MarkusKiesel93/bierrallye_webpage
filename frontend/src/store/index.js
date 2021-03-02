@@ -229,7 +229,8 @@ export default new Vuex.Store({
       if (error.response.status === 409) {
         state.verificationErrorMessage = error.response.data.detail
       } else {
-        state.verificationErrorMessage = 'Wir werden uns darum kümmern, probiere es später noch einmal.'
+        // todo: input email adress
+        state.verificationErrorMessage = 'Das sollte nicht passieren. Melde dich bei uns ...'
       }
       state.loading = false
     },
