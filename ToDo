@@ -1,11 +1,8 @@
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
-    data:
-        mail dot on end of registration alert
     
 Backend
-    mail stornonummer statt stornocode
     remove logging
     inform admin on error 
         verification error especially

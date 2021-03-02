@@ -14,7 +14,7 @@ def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Sessi
     if db_team:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail='Team mit dieser Email bereits registriert!')
+            detail='Team mit dieser Email bereits registriert.')
     new_team = crud.create_team(db, team)
     background_tasks.add_task(verification_mail, new_team)
     return new_team
@@ -26,7 +26,7 @@ def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: S
     if not db_team:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Kein Team mit dieser Email ist registriert!')
+            detail='Kein Team mit dieser Email ist registriert.')
     if not db_team.hash == verify.hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -35,7 +35,7 @@ def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: S
     if db_verified:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
-            detail='Diese Email Adresse ist bereits verifiziert')
+            detail='Diese Email Adresse ist bereits verifiziert.')
     verify_create = crud.verify(db, verify.email)
     background_tasks.add_task(registration_mail, db_team)
     return verify_create
@@ -47,11 +47,11 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
     if not db_team:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Kein Team mit dieser Email ist registriert!')
+            detail='Kein Team mit dieser Email ist registriert.')
     if not db_team.hash == hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f'Stornocode ist nicht gültig! Überprüfe den Code den wir dir an {db_team.email} gesendet haben.')
+            detail=f'Stornonummer ist nicht gültig! Überprüfe die Nummer die wir dir an {db_team.email} gesendet haben.')
     deleted_team = crud.delete_team(db, email)
     background_tasks.add_task(deregistration_mail, deleted_team)
     return deleted_team

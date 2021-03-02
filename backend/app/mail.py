@@ -18,7 +18,7 @@ async def send_email(email: str, subject: str, body: str, fast_mail: FastMail = 
 
 async def verification_mail(team: TeamCreated):
     verification_link = f'https://{settings.frontend_domain}/verify/{team.email}/{team.hash}'
-    subject = 'Verifizierung: Bierrallye Irnfritez 2021'
+    subject = 'Verifizierung: Bierrallye Irnfritz 2021'
     body = (
         f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
@@ -31,7 +31,7 @@ async def verification_mail(team: TeamCreated):
 
 async def registration_mail(team: TeamCreated):
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.email}/{team.hash}'
-    subject = 'Anmeldung: Bierrallye Irnfritez 2021'
+    subject = 'Anmeldung: Bierrallye Irnfritz 2021'
     body = (
         f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
@@ -49,7 +49,7 @@ async def registration_mail(team: TeamCreated):
 
 
 async def deregistration_mail(team: Team):
-    subject = 'Abmeldung: Bierrallye Irnfritez 2021'
+    subject = 'Abmeldung: Bierrallye Irnfritz 2021'
     body = (
         f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
