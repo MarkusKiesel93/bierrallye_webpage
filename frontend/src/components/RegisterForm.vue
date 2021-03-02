@@ -180,12 +180,12 @@ export default {
     }),
     ...mapActions({
       createTeam: 'createTeam',
-      getPlacesTaken: 'getPlacesTaken',
+      getPlacesFree: 'getPlacesFree',
     }),
     nextStep() {
       this.step += 1
       if (this.step === 3) {
-        this.getPlacesTaken()
+        this.getPlacesFree()
       }
     },
     lastStep() {

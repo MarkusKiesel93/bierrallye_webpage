@@ -16,12 +16,12 @@ export default new Vuex.Store({
   state: {
     team: {
       email: '',
-      firstNamePlayer1: 'asdfdf',
-      lastNamePlayer1: 'asdfdf',
-      drinkPrefPlayer1: 'asdfdf',
-      firstNamePlayer2: 'asdfadsf',
-      lastNamePlayer2: 'asdfdf',
-      drinkPrefPlayer2: 'asdfdf',
+      firstNamePlayer1: '',
+      lastNamePlayer1: '',
+      drinkPrefPlayer1: '',
+      firstNamePlayer2: '',
+      lastNamePlayer2: '',
+      drinkPrefPlayer2: '',
       timePref: '',
     },
 
@@ -35,22 +35,18 @@ export default new Vuex.Store({
       {
         value: 'block1',
         text: 'Block 1',
-        places: 30
       },
       {
         value: 'block2',
         text: 'Block 2',
-        places: 30
       },
       {
         value: 'block3',
         text: 'Block 3',
-        places: 30
       },
       {
         value: 'block4',
         text: 'Block 4',
-        places: 30
       }
     ],
 
@@ -72,6 +68,12 @@ export default new Vuex.Store({
     deleteErrorMessage: '',
 
     placesAvailable: 0,
+    placesFree: {
+      block1: 0,
+      block2: 0,
+      block3: 0,
+      block4: 0,
+    },
   },
   getters: {
     getTimeInfo: function (state) {
@@ -79,22 +81,22 @@ export default new Vuex.Store({
         {
           label: 'Block 1',
           row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.timesOptions[0].places} / 30 Plätze`,
+          row2: `${state.placesFree.block1} / 30 Plätze`,
         },
         {
           label: 'Block 2',
           row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.timesOptions[1].places} / 30 Plätze`,
+          row2: `${state.placesFree.block2} / 30 Plätze`,
         },
         {
           label: 'Block 3',
           row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.timesOptions[2].places} / 30 Plätze`,
+          row2: `${state.placesFree.block3} / 30 Plätze`,
         },
         {
           label: 'Block 4',
           row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.timesOptions[3].places} / 30 Plätze`,
+          row2: `${state.placesFree.block4} / 30 Plätze`,
         },
       ]
       return items
@@ -172,7 +174,6 @@ export default new Vuex.Store({
     },
     setTimePref: function (state, timePref) {
       state.team.timePref = timePref
-      console.log(state.team.timePref)
     },
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
@@ -212,13 +213,10 @@ export default new Vuex.Store({
       state.loading = false
     },
     'PLACES_FREE': function (state, response) {
-      let placesAvailable = 150
-      const data = response.data
-      for (let timeOpt of state.timesOptions) {
-        if (data[timeOpt.value]) {
-          timeOpt.places -= data[timeOpt.value]
-          placesAvailable -= data[timeOpt.value]
-        }
+      let placesAvailable = 0
+      for (let [key, value] of Object.entries(response.data)) {
+        state.placesFree[key] = value
+        placesAvailable += value
       }
       state.placesAvailable = placesAvailable
     },
@@ -245,9 +243,9 @@ export default new Vuex.Store({
         return store.commit('FAILED_DELETION', error)
       }
     },
-    getPlacesTaken: async (store) => {
+    getPlacesFree: async (store) => {
       try {
-        const response = await axios.get(`${BASE_PATH}/places/taken/`)
+        const response = await axios.get(`${BASE_PATH}/places/free/`)
         return store.commit('PLACES_FREE', response)
       } catch (error) {
         return store.commit('FAILED', error)

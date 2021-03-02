@@ -27,9 +27,14 @@ def get_team_by_email(db: Session, email: str):
     return db.query(models.Team).filter(models.Team.email == email).first()
 
 
-def get_places_taken(db: Session):
-    places_taken = {}
+def get_places_free(db: Session):
+    places_free = {
+        'block1': 30,
+        'block2': 30,
+        'block3': 30,
+        'block4': 30,
+    }
     counts = db.query(models.Team.time_pref, func.count(models.Team.email)).group_by(models.Team.time_pref).all()
     for block, count in counts:
-        places_taken[block] = count
-    return places_taken
+        places_free[block] -= count
+    return places_free

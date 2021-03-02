@@ -36,6 +36,6 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
     return deleted_team
 
 
-@router.get('/places/taken/')
-def get_places_taken(db: Session = Depends(get_db)):
-    return crud.get_places_taken(db)
+@router.get('/places/free/')
+def get_places_free(db: Session = Depends(get_db)):
+    return crud.get_places_free(db)
