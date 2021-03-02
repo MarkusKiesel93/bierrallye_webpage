@@ -1,8 +1,10 @@
 Frontend
     https://github.com/vuejs/vue-cli/issues/5690
     only allow submit if one thing is selected
+    implement email validation
 
 Backend
+    implement email validation
     do calculation of available places in backend
     automatic mails
         create templates
