@@ -1,14 +1,12 @@
 Frontend
     https://github.com/vuejs/vue-cli/issues/5690
     only allow submit if one thing is selected
-    implement email validation
-
+    
 Backend
-    implement email validation
-    do calculation of available places in backend
+    inform admin on error 
+        verification error especially
     automatic mails
-        create templates
-        store timestemp when email sent
+        maby use templates
         give this timestemp back for errors
 
 Deploy
