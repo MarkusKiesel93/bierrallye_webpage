@@ -4,7 +4,7 @@
       type="success"
       :value="true"
       :dismissible="false"
-      row1="Du hast dein Team erfolgreich abgemeldet von der Bierrallye"
+      row1="Du hast dein Team erfolgreich abgemeldet von der Bierrallye."
       :row2="successMessage"
     />
     <v-btn 

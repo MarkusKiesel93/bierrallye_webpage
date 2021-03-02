@@ -36,7 +36,7 @@
               :lastNameSetter="lastName1Setter"
             />
             <InputSelectBox
-              label="Getränk"
+              label="Getränk Spieler 1"
               :value="drinkPrefPlayer1"
               :items="drinksOptions"
               :setter="drinkPref1Setter"
@@ -49,7 +49,7 @@
               :lastNameSetter="lastName2Setter"
             />
             <InputSelectBox
-              label="Getränk"
+              label="Getränk Spieler 2"
               :value="drinkPrefPlayer2"
               :items="drinksOptions"
               :setter="drinkPref2Setter"

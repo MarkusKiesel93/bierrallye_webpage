@@ -4,7 +4,7 @@
       type="success"
       :value="true"
       :dismissible="false"
-      row1="Gratulation, fast geschafft"
+      row1="Gratulation, fast geschafft!"
       :row2="successMessage"
     />
     <v-btn

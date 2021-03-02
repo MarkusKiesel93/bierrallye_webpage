@@ -111,7 +111,15 @@ export default new Vuex.Store({
       ]
       return items
     },
-    getRegistrationInfo: function (state) {
+    getTimePref: function(state) {
+      if (state.team.timePref.length > 1) {
+        const timePref = state.timesOptions.filter(item => item.value === state.team.timePref)
+        return timePref[0].text
+      } else {
+        return ''
+      }
+    },
+    getRegistrationInfo: function (state, getters) {
       let items = [
         {
           label: 'Kontakt',
@@ -135,16 +143,16 @@ export default new Vuex.Store({
         },
         {
           label: 'Startzeit',
-          row1: state.team.timePref,
+          row1: getters.getTimePref,
         }
       ]
       return items
     },
     getCreateSuccessMessage: function (state) {
-      return `Verifiziere noch deine Email adresse ${state.team.email} um die Anmldung abzuschließen.`
+      return `Verifiziere noch deine Email Adresse ${state.team.email} um die Anmldung abzuschließen.`
     },
     getVerifySuccessMessage: function (state) {
-      return `Eine Bestätigung mit allen Eckdaten bekommst du in den nächsten Minuten an: ${state.verify.email}.`
+      return `Eine Bestätigung mit allen Eckdaten bekommst du in den nächsten Minuten an ${state.verify.email}.`
     },
     getDeregistrationInfo: function (state) {
       let items = [
