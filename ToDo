@@ -1,17 +1,27 @@
 Frontend
-    https://github.com/vuejs/vue-cli/issues/5690
-    only allow submit if one thing is selected
+    npm warnings:
+        https://github.com/vuejs/vue-cli/issues/5690
+    registration:
+        only allow submit if one option from select box selected
+    data:
+        mail dot on end of registration alert
     
 Backend
+    mail stornonummer statt stornocode
+    remove logging
     inform admin on error 
         verification error especially
     automatic mails
         maby use templates
         give this timestemp back for errors
+    time until registration possible then winner list
 
 Deploy
     static files
     development files build on one and another
+    permanent database
+    mail konto von Jugend Irnfritz
+    domain kaufen und einrichten
 
 Allgemein
     Rückmeldung das ein gewisser Block schon voll ist und nicht mehr ausgewählt werden kann
