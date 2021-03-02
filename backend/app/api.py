@@ -13,7 +13,7 @@ def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Sessi
     db_team = crud.get_team_by_email(db, team.email)
     if db_team:
         raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
+            status_code=status.HTTP_409_CONFLICT,
             detail='Team mit dieser Email bereits registriert!')
     new_team = crud.create_team(db, team)
     background_tasks.add_task(verification_mail, new_team)
@@ -31,6 +31,11 @@ def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: S
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Hash falsch')
+    db_verified = crud.get_verified_by_email(db, verify.email)
+    if db_verified:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail='Diese Email Adresse ist bereits verifiziert')
     verify_create = crud.verify(db, verify.email)
     background_tasks.add_task(registration_mail, db_team)
     return verify_create

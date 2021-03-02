@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, validator
 from humps.camel import case
 
 
@@ -15,6 +15,12 @@ class Team(BaseModel):
     last_name_player_2: str
     drink_pref_player_2: str
     time_pref: str
+
+    @validator('time_pref')
+    def restrict_to_blocks(cls, time_pref):
+        if time_pref not in ['block1', 'block2', 'block3', 'block4']:
+            raise ValueError('time_pref must be one of four blocks')
+        return time_pref
 
     class Config:
         orm_mode = True

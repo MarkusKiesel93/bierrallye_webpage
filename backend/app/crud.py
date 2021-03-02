@@ -27,7 +27,7 @@ def verify(db: Session, email: str):
 def delete_team(db: Session, email: str):
     team = get_team_by_email(db, email)
     db.delete(team)
-    verified = get_verifyed_by_email(db, email)
+    verified = get_verified_by_email(db, email)
     db.delete(verified)
     db.commit()
     return team
@@ -37,7 +37,7 @@ def get_team_by_email(db: Session, email: str):
     return db.query(models.Team).filter(models.Team.email == email).first()
 
 
-def get_verifyed_by_email(db: Session, email: str):
+def get_verified_by_email(db: Session, email: str):
     return db.query(models.Verified).filter(models.Verified.email == email).first()
 
 

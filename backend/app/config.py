@@ -10,7 +10,7 @@ class Settings(BaseSettings):
 
     cors_allowed_origins: list = [
         f'http://{os.getenv("FRONTEND_DOMAIN")}',
-        f'https://{os.getenv("FRONTEND_DOMAIN")}',   
+        f'https://{os.getenv("FRONTEND_DOMAIN")}',
     ]
     cors_allowed_methods: list = ['POST', 'DELETE']
     cors_allowed_headers: list = ['*']
