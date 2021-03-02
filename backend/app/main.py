@@ -1,11 +1,10 @@
 
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.config import settings, Settings
+from app.config import settings
 from app.models import create_models
 from app.api import router
-from app.logging import simple_logging
 
 
 create_models()
@@ -20,13 +19,6 @@ app.add_middleware(
     allow_methods=settings.cors_allowed_methods,
     allow_headers=settings.cors_allowed_headers,
 )
-
-
-@app.middleware("http")
-async def logging(request: Request, call_next):
-    response = await call_next(request)
-    await simple_logging(request, response)
-    return response
 
 
 if __name__ == '__main__':
