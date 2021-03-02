@@ -1,9 +1,8 @@
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from sqlalchemy.orm import Session
 
-from app import crud, schemas
+from app import crud, schemas, mail
 from app.database import get_db
-from app.mail import verification_mail, registration_mail, deregistration_mail
 
 router = APIRouter()
 
@@ -16,7 +15,7 @@ def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Sessi
             status_code=status.HTTP_409_CONFLICT,
             detail='Team mit dieser Email bereits registriert.')
     new_team = crud.create_team(db, team)
-    background_tasks.add_task(verification_mail, new_team)
+    background_tasks.add_task(mail.verification_mail, new_team)
     return new_team
 
 
@@ -26,18 +25,18 @@ def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: S
     if not db_team:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Kein Team mit dieser Email ist registriert.')
+            detail='Kein Team mit dieser Email hat sich registriert.')
     if not db_team.hash == verify.hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Hash falsch')
+            detail='Verifizierungsnummer falsch')
     db_verified = crud.get_verified_by_email(db, verify.email)
     if db_verified:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail='Diese Email Adresse ist bereits verifiziert.')
     verify_create = crud.verify(db, verify.email)
-    background_tasks.add_task(registration_mail, db_team)
+    background_tasks.add_task(mail.registration_mail, db_team)
     return verify_create
 
 
@@ -51,9 +50,9 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
     if not db_team.hash == hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f'Stornonummer ist nicht gültig! Überprüfe die Nummer die wir dir an {db_team.email} gesendet haben.')
+            detail=f'Stornonummer nicht gültig! Überprüfe die Nummer die wir dir an {db_team.email} gesendet haben.')
     deleted_team = crud.delete_team(db, email)
-    background_tasks.add_task(deregistration_mail, deleted_team)
+    background_tasks.add_task(mail.deregistration_mail, deleted_team)
     return deleted_team
 
 

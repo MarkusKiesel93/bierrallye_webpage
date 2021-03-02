@@ -1,14 +1,11 @@
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
+    only block selectable if free places
+    winner list
+    registered teams
     
 Backend
-    remove logging
-    inform admin on error 
-        verification error especially
-    automatic mails
-        maby use templates
-        give this timestemp back for errors
     time until registration possible then winner list
 
 Deploy
