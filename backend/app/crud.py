@@ -41,14 +41,9 @@ def get_verified_by_email(db: Session, email: str):
     return db.query(models.Verified).filter(models.Verified.email == email).first()
 
 
-def get_places_free(db: Session):
-    places_free = {
-        'block1': 30,
-        'block2': 30,
-        'block3': 30,
-        'block4': 30,
-    }
+def get_places_taken(db: Session):
+    places_taken = {}
     counts = db.query(models.Team.time_pref, func.count(models.Team.email)).group_by(models.Team.time_pref).all()
     for block, count in counts:
-        places_free[block] -= count
-    return places_free
+        places_taken[block] = count
+    return places_taken

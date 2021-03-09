@@ -34,4 +34,18 @@ class Settings(BaseSettings):
         cors_allowed_origins: list = ['*']
 
 
+class BierrallyeSettings(BaseSettings):
+    blocks: list = ['A', 'B', 'C', 'D', 'E', 'F']
+    times: list = ['13:00', '13:30', '14:00', '14:30', '15:00', '15:30']
+    teams_per_block = 20
+    drinks: list = [
+      'Bier',
+      'Wein + Mineral',
+      'Wein + Almdudler',
+      'Wein + Cola',
+      'Wein + Frucade',
+    ]
+
+
 settings = Settings()
+bier_settings = BierrallyeSettings()

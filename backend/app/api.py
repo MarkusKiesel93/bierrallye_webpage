@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 
 from app import crud, schemas, mail
 from app.database import get_db
+from app.config import bier_settings
 
 router = APIRouter()
 
@@ -56,6 +57,30 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
     return deleted_team
 
 
+@router.get('/options/time/')
+def get_time_options(db: Session = Depends(get_db)):
+    time_options = []
+    places_taken = crud.get_places_taken(db)
+    for block, time in zip(bier_settings.blocks, bier_settings.times):
+        places_free = bier_settings.teams_per_block
+        if block in places_taken:
+            places_free -= places_taken[block]
+        time_options.append({
+            'value': block,
+            'text': f'Block {block}',
+            'time': time,
+            'free': places_free,
+        })
+    return time_options
+
+
+@router.get('/options/drink/')
+def get_drink_option(db: Session = Depends(get_db)):
+    return bier_settings.drinks
+
+
 @router.get('/places/free/')
-def get_places_free(db: Session = Depends(get_db)):
-    return crud.get_places_free(db)
+def get_free_places(db: Session = Depends(get_db)):
+    places_taken = crud.get_places_taken(db)
+    places_free = len(bier_settings.blocks) * bier_settings.teams_per_block - sum(places_taken.values())
+    return places_free
