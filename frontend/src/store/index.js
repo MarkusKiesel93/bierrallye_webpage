@@ -25,31 +25,8 @@ export default new Vuex.Store({
       timePref: '',
     },
 
-    drinksOptions: [
-      'Bier',
-      'Spritzer',
-      'Kaiserspritzer',
-      'Almweiss',
-    ],
-
-    timesOptions: [
-      {
-        value: 'block1',
-        text: 'Block 1',
-      },
-      {
-        value: 'block2',
-        text: 'Block 2',
-      },
-      {
-        value: 'block3',
-        text: 'Block 3',
-      },
-      {
-        value: 'block4',
-        text: 'Block 4',
-      }
-    ],
+    drinksOptions: [],
+    timesOptions: [],
 
     acceptedDataLaws: false,
 
@@ -77,48 +54,38 @@ export default new Vuex.Store({
     deleteError: false,
     deleteErrorMessage: '',
 
-    placesAvailable: 0,
-    placesFree: {
-      block1: 0,
-      block2: 0,
-      block3: 0,
-      block4: 0,
-    },
+    placesFree: 0,
   },
   getters: {
+    getTimeOptions: function(state) {
+      let items = []
+      for (const timeOpt of state.timesOptions) {
+        if (timeOpt.free > 0) {
+          items.push(timeOpt)
+        }
+      }
+      return items
+    },
     getTimeInfo: function (state) {
-      let items = [
-        {
-          label: 'Block 1',
-          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.placesFree.block1} / 30 Plätze`,
-        },
-        {
-          label: 'Block 2',
-          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.placesFree.block2} / 30 Plätze`,
-        },
-        {
-          label: 'Block 3',
-          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.placesFree.block3} / 30 Plätze`,
-        },
-        {
-          label: 'Block 4',
-          row1: 'Startzeit ca. zwischen 15:00 bis 15:30',
-          row2: `${state.placesFree.block4} / 30 Plätze`,
-        },
-      ]
+      let items = []
+      for (let timeOpt of state.timesOptions) {
+        items.push({
+          label: timeOpt.text,
+          row1: `Anmeldung (vor Ort) ${timeOpt.time} Uhr`,
+          row2: `Frei Plätze: ${timeOpt.free}`,
+        })
+      }
       return items
     },
     getTimePref: function(state) {
-      if (state.team.timePref.length > 1) {
+      if (state.team.timePref.length > 0) {
         const timePref = state.timesOptions.filter(item => item.value === state.team.timePref)
         return timePref[0].text
       } else {
         return ''
       }
     },
+    // todo: other formatting maby
     getRegistrationInfo: function (state, getters) {
       let items = [
         {
@@ -256,17 +223,18 @@ export default new Vuex.Store({
       }
       state.loading = false
     },
+    'TIME_OPTIONS': function (state, response) {
+      state.timesOptions = response.data
+    },
+    'DRINK_OPTIONS': function (state, response) {
+      state.drinksOptions = response.data
+    },
     'PLACES_FREE': function (state, response) {
-      let placesAvailable = 0
-      for (let [key, value] of Object.entries(response.data)) {
-        state.placesFree[key] = value
-        placesAvailable += value
-      }
-      state.placesAvailable = placesAvailable
+      state.placesFree = response.data
     },
     'FAILED': function (state, error) {
       console.log(error.response.data)
-    }
+    },
   },
   actions: {
     createTeam: async (store) => {
@@ -294,6 +262,22 @@ export default new Vuex.Store({
         return store.commit('TEAM_DELETED', response)
       } catch (error) {
         return store.commit('FAILED_DELETION', error)
+      }
+    },
+    getTimeOptions: async (store) => {
+      try {
+        const response = await axios.get(`${BASE_PATH}/options/time/`)
+        return store.commit('TIME_OPTIONS', response)
+      } catch (error) {
+        return store.commit('FAILED', error)
+      }
+    },
+    getDrinkOptions: async (store) => {
+      try {
+        const response = await axios.get(`${BASE_PATH}/options/drink/`)
+        return store.commit('DRINK_OPTIONS', response)
+      } catch (error) {
+        return store.commit('FAILED', error)
       }
     },
     getPlacesFree: async (store) => {

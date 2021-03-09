@@ -68,7 +68,7 @@
             <InputSelectBox
                 label="Startblock"
                 :value="timePref"
-                :items="timesOptions"
+                :items="timeOptions"
                 :setter="timeSetter"
               />
             <ButtonsNextBack
@@ -155,7 +155,6 @@ export default {
       drinkPrefPlayer2: (state) => state.team.drinkPrefPlayer2,
       timePref: (state) => state.team.timePref,
       drinksOptions: (state) => state.drinksOptions,
-      timesOptions: (state) => state.timesOptions,
       acceptedDataLaws: (state) => state.acceptedDataLaws,
       success: (state) => state.createSuccess,
       error: (state) => state.createError,
@@ -165,6 +164,7 @@ export default {
     ...mapGetters({
       timeInfo: 'getTimeInfo',
       infoItems: 'getRegistrationInfo',
+      timeOptions: 'getTimeOptions',
     }),
   },
   methods: {
@@ -182,13 +182,11 @@ export default {
     }),
     ...mapActions({
       createTeam: 'createTeam',
-      getPlacesFree: 'getPlacesFree',
+      getDrinkOptions: 'getDrinkOptions',
+      getTimeOptions: 'getTimeOptions',
     }),
     nextStep() {
       this.step += 1
-      if (this.step === 3) {
-        this.getPlacesFree()
-      }
     },
     lastStep() {
       this.step -= 1
@@ -203,6 +201,14 @@ export default {
         this.$router.push({ name: 'RegisterSuccessView' })
       }
     },
+    step: function() {
+      if (this.step === 2) {
+        this.getDrinkOptions()
+      }
+      if (this.step === 3) {
+        this.getTimeOptions()
+      }
+    }
   }
 }
 </script>
