@@ -30,4 +30,6 @@ Questions
     Einzelanmeldung erlauben ?
 
 Tests
-    only block selectable if free places
+    E2E
+        how to disable emails for testing
+        only block selectable if free places
