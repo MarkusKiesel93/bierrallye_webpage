@@ -1,9 +1,12 @@
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 from datetime import date
+import pandas as pd
+import json
 
 from app import models, schemas
 from app.hashing import hash_email
+from app.config import settings
 
 
 def create_team(db: Session, team: schemas.Team):
@@ -47,3 +50,40 @@ def get_places_taken(db: Session):
     for block, count in counts:
         places_taken[block] = count
     return places_taken
+
+
+def teams_registered_query(db: Session):
+    query_statement = db.query(
+        models.Team
+    ).join(
+        models.Verified,
+        models.Team.email == models.Verified.email,
+        isouter=True).statement
+    return query_statement
+
+
+def get_teams_registered(db: Session):
+    teams = db.query(teams_registered_query(db)).all()
+    return teams
+
+
+def create_registered_csv(db: Session):
+    df = pd.read_sql(teams_registered_query(db), db.bind)
+    df['Spieler 1'] = df['first_name_player_1'] + ' ' + df['last_name_player_1']
+    df['Spieler 2'] = df['first_name_player_2'] + ' ' + df['last_name_player_2']
+    df = df.rename(columns={
+        'email': 'Email',
+        'drink_pref_player_1': 'Getränk 1',
+        'drink_pref_player_2': 'Getränk 2',
+        'time_pref': 'Startblock',
+    })
+    df = df.drop(columns=[
+        'first_name_player_1',
+        'last_name_player_1',
+        'first_name_player_2',
+        'last_name_player_2'
+    ])
+    df = df.reindex(columns=['Email', 'Spieler 1', 'Getränk 1', 'Spieler 2', 'Getränk 2', 'Startblock'])
+    csv_path = settings.static_path / 'registrierte_nutzer.csv'
+    df.to_csv(csv_path, index=False)
+    return csv_path

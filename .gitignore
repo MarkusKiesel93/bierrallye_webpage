@@ -3,6 +3,9 @@
 nginx.frontend.conf
 nginx.backend.conf
 
+# csv
+registrierte_nutzer.csv
+
 # database
 *.db
 

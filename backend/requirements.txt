@@ -6,3 +6,4 @@ requests~=2.25.1
 humps~=0.2.2
 fastapi-mail~=0.3.4.2
 pandas~=1.2.2
+aiofiles~=0.6.0

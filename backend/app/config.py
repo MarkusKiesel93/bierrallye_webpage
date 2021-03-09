@@ -1,6 +1,7 @@
 import os
 from fastapi_mail import ConnectionConfig
-from pydantic import BaseSettings
+from pydantic import BaseSettings, DirectoryPath
+from pathlib import Path
 
 
 class Settings(BaseSettings):
@@ -16,6 +17,8 @@ class Settings(BaseSettings):
     cors_allowed_headers: list = ['*']
 
     database: str
+
+    static_path: DirectoryPath = Path(__file__).absolute().parent.parent / 'static'
 
     mail_config: object = ConnectionConfig(
         MAIL_USERNAME=os.getenv('EMAIL_ADDRESS'),
