@@ -1,9 +1,10 @@
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
-    only block selectable if free places
     winner list
     registered teams
+    Getränkeoptionen
+        Wein + Almdudler vs Almweiss
     
 Backend
     time until registration possible then winner list
@@ -18,8 +19,15 @@ Deploy
 Allgemein
     Rückmeldung das ein gewisser Block schon voll ist und nicht mehr ausgewählt werden kann
     inform me for the next years event
+    SMS instead of Email as choice
 
 Logging
     how to log uvicorn
     how to log gunicorn
     how to log fast api
+
+Questions
+    Einzelanmeldung erlauben ?
+
+Tests
+    only block selectable if free places
