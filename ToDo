@@ -2,12 +2,12 @@ Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
     winner list
-    registered teams
+        activated when data is accessible
     Getränkeoptionen
         Wein + Almdudler vs Almweiss
     
 Backend
-    time until registration possible then winner list
+    read in csv and create winner list
 
 Deploy
     static files
