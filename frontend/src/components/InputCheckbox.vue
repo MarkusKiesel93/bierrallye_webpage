@@ -1,29 +1,29 @@
 <template>
-  <v-container fluid>
-    <validation-provider
-      v-slot="{ errors }"
-      :name="fieldName"
-      rules="checked"
+  <validation-provider
+    v-slot="{ errors }"
+    :name="fieldName"
+    rules="checked"
+  >
+    <v-checkbox 
+      v-model="checkbox"
+      :error-messages="errors"
+      dense
+      class="mt-1"
     >
-      <v-checkbox 
-        v-model="checkbox"
-        :error-messages="errors"
-      >
-        <template v-slot:label>
-          <div v-if="routerTo">
-            Ich akzeptiere die
-            <router-link :to="routerTo" active-class>
-              {{ text }}
-            </router-link>
-            .
-          </div>
-          <div v-else>
-            Ich akzeptiere die {{ text }}.
-          </div>
-        </template>
-      </v-checkbox>
-    </validation-provider>
-  </v-container>
+      <template v-slot:label>
+        <div v-if="routerTo">
+          Ich akzeptiere die
+          <router-link :to="routerTo" active-class>
+            {{ text }}
+          </router-link>
+          .
+        </div>
+        <div v-else>
+          Ich akzeptiere die {{ text }}.
+        </div>
+      </template>
+    </v-checkbox>
+  </validation-provider>
 </template>
 
 <script>

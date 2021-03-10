@@ -28,6 +28,7 @@ export default new Vuex.Store({
     drinksOptions: [],
     timesOptions: [],
 
+    acceptedGameRules: false,
     acceptedDataLaws: false,
 
     loading: false,
@@ -162,6 +163,9 @@ export default new Vuex.Store({
     },
     setTimePref: function (state, timePref) {
       state.team.timePref = timePref
+    },
+    setAcceptedGameRules: function (state, checkbox) {
+      state.acceptedGameRules = checkbox
     },
     setAcceptedDataLaws: function (state, checkbox) {
       state.acceptedDataLaws = checkbox
