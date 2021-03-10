@@ -9,7 +9,9 @@ ENV PYTHONDONTWRITEBYTECODE 1
 
 # Create an app user (more secure for production)
 # uid 1000 to resolve permission errors with staticfiles
-RUN adduser --system --uid="1000" app_user
+RUN addgroup --system app_group
+RUN adduser --system app_user
+RUN adduser app_user app_group
 
 # Tell docker that all future commands should run as the app user
 USER app_user
@@ -34,5 +36,5 @@ COPY ./backend ./
 
 # grant ownership to prevent perimssion errors.
 USER root:root
-RUN chown -R app_user /home/app_user/code
+RUN chown -R app_user:app_group /home/app_user/code
 USER app_user
