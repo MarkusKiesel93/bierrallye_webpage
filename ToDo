@@ -15,14 +15,8 @@ Deploy
     domain kaufen und einrichten
 
 Allgemein
-    Rückmeldung das ein gewisser Block schon voll ist und nicht mehr ausgewählt werden kann
     inform me for the next years event
     SMS instead of Email as choice
-
-Logging
-    how to log uvicorn
-    how to log gunicorn
-    how to log fast api
 
 Questions
     Einzelanmeldung erlauben ?
@@ -31,3 +25,8 @@ Tests
     E2E
         how to disable emails for testing
         only block selectable if free places
+    Frontend
+        how to test 
+        necessery when I have E2E ?
+    Backend
+        test api
