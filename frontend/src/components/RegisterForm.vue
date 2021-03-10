@@ -118,24 +118,24 @@
 </template>
 
 <script>
-import { ValidationObserver, setInteractionMode } from "vee-validate";
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import { ValidationObserver, setInteractionMode } from 'vee-validate'
+import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
-import InfoItems from "@/components/InfoItems";
-import InputName from "@/components/InputName";
-import InputEmail from "@/components/InputEmail";
-import InputSelectBox from "@/components/InputSelectBox";
-import InputCheckbox from "@/components/InputCheckbox";
-import ButtonsNextBack from "@/components/ButtonsNextBack";
-import AlertField from "@/components/AlertField";
-import LoadingCircle from "@/components/LoadingCircle";
-import GameRulesDialog from "@/components/GameRulesDialog";
-import DataProtectionDialog from "@/components/DataProtectionDialog";
+import InfoItems from '@/components/InfoItems'
+import InputName from '@/components/InputName'
+import InputEmail from '@/components/InputEmail'
+import InputSelectBox from '@/components/InputSelectBox'
+import InputCheckbox from '@/components/InputCheckbox'
+import ButtonsNextBack from '@/components/ButtonsNextBack'
+import AlertField from '@/components/AlertField'
+import LoadingCircle from '@/components/LoadingCircle'
+import GameRulesDialog from '@/components/GameRulesDialog'
+import DataProtectionDialog from '@/components/DataProtectionDialog'
 
-setInteractionMode("lazy");
+setInteractionMode('lazy')
 
 export default {
-  name: "RegisterForm",
+  name: 'RegisterForm',
   components: {
     ValidationObserver,
     InputName,
@@ -156,71 +156,71 @@ export default {
   }),
   computed: {
     ...mapState({
-      email: (state) => state.team.email,
-      firstNamePlayer1: (state) => state.team.firstNamePlayer1,
-      lastNamePlayer1: (state) => state.team.lastNamePlayer1,
-      drinkPrefPlayer1: (state) => state.team.drinkPrefPlayer1,
-      firstNamePlayer2: (state) => state.team.firstNamePlayer2,
-      lastNamePlayer2: (state) => state.team.lastNamePlayer2,
-      drinkPrefPlayer2: (state) => state.team.drinkPrefPlayer2,
-      timePref: (state) => state.team.timePref,
-      drinksOptions: (state) => state.drinksOptions,
-      acceptedGameRules: (state) => state.acceptedGameRules,
-      acceptedDataLaws: (state) => state.acceptedDataLaws,
-      success: (state) => state.createSuccess,
-      error: (state) => state.createError,
-      errorMessage: (state) => state.createErrorMessage,
-      loading: (state) => state.loading,
+      email: state => state.team.email,
+      firstNamePlayer1: state => state.team.firstNamePlayer1,
+      lastNamePlayer1: state => state.team.lastNamePlayer1,
+      drinkPrefPlayer1: state => state.team.drinkPrefPlayer1,
+      firstNamePlayer2: state => state.team.firstNamePlayer2,
+      lastNamePlayer2: state => state.team.lastNamePlayer2,
+      drinkPrefPlayer2: state => state.team.drinkPrefPlayer2,
+      timePref: state => state.team.timePref,
+      drinksOptions: state => state.drinksOptions,
+      acceptedGameRules: state => state.acceptedGameRules,
+      acceptedDataLaws: state => state.acceptedDataLaws,
+      success: state => state.createSuccess,
+      error: state => state.createError,
+      errorMessage: state => state.createErrorMessage,
+      loading: state => state.loading,
     }),
     ...mapGetters({
-      timeInfo: "getTimeInfo",
-      infoItems: "getRegistrationInfo",
-      timeOptions: "getTimeOptions",
+      timeInfo: 'getTimeInfo',
+      infoItems: 'getRegistrationInfo',
+      timeOptions: 'getTimeOptions',
     }),
   },
   methods: {
     ...mapMutations({
-      emailSetter: "setTeamEmail",
-      firstName1Setter: "setFirstNamePayer1",
-      lastName1Setter: "setLastNamePlayer1",
-      drinkPref1Setter: "setDrinkPrefPlayer1",
-      firstName2Setter: "setFirstNamePayer2",
-      lastName2Setter: "setLastNamePlayer2",
-      drinkPref2Setter: "setDrinkPrefPlayer2",
-      timeSetter: "setTimePref",
-      gameRulesSetter: "setAcceptedGameRules",
-      dataLawsSetter: "setAcceptedDataLaws",
-      setCreateError: "setCreateError",
+      emailSetter: 'setTeamEmail',
+      firstName1Setter: 'setFirstNamePayer1',
+      lastName1Setter: 'setLastNamePlayer1',
+      drinkPref1Setter: 'setDrinkPrefPlayer1',
+      firstName2Setter: 'setFirstNamePayer2',
+      lastName2Setter: 'setLastNamePlayer2',
+      drinkPref2Setter: 'setDrinkPrefPlayer2',
+      timeSetter: 'setTimePref',
+      gameRulesSetter: 'setAcceptedGameRules',
+      dataLawsSetter: 'setAcceptedDataLaws',
+      setCreateError: 'setCreateError',
     }),
     ...mapActions({
-      createTeam: "createTeam",
-      getDrinkOptions: "getDrinkOptions",
-      getTimeOptions: "getTimeOptions",
+      createTeam: 'createTeam',
+      getDrinkOptions: 'getDrinkOptions',
+      getTimeOptions: 'getTimeOptions',
     }),
     nextStep() {
-      this.step += 1;
+      this.step += 1
     },
     lastStep() {
-      this.step -= 1;
+      this.step -= 1
       if (this.step < 1) {
-        this.$router.push({ name: "HomeView" });
+        this.$router.push({ name: 'HomeView' })
       }
     },
   },
   watch: {
-    success: function () {
+    success: function() {
       if (this.success) {
-        this.$router.push({ name: "RegisterSuccessView" });
+        this.$router.push({ name: 'RegisterSuccessView' })
       }
     },
-    step: function () {
+    step: function() {
       if (this.step === 2) {
-        this.getDrinkOptions();
+        this.getDrinkOptions()
       }
       if (this.step === 3) {
-        this.getTimeOptions();
+        this.getTimeOptions()
       }
     },
   },
-};
+}
 </script>

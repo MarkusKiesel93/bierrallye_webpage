@@ -1,10 +1,9 @@
 <template>
- <RegisterForm />
+  <RegisterForm />
 </template>
 
 <script>
 import RegisterForm from '@/components/RegisterForm'
-
 
 export default {
   name: 'RegisterView',

@@ -1,8 +1,6 @@
 <template>
   <v-container fluid>
-    <LoadingCircle
-      :show="loading"
-    />
+    <LoadingCircle :show="loading" />
     <AlertField
       type="success"
       :value="success"
@@ -16,10 +14,7 @@
       row1="Ups, es ist was falsch gelaufen"
       :row2="errorMessage"
     />
-    <v-btn 
-      color="primary"
-      @click="$router.push({ name: 'HomeView' })"
-    >
+    <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
       Startseite
     </v-btn>
   </v-container>
@@ -31,7 +26,6 @@ import { mapState, mapGetters, mapActions, mapMutations } from 'vuex'
 import LoadingCircle from '@/components/LoadingCircle'
 import AlertField from '@/components/AlertField'
 
-
 export default {
   name: 'VerificationView',
   components: {
@@ -40,14 +34,14 @@ export default {
   },
   computed: {
     ...mapState({
-      loading: (state) => state.loading,
-      success: (state) => state.verificationSuccess,
-      error: (state) => state.verificationError,
-      errorMessage: (state) => state.verificationErrorMessage,
+      loading: state => state.loading,
+      success: state => state.verificationSuccess,
+      error: state => state.verificationError,
+      errorMessage: state => state.verificationErrorMessage,
     }),
     ...mapGetters({
       successMessage: 'getVerifySuccessMessage',
-    })
+    }),
   },
   methods: {
     ...mapMutations({
@@ -56,12 +50,12 @@ export default {
     }),
     ...mapActions({
       verifyTeam: 'verifyTeam',
-    })
+    }),
   },
   created: function() {
     this.setVerifyEmail(this.$route.params.email)
     this.setVerifyHash(this.$route.params.hash)
     this.verifyTeam()
-  }
+  },
 }
 </script>

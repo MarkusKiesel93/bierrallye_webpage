@@ -7,13 +7,9 @@
       row1="Du hast dein Team erfolgreich abgemeldet von der Bierrallye."
       :row2="successMessage"
     />
-    <v-btn 
-      color="primary"
-      @click="$router.push({ name: 'HomeView' })"
-    >
+    <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
       Startseite
     </v-btn>
-
   </v-container>
 </template>
 
@@ -30,7 +26,7 @@ export default {
   computed: {
     ...mapGetters({
       successMessage: 'getDeleteSuccessMessage',
-    })
+    }),
   },
 }
 </script>

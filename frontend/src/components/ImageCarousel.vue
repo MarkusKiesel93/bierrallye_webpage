@@ -13,19 +13,14 @@
   >
     <!-- loop over every image provided by the images prop -->
     <!-- TODO images have no ID -->
-    <v-carousel-item
-      v-for="image in images"
-      :key="image.id"
-      :src="image.src"
-    >
+    <v-carousel-item v-for="image in images" :key="image.id" :src="image.src">
     </v-carousel-item>
   </v-carousel>
 </template>
 
 <script>
-
 export default {
-  name: "ImageCarousel",
+  name: 'ImageCarousel',
   props: {
     //array of images ([path, path, ..])
     images: {
@@ -44,7 +39,7 @@ export default {
       required: false,
       default: false,
     },
-     //interval of the rotation, when cycle=true (in ms)
+    //interval of the rotation, when cycle=true (in ms)
     cycleInterval: {
       type: Number,
       required: false,
@@ -65,8 +60,7 @@ export default {
       this.showArrow = true
       this.showArrowsOnHover = true
       this.hideDelimiters = false
-    }
-    else {
+    } else {
       this.showArrow = false
       this.showArrowsOnHover = false
       this.hideDelimiters = true

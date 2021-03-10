@@ -2,18 +2,17 @@
   <v-form>
     <v-stepper v-model="step">
       <v-stepper-header>
-        <v-stepper-step step="1" :complete="step > 1"> Abmeldung angeben </v-stepper-step>
+        <v-stepper-step step="1" :complete="step > 1">
+          Abmeldung angeben
+        </v-stepper-step>
         <v-divider></v-divider>
-        <v-stepper-step step="2"> Abmeldung abschicken  </v-stepper-step>
+        <v-stepper-step step="2"> Abmeldung abschicken </v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
         <v-stepper-content step="1">
           <validation-observer ref="observer" v-slot="{ invalid }">
-            <InputEmail
-              :value="email"
-              :setter="emailSetter"
-            />
+            <InputEmail :value="email" :setter="emailSetter" />
             <InputCode
               :value="hash"
               :setter="hashSetter"
@@ -21,8 +20,8 @@
               counter="6"
             />
             <ButtonsNextBack
-              v-on:click-next='nextStep'
-              v-on:click-back='lastStep'
+              v-on:click-next="nextStep"
+              v-on:click-back="lastStep"
               :disabled="invalid"
             />
           </validation-observer>
@@ -36,14 +35,12 @@
             row1="Es gab einen Fehler bei der Abmeldung:"
             :row2="errorMessage"
           />
-          <LoadingCircle
-            :show="loading"
-          />
+          <LoadingCircle :show="loading" />
           <ButtonsNextBack
             :disabled="invalid"
             nextLabel="Abmelden"
-            v-on:click-next='deleteTeam'
-            v-on:click-back='lastStep'
+            v-on:click-next="deleteTeam"
+            v-on:click-back="lastStep"
           />
         </v-stepper-content>
       </v-stepper-items>
@@ -62,11 +59,10 @@ import ButtonsNextBack from '@/components/ButtonsNextBack'
 import AlertField from '@/components/AlertField'
 import LoadingCircle from '@/components/LoadingCircle'
 
-setInteractionMode('lazy');
-
+setInteractionMode('lazy')
 
 export default {
-  name: "DeregisterForm",
+  name: 'DeregisterForm',
   components: {
     ValidationObserver,
     InputEmail,
@@ -82,12 +78,12 @@ export default {
   }),
   computed: {
     ...mapState({
-      email: (state) => state.deregister.email,
-      hash: (state) => state.deregister.hash,
-      success: (state) => state.deleteSuccess,
-      error: (state) => state.deleteError,
-      errorMessage: (state) => state.deleteErrorMessage,
-      loading: (state) => state.loading,
+      email: state => state.deregister.email,
+      hash: state => state.deregister.hash,
+      success: state => state.deleteSuccess,
+      error: state => state.deleteError,
+      errorMessage: state => state.deleteErrorMessage,
+      loading: state => state.loading,
     }),
     ...mapGetters({
       infoItems: 'getDeregistrationInfo',
@@ -100,7 +96,7 @@ export default {
       setDeleteError: 'setDeleteError',
     }),
     ...mapActions({
-      deleteTeam: 'deleteTeam'
+      deleteTeam: 'deleteTeam',
     }),
     nextStep() {
       this.step += 1
@@ -118,6 +114,6 @@ export default {
         this.$router.push({ name: 'DeregisterSuccessView' })
       }
     },
-  }
+  },
 }
 </script>

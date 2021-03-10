@@ -1,10 +1,6 @@
 <template>
   <v-container fluid>
-    <validation-provider
-      v-slot="{ errors }"
-      name="Vorname"
-      rules="required"
-    >
+    <validation-provider v-slot="{ errors }" name="Vorname" rules="required">
       <v-text-field
         label="Vorname"
         v-model="first"
@@ -13,11 +9,7 @@
         required
       ></v-text-field>
     </validation-provider>
-    <validation-provider
-      v-slot="{ errors }"
-      name="Zuname"
-      rules="required"
-    >
+    <validation-provider v-slot="{ errors }" name="Zuname" rules="required">
       <v-text-field
         label="Zuname"
         v-model="last"
@@ -27,11 +19,10 @@
       ></v-text-field>
     </validation-provider>
   </v-container>
-  
 </template>
 
 <script>
-import { ValidationProvider } from 'vee-validate';
+import { ValidationProvider } from 'vee-validate'
 import './validation'
 
 export default {
@@ -55,25 +46,25 @@ export default {
     lastNameSetter: {
       type: Function,
       required: true,
-    }
+    },
   },
   computed: {
     first: {
-      get () {
+      get() {
         return this.firstName
       },
-      set (value) {
+      set(value) {
         this.firstNameSetter(value)
-      }
+      },
     },
     last: {
-      get () {
+      get() {
         return this.lastName
       },
-      set (value) {
+      set(value) {
         this.lastNameSetter(value)
-      }
+      },
     },
-  }
+  },
 }
 </script>

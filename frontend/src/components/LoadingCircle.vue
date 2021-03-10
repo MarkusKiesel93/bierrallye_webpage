@@ -1,8 +1,5 @@
 <template>
-  <v-container
-    fluid
-    v-if="show"
-  >
+  <v-container fluid v-if="show">
     <v-progress-circular
       :size="30"
       color="primary"
@@ -17,8 +14,8 @@ export default {
   props: {
     show: {
       type: Boolean,
-      required: true
-    }
-  }
+      required: true,
+    },
+  },
 }
 </script>

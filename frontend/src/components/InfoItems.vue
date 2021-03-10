@@ -18,12 +18,12 @@
 
 <script>
 export default {
-  name: "InfoItems",
+  name: 'InfoItems',
   props: {
     items: {
       type: Array,
       required: true,
     },
   },
-};
+}
 </script>

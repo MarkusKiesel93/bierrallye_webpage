@@ -14,11 +14,10 @@
       ></v-text-field>
     </validation-provider>
   </v-container>
-  
 </template>
 
 <script>
-import { ValidationProvider } from 'vee-validate';
+import { ValidationProvider } from 'vee-validate'
 import './validation'
 
 export default {
@@ -34,17 +33,17 @@ export default {
     setter: {
       type: Function,
       required: true,
-    }
+    },
   },
   computed: {
     email: {
-      get () {
+      get() {
         return this.value
       },
-      set (value) {
+      set(value) {
         this.setter(value)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>

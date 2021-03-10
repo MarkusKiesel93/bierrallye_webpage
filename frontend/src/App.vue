@@ -1,11 +1,10 @@
 <template>
   <v-app>
-    <v-app-bar
-      app
-      color="primary"
-      >
+    <v-app-bar app color="primary">
       <router-link :to="{ name: 'HomeView' }">
-        <v-app-bar-title class="white--text"> Bierrallye Irnfritz 2021 </v-app-bar-title>
+        <v-app-bar-title class="white--text">
+          Bierrallye Irnfritz 2021
+        </v-app-bar-title>
       </router-link>
       <v-spacer> </v-spacer>
       <router-link :to="{ name: 'HomeView' }">
@@ -34,7 +33,7 @@
       <v-spacer></v-spacer>
       <!-- link to impressum -->
       <router-link :to="{ name: 'LegalNoticeView' }" active-class>
-        <div> Impressum </div>
+        <div>Impressum</div>
       </router-link>
     </v-footer>
   </v-app>
@@ -75,11 +74,10 @@ export default {
       },
     ],
   }),
-};
+}
 </script>
 
 <style scoped>
-
 a {
   text-decoration: none;
 }
@@ -87,5 +85,4 @@ a {
 .main-container {
   max-width: 1000px;
 }
-
 </style>

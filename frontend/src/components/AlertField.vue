@@ -1,14 +1,10 @@
 <template>
-  <v-alert
-    :type='type'
-    :value="value"
-    :dismissible='dismissible'
-  >
+  <v-alert :type="type" :value="value" :dismissible="dismissible">
     <v-row class="mb-4">
-      <div> {{ row1 }} </div>
+      <div>{{ row1 }}</div>
     </v-row>
     <v-row>
-      <div> {{ row2 }} </div>
+      <div>{{ row2 }}</div>
     </v-row>
   </v-alert>
 </template>
@@ -36,7 +32,7 @@ export default {
     row2: {
       type: String,
       default: null,
-    }
+    },
   },
 }
 </script>

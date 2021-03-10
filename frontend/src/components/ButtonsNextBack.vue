@@ -8,10 +8,7 @@
     >
       {{ nextLabel }}
     </v-btn>
-    <v-btn
-      class="mt-4"
-      @click="$emit('click-back')"
-    >
+    <v-btn class="mt-4" @click="$emit('click-back')">
       {{ backLabel }}
     </v-btn>
   </v-container>
@@ -32,7 +29,7 @@ export default {
     backLabel: {
       type: String,
       default: 'Zurück',
-    }
+    },
   },
 }
 </script>

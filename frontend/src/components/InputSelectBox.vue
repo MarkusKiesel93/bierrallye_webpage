@@ -1,10 +1,6 @@
 <template>
   <v-container fluid>
-    <validation-provider
-      v-slot="{ errors }"
-      :name="label"
-      rules="required"
-    >
+    <validation-provider v-slot="{ errors }" :name="label" rules="required">
       <v-select
         v-model="selected"
         :items="items"
@@ -16,7 +12,7 @@
 </template>
 
 <script>
-import { ValidationProvider } from 'vee-validate';
+import { ValidationProvider } from 'vee-validate'
 import './validation'
 
 export default {
@@ -27,7 +23,7 @@ export default {
   props: {
     value: {
       type: String,
-      default: null
+      default: null,
     },
     label: {
       type: String,
@@ -44,13 +40,13 @@ export default {
   },
   computed: {
     selected: {
-      get () {
+      get() {
         return this.value
       },
-      set (value) {
+      set(value) {
         this.setter(value)
-      }
-    }
-  }
+      },
+    },
+  },
 }
 </script>
