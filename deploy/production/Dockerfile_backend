@@ -7,21 +7,9 @@ FROM python:3.8-slim-buster
 ENV PYTHONUNBUFFERED 1
 ENV PYTHONDONTWRITEBYTECODE 1
 
-# Create an app user (more secure for production)
-# uid 1000 to resolve permission errors with staticfiles
-RUN addgroup --system app_group
-RUN adduser --system app_user
-RUN adduser app_user app_group
-
-# Tell docker that all future commands should run as the app user
-USER app_user
-
 # Change the working directory, every command after this will be run from the WORKDIR
-RUN mkdir -p /home/app_user/code
-WORKDIR /home/app_user/code
-
-# Set the PATH ENV variable to point to the user bin
-ENV PATH="/home/app_user/.local/bin:${PATH}"
+RUN mkdir -p /code
+WORKDIR /code
 
 # copy requirements to WORKDIR
 COPY ./backend/requirements.txt ./
@@ -33,8 +21,3 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # copy source code to WORKDIR
 COPY ./backend ./
-
-# grant ownership to prevent perimssion errors.
-USER root:root
-RUN chown -R app_user:app_group /home/app_user/code
-USER app_user
