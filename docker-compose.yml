@@ -8,6 +8,7 @@ services:
       dockerfile: deploy/production/Dockerfile_backend
     # set volume for staticfiles to be deployed by nginx
     volumes:
+      - ./backend/database.db:/home/app_user/code/database.db
       - static:/home/app_user/code/static
     env_file:
       - ./.env
