@@ -23,6 +23,12 @@ const routes = [
       import('@/views/DataProtectionView.vue')
   },
   {
+    path: '/game-rules',
+    name: 'GameRulesView',
+    component: () =>
+      import('@/views/GameRulesView.vue')
+  },
+  {
     path: '/register',
     name: 'RegisterView',
     component: () =>

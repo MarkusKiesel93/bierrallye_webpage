@@ -33,6 +33,10 @@
       </p>
       <v-spacer></v-spacer>
       <!-- link to data protection -->
+      <router-link :to="{ name: 'GameRulesView' }" active-class>
+        <div class="mx-4"> Teilnahmebedingung </div>
+      </router-link>
+      <!-- link to data protection -->
       <router-link :to="{ name: 'DataProtectionView' }" active-class>
         <div class="mx-4"> Datenschutzerklärung </div>
       </router-link>
