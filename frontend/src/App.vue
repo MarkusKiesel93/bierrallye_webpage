@@ -32,14 +32,6 @@
         <strong> &copy; {{ this.ccName }} </strong> - {{ this.year }}
       </p>
       <v-spacer></v-spacer>
-      <!-- link to data protection -->
-      <router-link :to="{ name: 'GameRulesView' }" active-class>
-        <div class="mx-4"> Teilnahmebedingung </div>
-      </router-link>
-      <!-- link to data protection -->
-      <router-link :to="{ name: 'DataProtectionView' }" active-class>
-        <div class="mx-4"> Datenschutzerklärung </div>
-      </router-link>
       <!-- link to impressum -->
       <router-link :to="{ name: 'LegalNoticeView' }" active-class>
         <div> Impressum </div>
@@ -49,36 +41,37 @@
 </template>
 
 <script>
-import ImageCarousel from "@/components/ImageCarousel";
+import ImageCarousel from '@/components/ImageCarousel'
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
     ImageCarousel,
   },
   data: () => ({
-    ccName: "Jugend Irnfritz",
+    ccName: 'Jugend Irnfritz',
     year: new Date().getFullYear(),
+    dialog: false,
     headerImages: [
       {
         id: 1,
-        src: "https://picsum.photos/seed/1/1920/1080",
+        src: 'https://picsum.photos/seed/1/1920/1080',
       },
       {
         id: 2,
-        src: "https://picsum.photos/seed/2/1920/1080",
+        src: 'https://picsum.photos/seed/2/1920/1080',
       },
       {
         id: 3,
-        src: "https://picsum.photos/seed/3/1920/1080",
+        src: 'https://picsum.photos/seed/3/1920/1080',
       },
       {
         id: 4,
-        src: "https://picsum.photos/seed/4/1920/1080",
+        src: 'https://picsum.photos/seed/4/1920/1080',
       },
       {
         id: 5,
-        src: "https://picsum.photos/seed/5/1920/1080",
+        src: 'https://picsum.photos/seed/5/1920/1080',
       },
     ],
   }),

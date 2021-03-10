@@ -11,16 +11,7 @@
       class="mt-1"
     >
       <template v-slot:label>
-        <div v-if="routerTo">
-          Ich akzeptiere die
-          <router-link :to="routerTo" active-class>
-            {{ text }}
-          </router-link>
-          .
-        </div>
-        <div v-else>
-          Ich akzeptiere die {{ text }}.
-        </div>
+        Ich akzeptiere die {{ text }}
       </template>
     </v-checkbox>
   </validation-provider>
@@ -51,10 +42,6 @@ export default {
     text: {
       type: String,
       required: true,
-    },
-    routerTo: {
-      type: Object,
-      default: null
     },
   },
   computed: {

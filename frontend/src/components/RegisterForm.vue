@@ -81,6 +81,8 @@
         <v-stepper-content step="4">
           <InfoItems :items="infoItems" />
           <validation-observer ref="observer" v-slot="{ invalid }">
+            <GameRulesDialog />
+            <DataProtectionDialog />
             <InputCheckbox
               :value="acceptedGameRules"
               :setter="gameRulesSetter"
@@ -127,6 +129,8 @@ import InputCheckbox from "@/components/InputCheckbox";
 import ButtonsNextBack from "@/components/ButtonsNextBack";
 import AlertField from "@/components/AlertField";
 import LoadingCircle from "@/components/LoadingCircle";
+import GameRulesDialog from "@/components/GameRulesDialog";
+import DataProtectionDialog from "@/components/DataProtectionDialog";
 
 setInteractionMode("lazy");
 
@@ -142,10 +146,13 @@ export default {
     InputCheckbox,
     AlertField,
     LoadingCircle,
+    GameRulesDialog,
+    DataProtectionDialog,
   },
   data: () => ({
-    step: 4,
+    step: 1,
     invalid: null,
+    showGRDialog: true,
   }),
   computed: {
     ...mapState({

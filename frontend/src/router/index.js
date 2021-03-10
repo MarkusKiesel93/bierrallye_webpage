@@ -17,18 +17,6 @@ const routes = [
       import('@/views/LegalNoticeView.vue')
   },
   {
-    path: '/data-privacy',
-    name: 'DataProtectionView',
-    component: () =>
-      import('@/views/DataProtectionView.vue')
-  },
-  {
-    path: '/game-rules',
-    name: 'GameRulesView',
-    component: () =>
-      import('@/views/GameRulesView.vue')
-  },
-  {
     path: '/register',
     name: 'RegisterView',
     component: () =>
