@@ -3,8 +3,8 @@ general:
   app_name: Bierreallye Irnfritz
   version: 0.1
 production:
-  backend_domain: api.bier.kiesel.tech
-  frontend_domain: bier.kiesel.tech
+  backend_domain: api.bierrallye-irnfritz.at
+  frontend_domain: bierrallye-irnfritz.at
   backend_port: 8008
   database: database/database.db
 development:
