@@ -25,8 +25,8 @@ class Settings(BaseSettings):
         MAIL_PASSWORD=os.getenv('EMAIL_PASSWORD'),
         MAIL_FROM=os.getenv('EMAIL_ADDRESS'),
         MAIL_PORT=587,
-        MAIL_SERVER='mail.gmx.net',
-        MAIL_FROM_NAME='Bierralley Irnfritz',
+        MAIL_SERVER='smtp.gmail.com',
+        MAIL_FROM_NAME='Bierrallye Irnfritz',
         MAIL_TLS=True,
         MAIL_SSL=False,
     )
