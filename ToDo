@@ -1,3 +1,6 @@
+Allgemein
+    SMS instead of Email as choice
+
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
@@ -11,15 +14,6 @@ Backend
 
 Deploy
     static files
-    mail konto von Jugend Irnfritz
-    domain kaufen und einrichten
-
-Allgemein
-    inform me for the next years event
-    SMS instead of Email as choice
-
-Questions
-    Einzelanmeldung erlauben ?
 
 Tests
     E2E
