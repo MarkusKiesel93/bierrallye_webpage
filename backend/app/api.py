@@ -62,16 +62,19 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
 def get_time_options(db: Session = Depends(get_db)):
     time_options = []
     places_taken = crud.get_places_taken(db)
+    id = 1
     for block, time in zip(bier_settings.blocks, bier_settings.times):
         places_free = bier_settings.teams_per_block
         if block in places_taken:
             places_free -= places_taken[block]
         time_options.append({
+            'id': id,
             'value': block,
             'text': f'Block {block}',
             'time': time,
             'free': places_free,
         })
+        id += 1
     return time_options
 
 

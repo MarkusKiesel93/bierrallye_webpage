@@ -87,30 +87,35 @@ export default new Vuex.Store({
         return ''
       }
     },
-    // todo: other formatting maby
     getRegistrationInfo: function(state, getters) {
       let items = [
         {
+          id: 1,
           label: 'Kontakt',
           row1: state.team.email,
         },
         {
+          id: 2,
           label: 'Spieler 1',
           row1: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`,
         },
         {
-          label: 'Spieler 1 Getränk',
+          id: 3,
+          label: 'Getränk',
           row1: state.team.drinkPrefPlayer1,
         },
         {
+          id: 4,
           label: 'Spieler 2',
           row1: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`,
         },
         {
-          label: 'Spieler 2 Getränk',
+          id: 5,
+          label: 'Getränk',
           row1: state.team.drinkPrefPlayer2,
         },
         {
+          id: 6,
           label: 'Startzeit',
           row1: getters.getTimePref,
         },
@@ -126,10 +131,12 @@ export default new Vuex.Store({
     getDeregistrationInfo: function(state) {
       let items = [
         {
+          id: 1,
           label: 'E-Mail',
           row1: state.deregister.email,
         },
         {
+          id: 2,
           label: 'Stornonummer',
           row1: state.deregister.hash,
         },

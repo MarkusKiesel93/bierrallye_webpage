@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row v-for="item in items" :key="item.label" :item="item">
+    <v-row v-for="item in items" :key="item.id" :item="item">
       <v-col cols="12" sm="4">
         <strong> {{ item.label }}: </strong>
       </v-col>
