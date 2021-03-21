@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 import pandas as pd
 from pathlib import Path
+import json
 
 
 TEST_DATA = Path(__file__).parent / 'data' / 'input.csv'
@@ -27,5 +28,17 @@ def test_places_free_initial(client: TestClient):
 #         response = client.post('/teams/', json=team)
 #         print(response.json())
 #         assert response.status_code == 201
+#         break
 
-
+def test_create_team(client: TestClient):
+    team = {
+        "email": "pphelan0@tripod.com",
+        "first_name_player_1": "Hube",
+        "last_name_player_1": "Roebottom",
+        "drink_pref_player_1": "Bier",
+        "first_name_player_2": "Peterus",
+        "last_name_player_2": "Phelan",
+        "drink_pref_player_2": "Wein + Mineral",
+        "time_pref": "F"}
+    response = client.post('/team/', json=team)
+    assert response.status_code == 201

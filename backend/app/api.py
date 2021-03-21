@@ -1,28 +1,40 @@
 from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
 from fastapi.responses import FileResponse
+from fastapi_mail import FastMail
 from sqlalchemy.orm import Session
 
 from app import crud, schemas, mail
 from app.database import get_db
+from app.mail import get_fm
 from app.config import bier_settings
 
 router = APIRouter()
 
 
 @router.post('/team/', response_model=schemas.TeamCreated, status_code=status.HTTP_201_CREATED)
-def create_team(team: schemas.Team, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def create_team(
+        team: schemas.Team,
+        background_tasks: BackgroundTasks,
+        db: Session = Depends(get_db),
+        fm: FastMail = Depends(get_fm)):
+
     db_team = crud.get_team_by_email(db, team.email)
     if db_team:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail='Team mit dieser Email bereits registriert.')
     new_team = crud.create_team(db, team)
-    background_tasks.add_task(mail.verification_mail, new_team)
+    background_tasks.add_task(mail.verification_mail, fm, new_team)
     return new_team
 
 
 @router.post('/team/verify', response_model=schemas.Verified, status_code=status.HTTP_200_OK)
-def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def verify_team(
+        verify: schemas.Verify,
+        background_tasks: BackgroundTasks,
+        db: Session = Depends(get_db),
+        fm: FastMail = Depends(get_fm)):
+
     db_team = crud.get_team_by_email(db, verify.email)
     if not db_team:
         raise HTTPException(
@@ -38,12 +50,18 @@ def verify_team(verify: schemas.Verify, background_tasks: BackgroundTasks, db: S
             status_code=status.HTTP_409_CONFLICT,
             detail='Diese Email Adresse ist bereits verifiziert.')
     verify_create = crud.verify(db, verify.email)
-    background_tasks.add_task(mail.registration_mail, db_team)
+    background_tasks.add_task(mail.registration_mail, fm, db_team)
     return verify_create
 
 
 @router.delete('/team/{email}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
-def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Session = Depends(get_db)):
+def delete_team(
+        email: str,
+        hash: str,
+        background_tasks: BackgroundTasks,
+        db: Session = Depends(get_db),
+        fm: FastMail = Depends(get_fm)):
+
     db_team = crud.get_team_by_email(db, email)
     if not db_team:
         raise HTTPException(
@@ -54,7 +72,7 @@ def delete_team(email: str, hash: str, background_tasks: BackgroundTasks, db: Se
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f'Stornonummer nicht gültig! Überprüfe die Nummer die wir dir an {db_team.email} gesendet haben.')
     deleted_team = crud.delete_team(db, email)
-    background_tasks.add_task(mail.deregistration_mail, deleted_team)
+    background_tasks.add_task(mail.deregistration_mail, fm, deleted_team)
     return deleted_team
 
 
@@ -79,7 +97,7 @@ def get_time_options(db: Session = Depends(get_db)):
 
 
 @router.get('/options/drink/')
-def get_drink_option(db: Session = Depends(get_db)):
+def get_drink_option():
     return bier_settings.drinks
 
 
