@@ -18,7 +18,7 @@ from app.config import settings
 
 @pytest.fixture(scope='module')
 def client() -> Generator:
-    database_url = 'sqlite:///database/test.db'
+    database_url = 'sqlite:///db/test.db'
     engine = create_engine(database_url, connect_args={'check_same_thread': False})
     TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
     Base.metadata.create_all(bind=engine)
@@ -44,7 +44,7 @@ def client() -> Generator:
         with TestClient(app) as client:
             yield client
     finally:
-        os.remove('./database/test.db')
+        os.remove('./db/test.db')
 
 
 @pytest.fixture(scope='module')

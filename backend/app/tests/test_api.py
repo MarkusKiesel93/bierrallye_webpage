@@ -7,7 +7,7 @@ import random
 from app.hashing import hash_email
 
 
-TEST_DATA_PATH = Path(__file__).parent / 'data' / 'input.csv'
+TEST_DATA_PATH = Path('./app/tests/data/input.csv')
 TEST_DATA = pd.read_csv(TEST_DATA_PATH)
 
 # todo: read https://www.jeffastor.com/blog/testing-fastapi-endpoints-with-docker-and-pytest

@@ -6,11 +6,8 @@ production:
   backend_domain: api.bierrallye-irnfritz.at
   frontend_domain: bierrallye-irnfritz.at
   backend_port: 8008
-  database: database/database.db
 development:
   frontend_domain: localhost:8080
   backend_port: 8000
   server_port: 8008
   frontend_port: 8080
-  database: database/dev_sqlite.db
-  secret_key: NOT_REALLY_A_SECRET

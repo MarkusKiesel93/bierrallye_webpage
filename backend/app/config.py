@@ -16,9 +16,9 @@ class Settings(BaseSettings):
     cors_allowed_methods: list = ['POST', 'DELETE']
     cors_allowed_headers: list = ['*']
 
-    database: str
+    database: str = './db/registered.db'
 
-    static_path: DirectoryPath = Path(__file__).absolute().parent.parent / 'static'
+    static_path: DirectoryPath = Path('./static/')
 
     mail_config: object = ConnectionConfig(
         MAIL_USERNAME=os.getenv('EMAIL_ADDRESS'),
@@ -35,6 +35,8 @@ class Settings(BaseSettings):
 
     if os.getenv('DEPLOY_MODE') == 'development':
         cors_allowed_origins: list = ['*']
+        database: str = './db/dev_sqlite.db'
+        secret_key: str = 'NOT_A_SECRET'
 
 
 class BierrallyeSettings(BaseSettings):
