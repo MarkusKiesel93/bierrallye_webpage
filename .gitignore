@@ -1,7 +1,6 @@
 # created files by run script
 .env
-nginx.frontend.conf
-nginx.backend.conf
+nginx.conf
 
 # csv
 registrierte_nutzer.csv

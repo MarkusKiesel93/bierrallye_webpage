@@ -4,8 +4,8 @@ services:
   backend:
     container_name: ${PROJECT_NAME}_backend
     build:
-      context: .
-      dockerfile: deploy/development/Dockerfile_backend
+      context: backend
+      dockerfile: deploy/Dockerfile_development
     volumes:
       - ./backend:/code
     env_file:
@@ -16,8 +16,8 @@ services:
   server:
     container_name: ${PROJECT_NAME}_server
     build:
-      context: .
-      dockerfile: deploy/development/Dockerfile_server
+      context: backend
+      dockerfile: deploy/Dockerfile_server
     environment:
       - SERVER_PORT=${SERVER_PORT}
     ports:
@@ -27,8 +27,8 @@ services:
   frontend:
     container_name: ${PROJECT_NAME}_frontend
     build:
-      context: .
-      dockerfile: deploy/development/Dockerfile_frontend
+      context: frontend
+      dockerfile: deploy/Dockerfile_development
     ports:
       - ${FRONTEND_PORT}:${FRONTEND_PORT}
     volumes:

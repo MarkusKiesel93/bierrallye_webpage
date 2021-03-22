@@ -4,8 +4,8 @@ services:
   backend:
     container_name: ${PROJECT_NAME}_backend
     build:
-      context: .
-      dockerfile: deploy/production/Dockerfile_backend
+      context: backend
+      dockerfile: deploy/Dockerfile_production
     # set volume for staticfiles to be deployed by nginx
     volumes:
       - ./backend/database:/code/database:rw
@@ -21,8 +21,8 @@ services:
   server:
     container_name: ${PROJECT_NAME}_server
     build:
-      context: .
-      dockerfile: deploy/production/Dockerfile_server
+      context: backend
+      dockerfile: deploy/Dockerfile_server
     # brauche ich das wirklich ?
     expose:
       - ${BACKEND_PORT}
@@ -41,8 +41,8 @@ services:
   frontend:
     container_name: ${PROJECT_NAME}_frontend
     build:
-      context: .
-      dockerfile: deploy/production/Dockerfile_frontend
+      context: frontend
+      dockerfile: deploy/Dockerfile_production
     command: ["nginx", "-g", "daemon off;"]
     expose:
       - 80

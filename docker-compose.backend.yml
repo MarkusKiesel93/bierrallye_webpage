@@ -4,8 +4,8 @@ services:
   backend:
     container_name: ${PROJECT_NAME}_backend
     build:
-      context: .
-      dockerfile: deploy/development/Dockerfile_backend
+      context: backend
+      dockerfile: deploy/Dockerfile_development
     volumes:
       - ./backend:/code
     env_file:

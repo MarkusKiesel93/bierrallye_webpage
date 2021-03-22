@@ -7,7 +7,6 @@ import yaml
 import sys
 
 REPO_PATH = Path(__file__).parent.resolve()
-DEPLOY_PATH = REPO_PATH / 'deploy'
 CONFIGS = REPO_PATH / 'configs.yml'
 SECRET_CONFIGS = REPO_PATH.parent / 'secret_configs.yml'
 DOCKER_ENV_FILE = REPO_PATH / '.env'
@@ -32,7 +31,7 @@ def run_production(configs):
     print(f'RUN PRODUCTION SERVER FOR: {configs["project_name"]}')
     create_env_files(configs)
     create_env_secrets(configs)
-    fill_templates(configs)
+    create_nginx_conf(configs)
     sp.run(['docker-compose', '--env-file', '.env', 'up', '--build', '--detach'])
 
 
@@ -40,7 +39,7 @@ def run_development(configs):
     print(f'RUN DEVELOPMENT SERVER FOR: {configs["project_name"]}')
     create_env_files(configs)
     create_env_secrets(configs)
-    fill_templates(configs)
+    create_nginx_conf(configs)
     sp.run(['npm', 'install'], cwd='./frontend/')
     sp.run(['docker-compose', '--file', 'docker-compose.dev.yml', '--env-file', '.env', 'up', '--build'])
 
@@ -49,7 +48,7 @@ def run_backend(configs):
     print(f'RUN BACKEND FOR: {configs["project_name"]}')
     create_env_files(configs)
     create_env_secrets(configs)
-    fill_templates(configs)
+    create_nginx_conf(configs)
     sp.run(['docker-compose', '--file', 'docker-compose.backend.yml', '--env-file', '.env', 'up', '--build'])
 
 
@@ -57,7 +56,7 @@ def run_frontend(configs):
     print(f'RUN FRONTEND FOR: {configs["project_name"]}')
     create_env_files(configs)
     create_env_secrets(configs)
-    fill_templates(configs)
+    create_nginx_conf(configs)
     sp.run(['docker-compose', '--file', 'docker-compose.frontend.yml', '--env-file', '.env', 'up', '--build'])
 
 
@@ -92,14 +91,19 @@ def create_env_secrets(configs):
             env_file.write(f'{config.upper()}={value}\n')
 
 
-def fill_templates(configs):
-    for template_file in DEPLOY_PATH.glob('**/*.template'):
-        with open(template_file, 'r') as t_file:
-            template = t_file.read()
-            for config, value in configs.items():
-                template = template.replace(f'{{{{{config}}}}}', str(value))
-        with open(template_file.parent / template_file.stem, 'w') as new_file:
-            new_file.write(template)
+def create_nginx_conf(configs):
+    for service in ['backend', 'frontend']:
+        for template_file in (REPO_PATH / service / 'deploy').glob(f'**/*nginx.conf_{configs["deploy_mode"]}'):
+            fill_template(configs, template_file)
+
+
+def fill_template(configs, template_file):
+    with open(template_file, 'r') as t_file:
+        template = t_file.read()
+        for config, value in configs.items():
+            template = template.replace(f'{{{{{config}}}}}', str(value))
+    with open(template_file.parent / 'nginx.conf', 'w') as new_file:
+        new_file.write(template)
 
 
 if __name__ == "__main__":

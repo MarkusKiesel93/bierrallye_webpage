@@ -13,7 +13,7 @@ WORKDIR /code
 RUN pip install --no-cache-dir "uvicorn[standard]" fastapi
 
 # copy requirements to WORKDIR
-COPY ./backend/requirements.txt ./
+COPY ./requirements.txt ./
 
 # install project dependencies
 RUN pip install --upgrade pip
