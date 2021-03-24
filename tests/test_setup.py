@@ -26,6 +26,8 @@ def test_files_exist():
     for folder in config:
         if folder == 'root':
             main_folder = PROJECT_ROOT
+        elif folder == 'parent':
+            main_folder = PROJECT_ROOT.resolve().parent
         else:
             main_folder = PROJECT_ROOT / folder
         for file in config[folder]:

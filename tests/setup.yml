@@ -12,6 +12,8 @@ folders:
 files:
   root:
     - configs.yml
+  parent:
+    - secret_configs.yml
   backend:
     - requirements.txt
   frontend:
