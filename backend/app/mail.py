@@ -4,7 +4,7 @@ from app.schemas import Team, TeamCreated
 from app.config import settings
 
 
-def get_fm():
+def get_fm() -> FastMail:
     fast_mail = FastMail(settings.mail_config)
     yield fast_mail
 
