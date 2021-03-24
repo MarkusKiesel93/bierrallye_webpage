@@ -17,9 +17,28 @@ def test_create_verify_delete(client: TestClient):
     assert free_places(client) == 90
     check_options_time(client, 90)
 
-    # create some teams
     test_teams = chose_teams(5)
+
+    # create team wrong drink pref player 1
+    team_wrong_dring = test_teams[0].copy()
+    team_wrong_dring['drink_pref_player_1'] = 'Sturm'
+    response = client.post('/team/', json=team_wrong_dring)
+    assert response.status_code == 422
+
+    # create team wrong drink pref player 2
+    team_wrong_dring = test_teams[0].copy()
+    team_wrong_dring['drink_pref_player_2'] = 'Schnaps'
+    response = client.post('/team/', json=team_wrong_dring)
+    assert response.status_code == 422
+
+    team_wrong_block = test_teams[0].copy()
+    team_wrong_block['time_pref'] = 'X'
+    response = client.post('/team/', json=team_wrong_block)
+    assert response.status_code == 422
+
+    # create some teams
     for team in test_teams:
+        print(team)
         response = client.post('/team/', json=team)
         assert response.status_code == 201
         assert response.json()['email'] == team['email']
