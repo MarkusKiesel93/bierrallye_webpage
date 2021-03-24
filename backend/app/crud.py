@@ -1,12 +1,11 @@
-from sqlalchemy import func
-from sqlalchemy.orm import Session
 from datetime import date
 import pandas as pd
-import json
+from sqlalchemy import func
+from sqlalchemy.orm import Session
 
 from app import models, schemas
-from app.hashing import hash_email
 from app.config import settings
+from app.hashing import hash_email
 
 
 def create_team(db: Session, team: schemas.Team):

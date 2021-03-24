@@ -1,10 +1,9 @@
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from app.api import router
 from app.config import settings
 from app.models import create_models
-from app.api import router
 
 
 create_models()

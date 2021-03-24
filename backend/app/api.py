@@ -1,12 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException, status, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from fastapi.responses import FileResponse
 from fastapi_mail import FastMail
 from sqlalchemy.orm import Session
 
 from app import crud, schemas, mail
+from app.config import bier_settings
 from app.database import get_db
 from app.mail import get_fm
-from app.config import bier_settings
 
 router = APIRouter()
 

@@ -1,19 +1,16 @@
+import pytest
+import os
+from typing import Generator
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from fastapi_mail import FastMail
-import pytest
-from typing import Generator
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-import os
 
 from app.api import router
 from app.database import Base, get_db
 from app.mail import get_fm
 from app.config import settings
-
-# todo: how do I need different scopes ?
-# monkeypatch and scope module cant be used
 
 
 @pytest.fixture(scope='module')

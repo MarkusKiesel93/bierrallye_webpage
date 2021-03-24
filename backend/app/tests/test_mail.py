@@ -1,5 +1,6 @@
-from app.mail import send_email
 import pytest
+
+from app.mail import send_email
 
 
 @pytest.mark.asyncio

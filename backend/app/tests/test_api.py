@@ -1,16 +1,13 @@
 from fastapi.testclient import TestClient
-import pandas as pd
 from pathlib import Path
-import json
 import random
+import pandas as pd
 
 from app.hashing import hash_email
 
 
 TEST_DATA_PATH = Path('./app/tests/data/input.csv')
 TEST_DATA = pd.read_csv(TEST_DATA_PATH)
-
-# todo: read https://www.jeffastor.com/blog/testing-fastapi-endpoints-with-docker-and-pytest
 
 
 def test_create_verify_delete(client: TestClient):
