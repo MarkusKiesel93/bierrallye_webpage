@@ -2,7 +2,7 @@
 
 set -e
 
-pytest --cov -v ./app
+pytest -v --cov=app --cov-report term-missing ./app
 
 if [ ${DEPLOY_MODE} = "production" ]; then
     gunicorn -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 app.main:app
