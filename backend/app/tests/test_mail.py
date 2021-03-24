@@ -1,4 +1,4 @@
-from app.mail import send_email, registration_mail, deregistration_mail
+from app.mail import send_email
 import pytest
 
 
@@ -10,9 +10,3 @@ async def test_send_email(fm):
     with fm.record_messages() as outbox:
         await send_email(fm, email, subject, body)
         assert len(outbox) == 1
-
-# todo: test registration mail
-#   what to exactly test there ?
-
-# todo: test deregistration mail
-#   what to exactly test there ?
