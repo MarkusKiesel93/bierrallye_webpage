@@ -9,7 +9,7 @@ SECTIONS = ['general', 'production', 'development']
 CONFIGS_GENERAL = ['project_name', 'app_name', 'version']
 CONFIGS_PRODUCTION = ['backend_domain', 'frontend_domain', 'backend_port']
 CONFIGS_DEVELOPMENT = ['frontend_domain', 'backend_port', 'frontend_port', 'server_port']
-CONFIGS_SECRET = ['email_address', 'email_password']
+CONFIGS_SECRET = ['secret_key', 'email_address', 'email_password']
 
 
 def load_config(config_path):
