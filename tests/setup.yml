@@ -1,0 +1,37 @@
+folders:
+  backend:
+    - app
+    - deploy
+    - db
+    - static
+    - scripts
+  frontend:
+    - deploy
+    - src 
+    - public
+files:
+  root:
+    - configs.yml
+  backend:
+    - requirements.txt
+  frontend:
+    - package.json
+deploy:
+  root:
+    - docker-compose.backend.yml
+    - docker-compose.dev.yml
+    - docker-compose.frontend.yml
+    - docker-compose.yml
+  backend:
+    - Dockerfile_development
+    - Dockerfile_production
+    - Dockerfile_server
+    - nginx.conf_development
+    - nginx.conf_production
+  frontend:
+    - Dockerfile_development
+    - Dockerfile_production
+    - nginx.conf_production
+
+
+  
