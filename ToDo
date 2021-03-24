@@ -1,14 +1,18 @@
-Allgemein
-    SMS instead of Email as choice
-
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
     winner list
         activated when data is accessible
+    send sms
+        verification like deregistration
     
 Backend
+    get csv only with password
     read in csv and create winner list
+    send sms
+        use TextMagic
+        verification like deregistration
+        
 
 Deploy
     static files
