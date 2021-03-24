@@ -2,7 +2,7 @@
 
 set -e
 
-pytest --cov -s ./app
+pytest --cov -v ./app
 
 if [ ${DEPLOY_MODE} = "production" ]; then
     gunicorn -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000 --workers 4 app.main:app

@@ -108,11 +108,6 @@ def get_free_places(db: Session = Depends(get_db)):
     return places_free
 
 
-@router.get('/registered/')
-def get_registered(db: Session = Depends(get_db)):
-    return crud.get_teams_registered(db)
-
-
 @router.get('/registered/csv/')
 def get_registered_csv(db: Session = Depends(get_db)):
     return FileResponse(crud.create_registered_csv(db), filename='registrierte_nutzer.csv')

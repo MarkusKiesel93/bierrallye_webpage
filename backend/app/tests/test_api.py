@@ -13,6 +13,64 @@ TEST_DATA = pd.read_csv(TEST_DATA_PATH)
 # todo: read https://www.jeffastor.com/blog/testing-fastapi-endpoints-with-docker-and-pytest
 
 
+def test_create_verify_delete(client: TestClient):
+    assert free_places(client) == 90
+
+    # create some teams
+    test_teams = chose_teams(5)
+    for team in test_teams:
+        response = client.post('/team/', json=team)
+        assert response.status_code == 201
+        assert response.json()['email'] == team['email']
+
+    assert free_places(client) == 90 - 5
+
+    # check for error on duplicate
+    response = client.post('/team/', json=test_teams[0])
+    assert response.status_code == 409
+
+    # check non registerd before verify
+    response = client.get('/registered/csv/')
+    assert response.status_code == 200
+    check_csv(0, 6)
+
+    # verify teams
+    for team in test_teams:
+        email = team['email']
+        response = client.post(
+            'team/verify',
+            json={
+                'email': email,
+                'hash': hash_email(email)
+            })
+        assert response.status_code == 200
+        assert response.json()['email'] == email
+
+    # check registerd csv
+    response = client.get('/registered/csv/')
+    assert response.status_code == 200
+    check_csv(5, 6)
+
+    # deregistration
+    for team in test_teams:
+        email = team['email']
+        response = client.delete(f'team/{email}/{hash_email(email)}')
+        assert response.status_code == 200
+        assert response.json()['email'] == email
+
+
+def test_options_time(client: TestClient):
+    response = client.get('/options/time/')
+    assert response.status_code == 200
+    assert len(response.json()) == 6
+
+
+def test_options_drink(client: TestClient):
+    response = client.get('/options/drink/')
+    assert response.status_code == 200
+    assert len(response.json()) == 5
+
+
 def chose_teams(n: int, max: int = 90):
     teams = []
     rows = []
@@ -31,27 +89,8 @@ def free_places(client: TestClient):
     return response.json()
 
 
-def test_api(client: TestClient):
-    assert free_places(client) == 90
-
-    # create some teams
-    test_teams = chose_teams(5)
-    for team in test_teams:
-        response = client.post('/team/', json=team)
-        assert response.status_code == 201
-
-    assert free_places(client) == 90 - 5
-
-    # check for error on duplicate
-    response = client.post('/team/', json=test_teams[0])
-    assert response.status_code == 409
-
-    # verify teams
-    for team in test_teams:
-        response = client.post(
-            'team/verify',
-            json={
-                'email': team['email'],
-                'hash': hash_email(team['email'])
-            })
-        assert response.status_code == 200
+def check_csv(rows, cols):
+    CSV_PATH = Path('./static/registrierte_nutzer.csv')
+    df = pd.read_csv(CSV_PATH)
+    assert df.shape[0] == rows
+    assert df.shape[1] == cols

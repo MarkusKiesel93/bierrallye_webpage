@@ -52,23 +52,13 @@ def get_places_taken(db: Session):
     return places_taken
 
 
-def teams_registered_query(db: Session):
-    query_statement = db.query(
+def create_registered_csv(db: Session):
+    query = db.query(
         models.Team
     ).join(
         models.Verified,
-        models.Team.email == models.Verified.email,
-        isouter=True).statement
-    return query_statement
-
-
-def get_teams_registered(db: Session):
-    teams = db.query(teams_registered_query(db)).all()
-    return teams
-
-
-def create_registered_csv(db: Session):
-    df = pd.read_sql(teams_registered_query(db), db.bind)
+        models.Team.email == models.Verified.email)
+    df = pd.read_sql(query.statement, db.bind)
     df['Spieler 1'] = df['first_name_player_1'] + ' ' + df['last_name_player_1']
     df['Spieler 2'] = df['first_name_player_2'] + ' ' + df['last_name_player_2']
     df = df.rename(columns={
