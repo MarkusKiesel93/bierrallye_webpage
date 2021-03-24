@@ -6,8 +6,6 @@ Frontend
         https://github.com/vuejs/vue-cli/issues/5690
     winner list
         activated when data is accessible
-    Getränkeoptionen
-        Wein + Almdudler vs Almweiss
     
 Backend
     read in csv and create winner list
@@ -22,5 +20,3 @@ Tests
     Frontend
         how to test 
         necessery when I have E2E ?
-    Backend
-        test api
