@@ -10,6 +10,7 @@ def to_camel(string):
 
 class Team(BaseModel):
     email: str
+    phone_number: str
     first_name_player_1: str
     last_name_player_1: str
     drink_pref_player_1: str

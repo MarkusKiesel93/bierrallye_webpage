@@ -9,8 +9,10 @@ def create_models():
 
 class Team(Base):
     __tablename__ = "teams"
+
     id = Column(Integer, primary_key=True, unique=True, index=True)
     email = Column(String, unique=True, index=True)
+    phone_number = Column(String, unique=True, index=True)
     first_name_player_1 = Column(String)
     last_name_player_1 = Column(String)
     drink_pref_player_1 = Column(String)
@@ -24,6 +26,6 @@ class Team(Base):
 class Verified(Base):
     __tablename__ = "veriefied"
 
-    # id = Column(Integer, primary_key=True, unique=True, index=True)
-    email = Column(String, primary_key=True, unique=True, index=True)
+    id = Column(Integer, primary_key=True, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
     registration_date = Column(String)
