@@ -38,7 +38,7 @@ def test_create_verify_delete(client: TestClient):
         print(team)
         response = client.post('/team/', json=team)
         assert response.status_code == 201
-        assert response.json()['email'] == team['email']
+        # todo: test if email or sms correct
 
     assert free_places(client) == 90 - 5
     check_options_time(client, 90 - 5)
@@ -47,69 +47,25 @@ def test_create_verify_delete(client: TestClient):
     response = client.post('/team/', json=test_teams[0])
     assert response.status_code == 409
 
-    # check non registerd before verify
-    response = client.get('/registered/csv/')
-    assert response.status_code == 200
-    check_csv(0, 6)
-
-    # verify teams
-    for team in test_teams:
-        email = team['email']
-        response = client.post(
-            'team/verify',
-            json={
-                'email': email,
-                'hash': hash_email(email)
-            })
-        assert response.status_code == 200
-        assert response.json()['email'] == email
-
-    # verify email not existing
-    response = client.post(
-        'team/verify',
-        json={
-            'email': 'not_exising@test.com',
-            'hash': 'ASDFJK'
-        })
-    assert response.status_code == 400
-
-    # verify wrong hash
-    response = client.post(
-        'team/verify',
-        json={
-            'email': test_teams[0]['email'],
-            'hash': 'WRONG!'
-        })
-    assert response.status_code == 400
-
-    # verify duplicate
-    response = client.post(
-        'team/verify',
-        json={
-            'email': test_teams[0]['email'],
-            'hash': hash_email(test_teams[0]['email'])
-        })
-    assert response.status_code == 409
-
     # check registerd csv
     response = client.get('/registered/csv/')
     assert response.status_code == 200
-    check_csv(5, 6)
+    check_csv(5, 7)
 
     # deregister wrong email
     response = client.delete('team/not_exising@test.com/ASDFJK')
     assert response.status_code == 400
 
     # deregister wrog hash
-    response = client.delete(f'team/{test_teams[0]["email"]}/WRONG!')
+    response = client.delete(f'team/{test_teams[0]["contact"]}/WRONG!')
     assert response.status_code == 400
 
     # deregistration
     for team in test_teams:
-        email = team['email']
-        response = client.delete(f'team/{email}/{hash_email(email)}')
+        contact = team['contact']
+        response = client.delete(f'team/{contact}/{hash_email(contact)}')
         assert response.status_code == 200
-        assert response.json()['email'] == email
+        # todo: test if email or sms correct
 
 
 def test_options_drink(client: TestClient):

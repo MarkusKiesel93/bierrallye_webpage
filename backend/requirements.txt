@@ -8,3 +8,4 @@ humps~=0.2.2
 fastapi-mail~=0.3.4.2
 pandas~=1.2.2
 aiofiles~=0.6.0
+twilio~=6.55.0

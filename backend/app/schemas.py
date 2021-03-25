@@ -9,8 +9,8 @@ def to_camel(string):
 
 
 class Team(BaseModel):
-    email: str
-    phone_number: str
+    contact: str
+    channel: str
     first_name_player_1: str
     last_name_player_1: str
     drink_pref_player_1: str
@@ -38,26 +38,28 @@ class Team(BaseModel):
             raise ValueError(f'drink_pref must be one of: {bier_settings.drinks}')
         return drink_pref_player_2
 
+    @validator('channel')
+    def restrict_to_channels(cls, channel):
+        if channel not in ['sms', 'email']:
+            raise ValueError('channel must be "sms" or "email"')
+        return channel
+
     class Config:
         orm_mode = True
         alias_generator = to_camel
         allow_population_by_field_name = True
-
-
-class TeamCreated(Team):
-    hash: str
 
 
 class Verify(BaseModel):
-    email: str
+    to: str
+    channel: str
+
+    @validator('channel')
+    def restrict_to_channels(cls, channel):
+        if channel not in ['sms', 'email']:
+            raise ValueError('channel must be "sms" or "email"')
+        return channel
+
+
+class VerifyCheck(Verify):
     hash: str
-
-
-class Verified(BaseModel):
-    email: str
-    registration_date: str
-
-    class Config:
-        orm_mode = True
-        alias_generator = to_camel
-        allow_population_by_field_name = True

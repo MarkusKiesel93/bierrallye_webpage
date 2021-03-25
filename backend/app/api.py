@@ -2,77 +2,82 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from fastapi.responses import FileResponse
 from fastapi_mail import FastMail
 from sqlalchemy.orm import Session
+from twilio.rest import Client
 
-from app import crud, schemas, mail
+from app import crud, schemas, notify
 from app.config import bier_settings
 from app.database import get_db
-from app.mail import get_fm
+from app.notify import get_fm, get_twilio_client
+from app.hashing import hash_email
 
 router = APIRouter()
 
 
-@router.post('/team/', response_model=schemas.TeamCreated, status_code=status.HTTP_201_CREATED)
+@router.post('/verify/notify/', status_code=status.HTTP_200_OK)
+async def verify_contact(
+        verify: schemas.Verify,
+        background_tasks: BackgroundTasks,
+        fm: FastMail = Depends(get_fm),
+        client: Client = Depends(get_twilio_client)):
+    if verify.channel == 'sms':
+        try:
+            phone_number = client.lookups.v1.phone_numbers(verify.to).fetch()
+            background_tasks.add_task(notify.verification_sms, client, phone_number.phone_number)
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                # todo: format
+                detail='Telefonnummer im falschen Format ###')
+    if verify.channel == 'email':
+        background_tasks.add_task(notify.verification_email, fm, verify.to)
+
+
+@router.post('/verify/check/', status_code=status.HTTP_200_OK)
+async def verify_check_contact(
+        verify_check: schemas.VerifyCheck,
+        fm: FastMail = Depends(get_fm),
+        client: Client = Depends(get_twilio_client)):
+    if not hash_email(verify_check.to) == verify_check.hash:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail='Verifizierungsnummer falsch')
+
+
+@router.post('/team/', response_model=schemas.Team, status_code=status.HTTP_201_CREATED)
 def create_team(
         team: schemas.Team,
         background_tasks: BackgroundTasks,
         db: Session = Depends(get_db),
         fm: FastMail = Depends(get_fm)):
 
-    db_team = crud.get_team_by_email(db, team.email)
+    db_team = crud.get_team_by_contact(db, team.contact)
     if db_team:
         raise HTTPException(
             status_code=status.HTTP_409_CONFLICT,
             detail='Team mit dieser Email bereits registriert.')
     new_team = crud.create_team(db, team)
-    background_tasks.add_task(mail.verification_mail, fm, new_team)
+    if new_team.channel == 'email':
+        background_tasks.add_task(notify.registration_mail, fm, new_team)
+    # todo: background task for sms
     return new_team
 
 
-@router.post('/team/verify', response_model=schemas.Verified, status_code=status.HTTP_200_OK)
-def verify_team(
-        verify: schemas.Verify,
-        background_tasks: BackgroundTasks,
-        db: Session = Depends(get_db),
-        fm: FastMail = Depends(get_fm)):
-
-    db_team = crud.get_team_by_email(db, verify.email)
-    if not db_team:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Kein Team mit dieser Email hat sich registriert.')
-    if not db_team.hash == verify.hash:
-        raise HTTPException(
-            status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Verifizierungsnummer falsch')
-    db_verified = crud.get_verified_by_email(db, verify.email)
-    if db_verified:
-        raise HTTPException(
-            status_code=status.HTTP_409_CONFLICT,
-            detail='Diese Email Adresse ist bereits verifiziert.')
-    verify_create = crud.verify(db, verify.email)
-    background_tasks.add_task(mail.registration_mail, fm, db_team)
-    return verify_create
-
-
-@router.delete('/team/{email}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
+@router.delete('/team/{contact}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
 def delete_team(
-        email: str,
+        contact: str,
         hash: str,
-        background_tasks: BackgroundTasks,
-        db: Session = Depends(get_db),
-        fm: FastMail = Depends(get_fm)):
+        db: Session = Depends(get_db)):
 
-    db_team = crud.get_team_by_email(db, email)
+    db_team = crud.get_team_by_contact(db, contact)
     if not db_team:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail='Kein Team mit dieser Email ist registriert.')
-    if not db_team.hash == hash:
+            detail=f'Kein Team mit unter {contact} ist registriert.')
+    if not hash_email(contact) == hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail=f'Stornonummer nicht gültig! Überprüfe die Nummer die wir dir an {db_team.email} gesendet haben.')
-    deleted_team = crud.delete_team(db, email)
-    background_tasks.add_task(mail.deregistration_mail, fm, deleted_team)
+            detail=f'Stornonummer nicht gültig! Überprüfe die Nummer die wir dir an {db_team.contact} gesendet haben.')
+    deleted_team = crud.delete_team(db, contact)
     return deleted_team
 
 

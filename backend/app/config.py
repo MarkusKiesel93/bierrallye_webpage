@@ -31,6 +31,12 @@ class Settings(BaseSettings):
         MAIL_SSL=False,
     )
 
+    TWILIO_SMS_FROM: str
+    TWILIO_SID: str
+    TWILIO_TOKEN: str
+    TWILIO_TEST_SID: str
+    TWILIO_TEST_TOKEN: str
+
     secret_key: str
 
     if os.getenv('DEPLOY_MODE') == 'development':
