@@ -30,6 +30,7 @@ async def verify_contact(
                 detail='Telefonnummer im falschen Format ###')
     if verify.channel == 'email':
         background_tasks.add_task(notify.verification_email, fm, verify.to)
+    return verify
 
 
 @router.post('/verify/check/', status_code=status.HTTP_200_OK)
@@ -41,6 +42,7 @@ async def verify_check_contact(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Verifizierungsnummer falsch')
+    return verify_check
 
 
 @router.post('/team/', response_model=schemas.Team, status_code=status.HTTP_201_CREATED)
