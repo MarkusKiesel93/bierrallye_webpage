@@ -5,6 +5,9 @@ Frontend
         activated when data is accessible
     send sms
         verification like deregistration
+    now deregistration notification is sent !
+    stornonummer / stornocode
+    margin on stepper content
     
 Backend
     get csv only with password
@@ -12,6 +15,7 @@ Backend
     send sms
         use TextMagic
         verification like deregistration
+    stornonummer / stornocode
         
 
 Deploy
