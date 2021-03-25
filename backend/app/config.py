@@ -31,6 +31,7 @@ class Settings(BaseSettings):
         MAIL_SSL=False,
     )
 
+    # todo change to lower case
     TWILIO_SMS_FROM: str
     TWILIO_SID: str
     TWILIO_TOKEN: str
@@ -39,6 +40,9 @@ class Settings(BaseSettings):
 
     secret_key: str
 
+    verify_allow_tries: int = 5
+    verify_wait_minutes: int = 2
+
     if os.getenv('DEPLOY_MODE') == 'development':
         cors_allowed_origins: list = ['*']
         database: str = './db/dev_sqlite.db'
@@ -46,6 +50,7 @@ class Settings(BaseSettings):
 
 
 class BierrallyeSettings(BaseSettings):
+    contact: str = os.getenv('EMAIL_ADDRESS')
     blocks: list = ['A', 'B', 'C', 'D', 'E', 'F']
     times: list = ['13:00', '13:30', '14:00', '14:30', '15:00', '15:30']
     teams_per_block = 15

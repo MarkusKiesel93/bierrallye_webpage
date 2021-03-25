@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Date, DateTime
 
 from app.database import Base, engine
 
@@ -20,5 +20,13 @@ class Team(Base):
     last_name_player_2 = Column(String)
     drink_pref_player_2 = Column(String)
     time_pref = Column(String)
-    registration_date = Column(String)
+    registration_date = Column(Date)
 
+
+class Verify(Base):
+    __tablename__ = "verifies"
+
+    id = Column(Integer, primary_key=True, unique=True, index=True)
+    to = Column(String)
+    channel = Column(String)
+    time = Column(DateTime)

@@ -1,4 +1,4 @@
-from datetime import date
+from datetime import date, datetime, timedelta
 import pandas as pd
 from sqlalchemy import func
 from sqlalchemy.orm import Session
@@ -7,8 +7,41 @@ from app import models, schemas
 from app.config import settings
 
 
+def store_notification_time(db: Session, verify: schemas.Verify):
+    time = datetime.now()
+    db_verify = models.Verify(**verify.dict(), time=time)
+    db.add(db_verify)
+    db.commit()
+    db.refresh(db_verify)
+    return db_verify
+
+
+def allow_notify_tries(db: Session, verify: schemas.Verify):
+    number_of_tries = db.query(func.count(models.Verify.to)) \
+        .filter(models.Verify.to == verify.to) \
+        .first()
+    if number_of_tries:
+        if number_of_tries[0] > settings.verify_allow_tries:
+            return False
+    return True
+
+
+def allow_notify_time(db: Session, verify: schemas.Verify):
+    last_notify = db.query(models.Verify.time) \
+        .filter(models.Verify.to == verify.to) \
+        .order_by(models.Verify.time.desc()) \
+        .first()
+    if last_notify:
+        time_wait = timedelta(minutes=settings.verify_wait_minutes)
+        time_past = datetime.now() - last_notify[0]
+        if time_past < time_wait:
+            next_try = int((time_wait - time_past).total_seconds()) + 1
+            return False, next_try
+    return True, 0
+
+
 def create_team(db: Session, team: schemas.Team):
-    reg_date = str(date.today().strftime('%d.%m.%Y'))
+    reg_date = date.today()  # .strftime('%d.%m.%Y')
     db_team = models.Team(**team.dict(), registration_date=reg_date)
     db.add(db_team)
     db.commit()

@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 from twilio.rest import Client
 
 from app import crud, schemas, notify
-from app.config import bier_settings
+from app.config import settings, bier_settings
 from app.database import get_db
 from app.notify import get_fm, get_twilio_client
 from app.hashing import hash_email
@@ -17,20 +17,40 @@ router = APIRouter()
 async def verify_contact(
         verify: schemas.Verify,
         background_tasks: BackgroundTasks,
+        db: Session = Depends(get_db),
         fm: FastMail = Depends(get_fm),
         client: Client = Depends(get_twilio_client)):
+
+    allow_notify_tries = crud.allow_notify_tries(db, verify)
+    if not allow_notify_tries:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=(
+                f'Mehr als {settings.verify_allow_tries} Anmeldeverusche\n'
+                f'Benutze eine andere Kontaktart oder melde dich unter {bier_settings.contact}'
+            )
+        )
+
+    allow_notify_time, next_try = crud.allow_notify_time(db, verify)
+    if not allow_notify_time:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail=f'Nächster Versuch in {next_try} Sekunden.'
+        )
+
+    new_notify = crud.store_notification_time(db, verify)
+
     if verify.channel == 'sms':
         try:
             phone_number = client.lookups.v1.phone_numbers(verify.to).fetch()
             background_tasks.add_task(notify.verification_sms, client, phone_number.phone_number)
         except Exception:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                # todo: format
-                detail='Telefonnummer im falschen Format ###')
+                status_code=status.HTTP_409_CONFLICT,
+                detail='Telefonnummer im falschen Format')
     if verify.channel == 'email':
         background_tasks.add_task(notify.verification_email, fm, verify.to)
-    return verify
+    return new_notify
 
 
 @router.post('/verify/check/', status_code=status.HTTP_200_OK)

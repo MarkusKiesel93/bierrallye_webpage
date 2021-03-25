@@ -60,6 +60,10 @@ class Verify(BaseModel):
             raise ValueError('channel must be "sms" or "email"')
         return channel
 
+    class Config:
+        orm_mode = True
+        allow_population_by_field_name = True
+
 
 class VerifyCheck(Verify):
     hash: str
