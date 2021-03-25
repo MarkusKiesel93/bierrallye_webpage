@@ -10,7 +10,7 @@ CONFIGS_GENERAL = ['project_name', 'app_name', 'version']
 CONFIGS_PRODUCTION = ['backend_domain', 'frontend_domain', 'backend_port']
 CONFIGS_DEVELOPMENT = ['frontend_domain', 'backend_port', 'frontend_port', 'server_port']
 CONFIGS_SECRET = ['secret_key', 'email_address', 'email_password',
-                  'sms_from', 'sms_sid', 'sms_token', 'test_sms_sid', 'test_sms_token']
+                  'twilio_sms_from', 'twilio_sid', 'twilio_token', 'twilio_verify_sid', 'twilio_test_sid', 'twilio_test_token']
 
 
 def load_config(config_path):
