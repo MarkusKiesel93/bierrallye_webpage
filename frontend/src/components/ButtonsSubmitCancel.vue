@@ -4,31 +4,31 @@
       color="primary"
       class="mr-4 mt-4"
       :disabled="disabled"
-      @click="$emit('click-next')"
+      @click="$emit('click-submit')"
     >
-      {{ nextLabel }}
+      {{ submitLabel }}
     </v-btn>
-    <v-btn class="mt-4" @click="$emit('click-back')">
-      {{ backLabel }}
+    <v-btn class="mt-4" @click="$emit('click-cancel')">
+      {{ cancelLabel }}
     </v-btn>
   </v-container>
 </template>
 
 <script>
 export default {
-  name: 'ButtonsNextBack',
+  name: 'ButtonsSubmitCancel',
   props: {
     disabled: {
       type: Boolean,
       default: false,
     },
-    nextLabel: {
+    submitLabel: {
       type: String,
-      default: 'Weiter',
+      default: 'ok',
     },
-    backLabel: {
+    cancelLabel: {
       type: String,
-      default: 'Zurück',
+      default: 'zurück',
     },
   },
 }

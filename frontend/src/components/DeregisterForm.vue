@@ -19,9 +19,9 @@
               label="Stornocode"
               counter="6"
             />
-            <ButtonsNextBack
-              v-on:click-next="nextStep"
-              v-on:click-back="lastStep"
+            <ButtonsSubmitCancel
+              v-on:click-submit="nextStep"
+              v-on:click-cancel="lastStep"
               :disabled="invalid"
             />
           </validation-observer>
@@ -36,11 +36,11 @@
             :row2="errorMessage"
           />
           <LoadingCircle :show="loading" />
-          <ButtonsNextBack
+          <ButtonsSubmitCancel
             :disabled="invalid"
-            nextLabel="Abmelden"
-            v-on:click-next="deleteTeam"
-            v-on:click-back="lastStep"
+            submitLabel="Abmelden"
+            v-on:click-submit="deleteTeam"
+            v-on:click-cancel="lastStep"
           />
         </v-stepper-content>
       </v-stepper-items>
@@ -55,7 +55,7 @@ import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 import InfoItems from '@/components/InfoItems'
 import InputEmail from '@/components/InputEmail'
 import InputCode from '@/components/InputCode'
-import ButtonsNextBack from '@/components/ButtonsNextBack'
+import ButtonsSubmitCancel from '@/components/ButtonsSubmitCancel'
 import AlertField from '@/components/AlertField'
 import LoadingCircle from '@/components/LoadingCircle'
 
@@ -68,7 +68,7 @@ export default {
     InputEmail,
     InputCode,
     InfoItems,
-    ButtonsNextBack,
+    ButtonsSubmitCancel,
     AlertField,
     LoadingCircle,
   },

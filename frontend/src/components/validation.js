@@ -20,8 +20,14 @@ extend('checked', {
 
 extend('hash', {
   validate: value => {
-    let upperLettersDigits = true
-    return value.length === 6 && upperLettersDigits
+    return value.length === 6
   },
   message: 'Stornocode besteht genau aus 6 Zeichen (Ziffern und Buchstaben)!',
+})
+
+extend('phoneNumber', {
+  validate: value => {
+    return value.startsWith('+') && value.length >= 10
+  },
+  message: 'Telefonnummer nicht im passenden Format'
 })

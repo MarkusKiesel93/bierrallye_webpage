@@ -13,19 +13,7 @@
         <v-stepper-step step="4"> Anmeldung abschicken </v-stepper-step>
       </v-stepper-header>
 
-      <v-stepper-items>
         <v-stepper-content step="1">
-          <validation-observer ref="observer" v-slot="{ invalid }">
-            <InputEmail :value="email" :setter="emailSetter" />
-            <ButtonsNextBack
-              v-on:click-next="nextStep"
-              v-on:click-back="lastStep"
-              :disabled="invalid"
-            />
-          </validation-observer>
-        </v-stepper-content>
-
-        <v-stepper-content step="2">
           <validation-observer ref="observer" v-slot="{ invalid }">
             <h3>Spieler 1</h3>
             <InputName
@@ -53,15 +41,15 @@
               :items="drinksOptions"
               :setter="drinkPref2Setter"
             />
-            <ButtonsNextBack
+            <ButtonsSubmitCancel
               :disabled="invalid"
-              v-on:click-next="nextStep"
-              v-on:click-back="lastStep"
+              v-on:click-submit="nextStep"
+              v-on:click-cancel="lastStep"
             />
           </validation-observer>
         </v-stepper-content>
 
-        <v-stepper-content step="3">
+        <v-stepper-content step="2">
           <validation-observer ref="observer" v-slot="{ invalid }">
             <InfoItems :items="timeInfo" />
             <InputSelectBox
@@ -70,12 +58,20 @@
               :items="timeOptions"
               :setter="timeSetter"
             />
-            <ButtonsNextBack
+            <ButtonsSubmitCancel
               :disabled="invalid"
-              v-on:click-next="nextStep"
-              v-on:click-back="lastStep"
+              v-on:click-submit="nextStep"
+              v-on:click-cancel="lastStep"
             />
           </validation-observer>
+        </v-stepper-content>
+
+        <v-stepper-items>
+        <v-stepper-content step="3">
+          <InputContactForm
+            v-on:click-submit="nextStep"
+            v-on:click-cancel="lastStep"
+          />
         </v-stepper-content>
 
         <v-stepper-content step="4">
@@ -104,11 +100,11 @@
               :row2="errorMessage"
             />
             <LoadingCircle :show="loading" />
-            <ButtonsNextBack
+            <ButtonsSubmitCancel
               :disabled="invalid"
-              nextLabel="Anmelden"
-              v-on:click-next="createTeam"
-              v-on:click-back="lastStep"
+              submitLabel="Anmelden"
+              v-on:click-submit="createTeam"
+              v-on:click-cancel="lastStep"
             />
           </validation-observer>
         </v-stepper-content>
@@ -118,15 +114,16 @@
 </template>
 
 <script>
+
 import { ValidationObserver, setInteractionMode } from 'vee-validate'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 import InfoItems from '@/components/InfoItems'
 import InputName from '@/components/InputName'
-import InputEmail from '@/components/InputEmail'
+import InputContactForm from '@/components/InputContactForm'
 import InputSelectBox from '@/components/InputSelectBox'
 import InputCheckbox from '@/components/InputCheckbox'
-import ButtonsNextBack from '@/components/ButtonsNextBack'
+import ButtonsSubmitCancel from '@/components/ButtonsSubmitCancel'
 import AlertField from '@/components/AlertField'
 import LoadingCircle from '@/components/LoadingCircle'
 import GameRulesDialog from '@/components/GameRulesDialog'
@@ -139,9 +136,9 @@ export default {
   components: {
     ValidationObserver,
     InputName,
-    InputEmail,
+    InputContactForm,
     InputSelectBox,
-    ButtonsNextBack,
+    ButtonsSubmitCancel,
     InfoItems,
     InputCheckbox,
     AlertField,
@@ -150,7 +147,7 @@ export default {
     DataProtectionDialog,
   },
   data: () => ({
-    step: 1,
+    step: 3,
     invalid: null,
     showGRDialog: true,
   }),

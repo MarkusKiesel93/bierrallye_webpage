@@ -3,6 +3,11 @@ import Vuex from 'vuex'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
+import actions from './modules/actions'
+import verifyContact from './modules/verifyContact'
+
+// todo: move loading and error messages to actions
+
 Vue.use(Vuex)
 Vue.use(VueAxios, axios)
 
@@ -12,6 +17,10 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 export default new Vuex.Store({
+  modules: {
+    actions,
+    verifyContact,
+  },
   state: {
     team: {
       email: '',
@@ -35,15 +44,6 @@ export default new Vuex.Store({
     createSuccess: false,
     createError: false,
     createErrorMessage: '',
-
-    verify: {
-      email: '',
-      hash: '',
-    },
-
-    verificationSuccess: false,
-    verificationError: false,
-    verificationErrorMessage: '',
 
     deregister: {
       email: '',
@@ -204,24 +204,6 @@ export default new Vuex.Store({
       }
       state.loading = false
     },
-    TEAM_VARIFIED: function(state, response) {
-      if (response.data.email == state.verify.email) {
-        state.verificationError = false
-        state.verificationSuccess = true
-        state.loading = false
-      }
-    },
-    FAILED_VERIFY: function(state, error) {
-      state.verificationError = true
-      if (error.response.status === 409) {
-        state.verificationErrorMessage = error.response.data.detail
-      } else {
-        // todo: input email adress
-        state.verificationErrorMessage =
-          'Das sollte nicht passieren. Melde dich bei uns ...'
-      }
-      state.loading = false
-    },
     TEAM_DELETED: function(state, response) {
       if (response.data.email == state.deregister.email) {
         state.deleteError = false
@@ -260,18 +242,6 @@ export default new Vuex.Store({
         return store.commit('TEAM_CREATED', response)
       } catch (error) {
         return store.commit('FAILED_CREATION', error)
-      }
-    },
-    verifyTeam: async store => {
-      store.state.loading = true
-      try {
-        const response = await axios.post(
-          `${BASE_PATH}/team/verify`,
-          store.state.verify,
-        )
-        return store.commit('TEAM_VARIFIED', response)
-      } catch (error) {
-        return store.commit('FAILED_VERIFY', error)
       }
     },
     deleteTeam: async store => {
