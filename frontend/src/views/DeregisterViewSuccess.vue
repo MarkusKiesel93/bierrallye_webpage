@@ -3,9 +3,7 @@
     <AlertField
       type="success"
       :value="true"
-      :dismissible="false"
-      row1="Du hast dein Team erfolgreich abgemeldet von der Bierrallye."
-      :row2="successMessage"
+      message="Du hast dein Team erfolgreich abgemeldet von der Bierrallye."
     />
     <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
       Startseite
@@ -19,7 +17,7 @@ import { mapGetters } from 'vuex'
 import AlertField from '@/components/AlertField'
 
 export default {
-  name: 'DeregisterSuccessView',
+  name: 'DeregisterViewSuccess',
   components: {
     AlertField,
   },

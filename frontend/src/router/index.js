@@ -22,8 +22,8 @@ const routes = [
   },
   {
     path: '/register/success',
-    name: 'RegisterSuccessView',
-    component: () => import('@/views/RegisterSuccessView.vue'),
+    name: 'RegisterViewSuccess',
+    component: () => import('@/views/RegisterViewSuccess.vue'),
   },
   {
     path: '/deregister',
@@ -31,14 +31,14 @@ const routes = [
     component: () => import('@/views/DeregisterView.vue'),
   },
   {
-    path: '/deregister/:email/:hash',
+    path: '/deregister/:channel/:contact/:hash',
     name: 'DeregisterViewFromLink',
     component: () => import('@/views/DeregisterView.vue'),
   },
   {
     path: '/deregister/success',
-    name: 'DeregisterSuccessView',
-    component: () => import('@/views/DeregisterSuccessView.vue'),
+    name: 'DeregisterViewSuccess',
+    component: () => import('@/views/DeregisterViewSuccess.vue'),
   },
   {
     path: '*',

@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'DataProtectionDialog',
+  name: 'DialogDataProtection',
   data: () => ({
     dialog: false,
   }),

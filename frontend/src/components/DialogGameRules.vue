@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  name: 'GameRulesDialog',
+  name: 'DialogGameRules',
   data: () => ({
     dialog: false,
   }),

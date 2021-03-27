@@ -1,11 +1,5 @@
 import axios from 'axios'
 
-// todo: move to index state
-let BASE_PATH = `https://${process.env.VUE_APP_BACKEND_DOMAIN}`
-if (process.env.NODE_ENV === 'development') {
-  BASE_PATH = `http://localhost:${process.env.VUE_APP_BACKEND_PORT}`
-}
-
 export default {
   namespaced: true,
 
@@ -15,100 +9,106 @@ export default {
     phoneNumber: '+43',
     hash: '',
 
-    notificationSuccess: false,
-    notificationError: '',
+    success: false,
 
-    verificationSuccess: false,
-    verificationError: false,
-    verificationErrorMessage: '',
+    laoding: false,
+
+    alert: false,
+    alertType: 'success',
+    alertMessage: '',
   },
 
-  getters: {},
+  getters: {
+    contact: function(state) {
+      let contact = state.channel === 'email' ? state.email : state.phoneNumber
+      return contact.replace(' ', '')
+    },
+    notifyData: function(state, getters) {
+      return {
+        to: getters.contact,
+        channel: state.channel,
+      }
+    },
+    verifyData: function(state, getters) {
+      return {
+        to: getters.contact,
+        channel: state.channel,
+        hash: state.hash,
+      }
+    }
+  },
 
   mutations: {
     setChannel: function(state, value) {
       state.channel = value
-      console.log(value)
     },
     setPhoneNumber: function(state, value) {
       state.phoneNumber = value
-      console.log(value)
     },
     setEmail: function(state, value) {
       state.email = value
-      console.log(value)
     },
     setHash: function(state, value) {
       state.hash = value
-      console.log(value)
     },
 
     NOTIFIED: function(state, response) {
-      let contact = state.channel === 'email' ? state.email : state.phoneNumber
-      if (response.data.to === contact) {
-        console.log(response.data)
-      }
+      state.loading = false
+      state.alertType = 'success'
+      state.alertMessage = `Code gesendet an ${response.data.to}`
+      state.alert = true
     },
     FAILED_NOTIFY: function(state, error) {
-      // todo: set error message
-      state.verificationError = true
-      console.log(error)
-      if (error.response.status === 409) {
-        state.verificationErrorMessage = error.response.data.detail
-      } else {
-        // todo: input email adress
-        state.verificationErrorMessage =
-          'Das sollte nicht passieren. Melde dich bei uns ...'
-      }
       state.loading = false
+      const status = error.response.status
+      if (status === 409 || status === 403 || status === 429) {
+        state.alertMessage = error.response.data.detail
+        if (status === 429) {
+          state.alertType = 'warning'
+        } else {
+          state.alertType = 'error'
+        }
+      } else {
+        state.alertType = 'error'
+        state.alertMessage = 'Das sollte nicht passieren, verusche es erneut.'
+      }
+      state.alert = true
     },
     VERIFIED: function(state, response) {
-      let contact = state.channel === 'email'
-        ? state.email : state.phoneNumber
-      if (response.data.to === contact) {
-        console.log(response.data)
-      }
+      state.loading = false
+      state.alertType = 'success'
+      state.alertMessage = `${response.data.to} erfolgreich verifiziert`
+      state.success = true
+      state.alert = true
     },
     FAILED_VERIFY: function(state, error) {
-      state.verificationError = true
-      if (error.response.status === 409) {
-        state.verificationErrorMessage = error.response.data.detail
-      } else {
-        // todo: input email adress
-        state.verificationErrorMessage =
-          'Das sollte nicht passieren. Melde dich bei uns ...'
-      }
       state.loading = false
+      state.alertType = 'error'
+      if (error.response.status === 400) {
+        state.alertMessage = error.response.data.detail
+      } else {
+        state.errorMessage = 'Das sollte nicht passieren, versuche es erneut.'
+      }
+      state.alert = true
     },
   },
   actions: {
-    // todo: add loading
-    verifyNotify: async store => {
-      const data = {
-        to: store.state.channel === 'email' ? store.state.email : store.state.phoneNumber,
-        channel: store.state.channel,
-      }
-      console.log(data)
+    async verifyNotify(context) {
+      context.state.loading = true
       try {
-        const response = await axios.post(`${BASE_PATH}/verify/notify/`, data)
-        return store.commit('NOTIFIED', response)
+        const response = await axios.post(`${context.rootGetters.getApiPath}/verify/notify/`, context.getters.notifyData)
+        return context.commit('NOTIFIED', response)
       } catch (error) {
-        return store.commit('FAILED_NOTIFY', error)
+        return context.commit('FAILED_NOTIFY', error)
       }
     },
-    // todo: add loading
-    verifyCheck: async store => {
-      const data = {
-        to: store.state.channel === 'email' ? store.state.email : store.state.phoneNumber,
-        channel: store.state.channel,
-        hash: store.state.hash,
-      }
-      console.log(data)
+    async verifyCheck(context) {
+      context.state.loading = true
       try {
-        const response = await axios.post(`${BASE_PATH}/verify/check/`, data)
-        return store.commit('VERIFIED', response)
+        const response = await axios.post(`${context.rootGetters.getApiPath}/verify/check/`, context.getters.verifyData)
+        return context.commit('VERIFIED', response)
       } catch (error) {
-        return store.commit('FAILED_VERIFY', error)
+        return context.commit('FAILED_VERIFY', error)
       }
     },
   },

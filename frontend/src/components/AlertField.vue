@@ -1,11 +1,6 @@
 <template>
   <v-alert :type="type" :value="value" :dismissible="dismissible">
-    <v-row class="mb-4">
-      <div>{{ row1 }}</div>
-    </v-row>
-    <v-row>
-      <div>{{ row2 }}</div>
-    </v-row>
+      {{ message }}
   </v-alert>
 </template>
 
@@ -23,15 +18,11 @@ export default {
     },
     dismissible: {
       type: Boolean,
-      default: true,
+      default: false,
     },
-    row1: {
+    message: {
       type: String,
       required: true,
-    },
-    row2: {
-      type: String,
-      default: null,
     },
   },
 }

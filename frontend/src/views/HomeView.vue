@@ -52,11 +52,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      getPlacesFree: 'getPlacesFree',
+      requestPlacesFree: 'requestPlacesFree',
     }),
   },
   created: function() {
-    this.getPlacesFree()
+    this.requestPlacesFree()
   },
 }
 </script>

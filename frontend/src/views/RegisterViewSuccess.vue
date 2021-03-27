@@ -3,9 +3,7 @@
     <AlertField
       type="success"
       :value="true"
-      :dismissible="false"
-      row1="Gratulation, fast geschafft!"
-      :row2="successMessage"
+      message="Gratulation, ihr habt euch erfolgreich angemeldet."
     />
     <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
       Startseite
@@ -19,7 +17,7 @@ import { mapGetters } from 'vuex'
 import AlertField from '@/components/AlertField'
 
 export default {
-  name: 'RegisterSuccessView',
+  name: 'RegisterViewSuccess',
   components: {
     AlertField,
   },
