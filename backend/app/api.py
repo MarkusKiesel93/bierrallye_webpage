@@ -41,7 +41,7 @@ async def verify_contact(
 
     if verify.channel == 'sms':
         try:
-            phone_number = client.lookups.v1.phone_numbers(verify.to).fetch()
+            phone_number = client.base_client.lookups.v1.phone_numbers(verify.to).fetch()
             background_tasks.add_task(notify.verification_sms, client, phone_number.phone_number)
         except Exception:
             raise HTTPException(
