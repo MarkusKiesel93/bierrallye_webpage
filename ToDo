@@ -4,12 +4,10 @@ Frontend
     winner list
         activated when data is accessible
     margin on stepper content
-    loading
     
 Backend
     get csv only with password
     read in csv and create winner list
-        
 
 Deploy
     static files
