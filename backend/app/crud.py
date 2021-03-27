@@ -41,7 +41,7 @@ def allow_notify_time(db: Session, verify: schemas.Verify):
 
 
 def create_team(db: Session, team: schemas.Team):
-    reg_date = date.today()  # .strftime('%d.%m.%Y')
+    reg_date = date.today()
     db_team = models.Team(**team.dict(), registration_date=reg_date)
     db.add(db_team)
     db.commit()
@@ -62,7 +62,7 @@ def get_team_by_contact(db: Session, contact: str):
 
 def get_places_taken(db: Session):
     places_taken = {}
-    counts = db.query(models.Team.time_pref, func.count(models.Team.contact)).group_by(models.Team.time_pref).all()
+    counts = db.query(models.Team.start_block, func.count(models.Team.contact)).group_by(models.Team.start_block).all()
     for block, count in counts:
         places_taken[block] = count
     return places_taken
@@ -78,7 +78,7 @@ def create_registered_csv(db: Session):
         'channel': 'Kontakt Art',
         'drink_pref_player_1': 'Getränk 1',
         'drink_pref_player_2': 'Getränk 2',
-        'time_pref': 'Startblock',
+        'start_block': 'Startblock',
         'registration_date': 'Anmeldedatum'
     })
     df = df.drop(columns=[

@@ -20,7 +20,7 @@
       </v-stepper-content>
 
       <v-stepper-content step="2">
-        <RegisterFormTime 
+        <RegisterFormBlock 
           v-on:click-submit="nextStep"
           v-on:click-cancel="lastStep"
         />
@@ -46,7 +46,7 @@
 
 <script>
 import RegisterFormPlayer from '@/components/RegisterFormPlayer'
-import RegisterFormTime from '@/components/RegisterFormTime'
+import RegisterFormBlock from '@/components/RegisterFormBlock'
 import RegisterFormContactInfo from '@/components/RegisterFormContactInfo'
 import RegisterFormFinalize from '@/components/RegisterFormFinalize'
 
@@ -54,7 +54,7 @@ export default {
   name: 'RegisterView',
   components: {
     RegisterFormPlayer,
-    RegisterFormTime,
+    RegisterFormBlock,
     RegisterFormContactInfo,
     RegisterFormFinalize,
   },

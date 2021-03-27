@@ -10,10 +10,10 @@ export default {
     firstNamePlayer2: '',
     lastNamePlayer2: '',
     drinkPrefPlayer2: '',
-    timePref: '',
+    startBlock: '',
 
     drinksOptions: [],
-    timesOptions: [],
+    blockOptions: [],
 
     acceptedGameRules: false,
     acceptedDataLaws: false,
@@ -38,36 +38,36 @@ export default {
         firstNamePlayer2: state.firstNamePlayer2,
         lastNamePlayer2: state.lastNamePlayer2,
         drinkPrefPlayer2: state.drinkPrefPlayer2,
-        timePref: state.timePref,
+        startBlock: state.startBlock,
       }
       return team
     },
-    timeOptions: function(state) {
+    blockOptions: function(state) {
       let items = []
-      for (const timeOpt of state.timesOptions) {
-        if (timeOpt.free > 0) {
-          items.push(timeOpt)
+      for (const blockOption of state.blockOptions) {
+        if (blockOption.free > 0) {
+          items.push(blockOption)
         }
       }
       return items
     },
-    timeInfo: function(state) {
+    blockInfo: function(state) {
       let items = []
-      for (let timeOpt of state.timesOptions) {
+      for (let blockOption of state.blockOptions) {
         items.push({
-          label: timeOpt.text,
-          row1: `Anmeldung (vor Ort) ${timeOpt.time} Uhr`,
-          row2: `Frei Plätze: ${timeOpt.free}`,
+          label: blockOption.text,
+          row1: `Anmeldung (vor Ort) ${blockOption.time} Uhr`,
+          row2: `Frei Plätze: ${blockOption.free}`,
         })
       }
       return items
     },
     block: function(state) {
-      if (state.timePref.length > 0) {
-        const timePref = state.timesOptions.filter(
-          item => item.value === state.timePref,
+      if (state.startBlock.length > 0) {
+        const startBlock = state.blockOptions.filter(
+          item => item.value === state.startBlock,
         )
-        return timePref[0].text
+        return startBlock[0].text
       } else {
         return ''
       }
@@ -131,8 +131,8 @@ export default {
     setDrinkPrefPlayer2: function(state, value) {
       state.drinkPrefPlayer2 = value
     },
-    setTimePref: function(state, value) {
-      state.timePref = value
+    setStartBlock: function(state, value) {
+      state.startBlock = value
     },
     setAcceptedGameRules: function(state, value) {
       state.acceptedGameRules = value
@@ -157,8 +157,8 @@ export default {
       }
       state.alert = true
     },
-    TIME_OPTIONS: function(state, response) {
-      state.timesOptions = response.data
+    BLOCK_OPTIONS: function(state, response) {
+      state.blockOptions = response.data
     },
     DRINK_OPTIONS: function(state, response) {
       state.drinksOptions = response.data
@@ -178,17 +178,17 @@ export default {
         return context.commit('FAILED_CREATION', error)
       }
     },
-    async requestTimeOptions(context) {
+    async requestBlockOptions(context) {
       try {
-        const response = await axios.get(`${context.rootGetters.getApiPath}/options/time/`)
-        return context.commit('TIME_OPTIONS', response)
+        const response = await axios.get(`${context.rootGetters.getApiPath}/options/blocks/`)
+        return context.commit('BLOCK_OPTIONS', response)
       } catch (error) {
         console.log(error.response)
       }
     },
     async requestDrinkOptions(context) {
       try {
-        const response = await axios.get(`${context.rootGetters.getApiPath}/options/drink/`)
+        const response = await axios.get(`${context.rootGetters.getApiPath}/options/drinks/`)
         return context.commit('DRINK_OPTIONS', response)
       } catch (error) {
         console.log(error.response)

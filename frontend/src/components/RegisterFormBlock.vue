@@ -1,12 +1,12 @@
 <template>
   <v-form>
     <validation-observer ref="observer" v-slot="{ invalid }">
-      <InfoItems :items="timeInfo" />
+      <InfoItems :items="blockInfo" />
       <InputSelectBox
         label="Startblock"
-        :value="timePref"
-        :items="timeOptions"
-        :setter="timeSetter"
+        :value="startBlock"
+        :items="blockOptions"
+        :setter="blockSetter"
       />
       <ButtonsSubmitCancel
         submitLabel="Weiter"
@@ -27,7 +27,7 @@ import InputSelectBox from '@/components/InputSelectBox'
 import ButtonsSubmitCancel from '@/components/ButtonsSubmitCancel'
 
 export default {
-  name: 'RegisterFormTime',
+  name: 'RegisterFormBlock',
   components: {
     ValidationObserver,
     InfoItems,
@@ -36,23 +36,23 @@ export default {
   },
   computed: {
     ...mapState({
-      timePref: state => state.register.timePref,
+      startBlock: state => state.register.startBlock,
     }),
     ...mapGetters({
-      timeInfo: 'register/timeInfo',
-      timeOptions: 'register/timeOptions',
+      blockInfo: 'register/blockInfo',
+      blockOptions: 'register/blockOptions',
     }),
   },
   methods: {
     ...mapMutations({
-      timeSetter: 'register/setTimePref',
+      blockSetter: 'register/setStartBlock',
     }),
     ...mapActions({
-      requestTimeOptions: 'register/requestTimeOptions',
+      requestBlockOptions: 'register/requestBlockOptions',
     }),
    },
    created: function() {
-    this.requestTimeOptions()
+    this.requestBlockOptions()
   },
 }
 </script>

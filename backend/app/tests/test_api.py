@@ -12,7 +12,7 @@ TEST_DATA = pd.read_csv(TEST_DATA_PATH)
 
 def test_create_verify_delete(client: TestClient):
     assert free_places(client) == 90
-    check_options_time(client, 90)
+    check_options_block(client, 90)
 
     test_teams = chose_teams(5)
 
@@ -29,7 +29,7 @@ def test_create_verify_delete(client: TestClient):
     assert response.status_code == 422
 
     team_wrong_block = test_teams[0].copy()
-    team_wrong_block['time_pref'] = 'X'
+    team_wrong_block['start_block'] = 'X'
     response = client.post('/team/', json=team_wrong_block)
     assert response.status_code == 422
 
@@ -41,7 +41,7 @@ def test_create_verify_delete(client: TestClient):
         # todo: test if email or sms correct
 
     assert free_places(client) == 90 - 5
-    check_options_time(client, 90 - 5)
+    check_options_block(client, 90 - 5)
 
     # check for error on duplicate
     response = client.post('/team/', json=test_teams[0])
@@ -69,13 +69,13 @@ def test_create_verify_delete(client: TestClient):
 
 
 def test_options_drink(client: TestClient):
-    response = client.get('/options/drink/')
+    response = client.get('/options/drinks/')
     assert response.status_code == 200
     assert len(response.json()) == 5
 
 
-def check_options_time(client: TestClient, places_free):
-    response = client.get('/options/time/')
+def check_options_block(client: TestClient, places_free):
+    response = client.get('/options/blocks/')
     assert response.status_code == 200
     assert len(response.json()) == 6
     free_overall = 0

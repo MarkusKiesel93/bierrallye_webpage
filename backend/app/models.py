@@ -19,7 +19,7 @@ class Team(Base):
     first_name_player_2 = Column(String)
     last_name_player_2 = Column(String)
     drink_pref_player_2 = Column(String)
-    time_pref = Column(String)
+    start_block = Column(String)
     registration_date = Column(Date)
 
 

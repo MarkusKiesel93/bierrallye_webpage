@@ -113,16 +113,16 @@ def delete_team(
     return deleted_team
 
 
-@router.get('/options/time/')
-def get_time_options(db: Session = Depends(get_db)):
-    time_options = []
+@router.get('/options/blocks/')
+def get_blocks_options(db: Session = Depends(get_db)):
+    block_options = []
     places_taken = crud.get_places_taken(db)
     id = 1
-    for block, time in zip(bier_settings.blocks, bier_settings.times):
+    for block, time in zip(bier_settings.start_blocks, bier_settings.times):
         places_free = bier_settings.teams_per_block
         if block in places_taken:
             places_free -= places_taken[block]
-        time_options.append({
+        block_options.append({
             'id': id,
             'value': block,
             'text': f'Block {block}',
@@ -130,10 +130,10 @@ def get_time_options(db: Session = Depends(get_db)):
             'free': places_free,
         })
         id += 1
-    return time_options
+    return block_options
 
 
-@router.get('/options/drink/')
+@router.get('/options/drinks/')
 def get_drink_option():
     return bier_settings.drinks
 
@@ -141,7 +141,7 @@ def get_drink_option():
 @router.get('/places/free/')
 def get_free_places(db: Session = Depends(get_db)):
     places_taken = crud.get_places_taken(db)
-    places_free = len(bier_settings.blocks) * bier_settings.teams_per_block - sum(places_taken.values())
+    places_free = len(bier_settings.start_blocks) * bier_settings.teams_per_block - sum(places_taken.values())
     return places_free
 
 

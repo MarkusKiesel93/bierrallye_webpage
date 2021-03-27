@@ -17,13 +17,13 @@ class Team(BaseModel):
     first_name_player_2: str
     last_name_player_2: str
     drink_pref_player_2: str
-    time_pref: str
+    start_block: str
 
-    @validator('time_pref')
-    def restrict_to_blocks(cls, time_pref):
-        if time_pref not in bier_settings.blocks:
-            raise ValueError(f'time_pref must be some block: {bier_settings.blocks}')
-        return time_pref
+    @validator('start_block')
+    def restrict_to_start_blocks(cls, start_block):
+        if start_block not in bier_settings.start_blocks:
+            raise ValueError(f'start_block must be some block: {bier_settings.start_blocks}')
+        return start_block
 
     @validator('drink_pref_player_1')
     def restrict_to_drinks_1(cls, drink_pref_player_1):
