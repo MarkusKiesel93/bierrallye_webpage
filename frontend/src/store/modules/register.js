@@ -150,7 +150,7 @@ export default {
     FAILED_CREATION: function(state, error) {
       state.loading = false
       state.alertType = 'error'
-      if (error.response.status === 400) {
+      if (error.response.status === 409) {
         state.alertMessage = error.response.data.detail
       } else {
         state.errorMessage = 'Das sollte nicht passieren, versuche es erneut.'
