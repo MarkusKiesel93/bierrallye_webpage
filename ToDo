@@ -1,3 +1,6 @@
+Refactor
+    rename startBlock to block
+
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
@@ -8,6 +11,7 @@ Frontend
     now deregistration notification is sent !
     stornonummer / stornocode
     margin on stepper content
+    loading
     
 Backend
     get csv only with password
