@@ -84,6 +84,6 @@ def registration_sms(client: Client, team: Team):
         'Stargeld: 50€ per Team\n'
         'Falls ihr doch keine Zeit habt dann bitte vor der Veranstaltung Abmelden:'
         f'Link: {deregistration_link}\n'
-        f'Stornonummer: {team.hash}'
+        f'Stornonummer: {hash}'
     )
-    send_sms(client, team.phone_number, body)
+    send_sms(client, team.contact, body)
