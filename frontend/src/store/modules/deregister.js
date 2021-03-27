@@ -69,7 +69,7 @@ export default {
       state.channel = value
     },
     setPhoneNumber: function(state, value) {
-      state.phoneNumber = value.replace(' ', '')
+      state.phoneNumber = value
     },
     setEmail: function(state, value) {
       state.email = value

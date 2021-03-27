@@ -49,7 +49,7 @@ export default {
       state.email = value
     },
     setHash: function(state, value) {
-      state.hash = value.toUpper()
+      state.hash = value.toUpperCase()
     },
 
     NOTIFIED: function(state, response) {
