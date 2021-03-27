@@ -2,12 +2,11 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, status
 from fastapi.responses import FileResponse
 from fastapi_mail import FastMail
 from sqlalchemy.orm import Session
-from twilio.rest import Client
 
 from app import crud, schemas, notify
 from app.config import settings, bier_settings
 from app.database import get_db
-from app.notify import get_fm, get_twilio_client
+from app.notify import get_fm, TwilioClient, get_twilio_client
 from app.hashing import hash_contact
 
 router = APIRouter()
@@ -19,7 +18,7 @@ async def verify_contact(
         background_tasks: BackgroundTasks,
         db: Session = Depends(get_db),
         fm: FastMail = Depends(get_fm),
-        client: Client = Depends(get_twilio_client)):
+        client: TwilioClient = Depends(get_twilio_client)):
 
     # todo: fraud detection, notify admin
 
@@ -71,7 +70,7 @@ def create_team(
         background_tasks: BackgroundTasks,
         db: Session = Depends(get_db),
         fm: FastMail = Depends(get_fm),
-        client: Client = Depends(get_twilio_client)):
+        client: TwilioClient = Depends(get_twilio_client)):
 
     db_team = crud.get_team_by_contact(db, team.contact)
     if db_team:

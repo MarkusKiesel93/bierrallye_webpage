@@ -11,9 +11,14 @@ def get_fm() -> FastMail:
     yield fast_mail
 
 
-def get_twilio_client() -> Client:
-    client = Client(settings.twilio_sid, settings.twilio_token)
-    yield client
+class TwilioClient():
+    def __init__(self, sid=settings.twilio_sid, token=settings.twilio_token, sms_from=settings.twilio_sms_from):
+        self.base_client = Client(sid, token)
+        self.sms_from = sms_from
+
+
+def get_twilio_client() -> TwilioClient:
+    yield TwilioClient()
 
 
 async def send_email(fm: FastMail, email: str, subject: str, body: str):
@@ -26,11 +31,11 @@ async def send_email(fm: FastMail, email: str, subject: str, body: str):
     await fm.send_message(message)
 
 
-async def send_sms(client: Client, sms_to: str, body: str):
+async def send_sms(client: TwilioClient, sms_to: str, body: str):
     # todo: rate_limits
-    message = client.messages.create(
+    message = client.base_client.messages.create(
         to=sms_to,
-        from_=settings.twilio_sms_from,
+        from_=client.sms_from,
         body=body)
     return message
 
@@ -46,7 +51,7 @@ async def verification_email(fm: FastMail, to: str):
     await send_email(fm, to, subject, body)
 
 
-async def verification_sms(client: Client, to: str):
+async def verification_sms(client: TwilioClient, to: str):
     hash = hash_contact(to)
     body = f'Dein Sicherheitscode für die Bierrallye Irnfritz 2021:\n\n{hash}'
     await send_sms(client, to, body)
@@ -72,7 +77,7 @@ async def registration_mail(fm: FastMail, team: Team):
     await send_email(fm, team.contact, subject, body)
 
 
-async def registration_sms(client: Client, team: Team):
+async def registration_sms(client: TwilioClient, team: Team):
     hash = hash_contact(team.contact)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     body = (

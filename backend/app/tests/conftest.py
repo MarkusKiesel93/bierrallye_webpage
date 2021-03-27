@@ -6,11 +6,10 @@ from fastapi.testclient import TestClient
 from fastapi_mail import FastMail
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from twilio.rest import Client
 
 from app.api import router
 from app.database import Base, get_db
-from app.notify import get_fm, get_twilio_client
+from app.notify import get_fm, TwilioClient, get_twilio_client
 from app.config import settings
 
 
@@ -33,8 +32,8 @@ def client() -> Generator:
         fast_mail.config.SUPPRESS_SEND = 1
         yield fast_mail
 
-    def override_get_twilio_client() -> Client:
-        client = Client(settings.twilio_test_sid, settings.twilio_test_token)
+    def override_get_twilio_client() -> TwilioClient:
+        client = TwilioClient(settings.twilio_test_sid, settings.twilio_test_token, '+15005550006')
         yield client
 
     app = FastAPI()
@@ -59,6 +58,6 @@ def fm() -> FastMail:
 
 
 @pytest.fixture(scope='module')
-def twilio_client() -> Client:
-    client = Client(settings.twilio_test_sid, settings.twilio_test_token)
+def twilio_client() -> TwilioClient:
+    client = TwilioClient(settings.twilio_test_sid, settings.twilio_test_token, '+15005550006')
     yield client
