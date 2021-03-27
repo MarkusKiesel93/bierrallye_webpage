@@ -72,7 +72,7 @@ async def registration_mail(fm: FastMail, team: Team):
     await send_email(fm, team.contact, subject, body)
 
 
-def registration_sms(client: Client, team: Team):
+async def registration_sms(client: Client, team: Team):
     hash = hash_contact(team.contact)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     body = (
@@ -86,4 +86,4 @@ def registration_sms(client: Client, team: Team):
         f'Link: {deregistration_link}\n'
         f'Stornonummer: {hash}'
     )
-    send_sms(client, team.contact, body)
+    await send_sms(client, team.contact, body)
