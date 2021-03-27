@@ -22,7 +22,7 @@ extend('hash', {
   validate: value => {
     return value.length === 6
   },
-  message: 'Stornocode besteht genau aus 6 Zeichen (Ziffern und Buchstaben)!',
+  message: 'Stornonummer besteht genau aus 6 Zeichen (Ziffern und Buchstaben)!',
 })
 
 extend('phoneNumber', {

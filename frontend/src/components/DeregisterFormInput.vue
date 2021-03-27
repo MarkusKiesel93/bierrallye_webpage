@@ -13,7 +13,7 @@
       <InputCode
         :value="hash"
         :setter="hashSetter"
-        label="Stornocode"
+        label="Stornonummer"
         counter="6"
       />
       <ButtonsSubmitCancel

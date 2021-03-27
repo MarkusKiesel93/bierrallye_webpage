@@ -68,7 +68,7 @@ async def registration_mail(fm: FastMail, team: Team):
         '<p> Falls ihr doch keine Zeit habt dann bitte vor der Veranstaltung '
         f'<a href="{deregistration_link}" target="_blank">Abmelden</a></p>'
         f'<p> Link: {deregistration_link} </p>'
-        f'<p> Stornocode: {hash} </p>'
+        f'<p> Stornonummer: {hash} </p>'
     )
     await send_email(fm, team.contact, subject, body)
 
@@ -85,6 +85,6 @@ def registration_sms(client: Client, team: Team):
         'Stargeld: 50€ per Team\n'
         'Falls ihr doch keine Zeit habt dann bitte vor der Veranstaltung Abmelden:'
         f'Link: {deregistration_link}\n'
-        f'Stornocode: {team.hash}'
+        f'Stornonummer: {team.hash}'
     )
     send_sms(client, team.phone_number, body)
