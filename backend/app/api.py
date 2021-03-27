@@ -39,8 +39,6 @@ async def verify_contact(
             )
         )
 
-    new_notify = crud.store_notification_time(db, verify)
-
     if verify.channel == 'sms':
         try:
             phone_number = client.lookups.v1.phone_numbers(verify.to).fetch()
@@ -51,6 +49,7 @@ async def verify_contact(
                 detail='Telefonnummer im falschen Format')
     if verify.channel == 'email':
         background_tasks.add_task(notify.verification_email, fm, verify.to)
+    new_notify = crud.store_notification_time(db, verify)
     return new_notify
 
 
