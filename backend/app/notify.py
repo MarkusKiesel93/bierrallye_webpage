@@ -55,7 +55,7 @@ async def verification_sms(client: Client, to: str):
 
 async def registration_mail(fm: FastMail, team: Team):
     hash = hash_email(team.contact)
-    deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.contact}/{hash}'
+    deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     subject = 'Anmeldung: Bierrallye Irnfritz 2021'
     body = (
         f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
@@ -75,7 +75,7 @@ async def registration_mail(fm: FastMail, team: Team):
 
 def registration_sms(client: Client, team: Team):
     hash = hash_email(team.contact)
-    deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.contact}/{hash}'
+    deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     body = (
         f'Hallo {team.first_name_player_1} und {team.first_name_player_2},\n\n'
         'Ihr habt euch erfolgreich für die Bierrallye Irnfritz 2021 angemeldet.\n'

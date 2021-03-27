@@ -21,6 +21,15 @@ async def verify_contact(
         fm: FastMail = Depends(get_fm),
         client: Client = Depends(get_twilio_client)):
 
+    # todo: fraud detection, notify admin
+
+    allow_notify_time, next_try = crud.allow_notify_time(db, verify)
+    if not allow_notify_time:
+        raise HTTPException(
+            status_code=status.HTTP_429_TOO_MANY_REQUESTS,
+            detail=f'Nächster Versuch in {next_try} Sekunden.'
+        )
+
     allow_notify_tries = crud.allow_notify_tries(db, verify)
     if not allow_notify_tries:
         raise HTTPException(
@@ -29,13 +38,6 @@ async def verify_contact(
                 f'Mehr als {settings.verify_allow_tries} Anmeldeverusche\n'
                 f'Benutze eine andere Kontaktart oder melde dich unter {bier_settings.contact}'
             )
-        )
-
-    allow_notify_time, next_try = crud.allow_notify_time(db, verify)
-    if not allow_notify_time:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail=f'Nächster Versuch in {next_try} Sekunden.'
         )
 
     new_notify = crud.store_notification_time(db, verify)
@@ -55,9 +57,7 @@ async def verify_contact(
 
 @router.post('/verify/check/', status_code=status.HTTP_200_OK)
 async def verify_check_contact(
-        verify_check: schemas.VerifyCheck,
-        fm: FastMail = Depends(get_fm),
-        client: Client = Depends(get_twilio_client)):
+        verify_check: schemas.VerifyCheck):
     if not hash_email(verify_check.to) == verify_check.hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -82,6 +82,16 @@ def create_team(
         background_tasks.add_task(notify.registration_mail, fm, new_team)
     # todo: background task for sms
     return new_team
+
+
+@router.get('/team/{contact}/', response_model=schemas.Team,  status_code=status.HTTP_200_OK)
+def get_team(contact: str, db: Session = Depends(get_db)):
+    db_team = crud.get_team_by_contact(db, contact)
+    if not db_team:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=f'Kein Team mit unter {contact} ist registriert.')
+    return db_team
 
 
 @router.delete('/team/{contact}/{hash}', response_model=schemas.Team, status_code=status.HTTP_200_OK)
