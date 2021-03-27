@@ -1,25 +1,14 @@
-Refactor
-    rename startBlock to block
-
 Frontend
     npm warnings:
         https://github.com/vuejs/vue-cli/issues/5690
     winner list
         activated when data is accessible
-    send sms
-        verification like deregistration
-    now deregistration notification is sent !
-    stornonummer / stornocode
     margin on stepper content
     loading
     
 Backend
     get csv only with password
     read in csv and create winner list
-    send sms
-        use TextMagic
-        verification like deregistration
-    stornonummer / stornocode
         
 
 Deploy
