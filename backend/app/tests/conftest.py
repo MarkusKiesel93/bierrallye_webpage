@@ -34,7 +34,7 @@ def client() -> Generator:
         yield fast_mail
 
     def override_get_twilio_client() -> Client:
-        client = Client(settings.TWILIO_TEST_SID, settings.TWILIO_TEST_TOKEN)
+        client = Client(settings.twilio_test_sid, settings.twilio_test_token)
         yield client
 
     app = FastAPI()
@@ -60,6 +60,5 @@ def fm() -> FastMail:
 
 @pytest.fixture(scope='module')
 def twilio_client() -> Client:
-    client = Client(settings.TWILIO_TEST_SID, settings.TWILIO_TEST_TOKEN)
-    # todo: how to change the sms_from ??
+    client = Client(settings.twilio_test_sid, settings.twilio_test_token)
     yield client

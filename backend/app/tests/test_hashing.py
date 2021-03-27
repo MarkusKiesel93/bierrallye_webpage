@@ -1,7 +1,7 @@
-from app.hashing import hash_email
+from app.hashing import hash_contact
 
 
-def test_hash_email():
+def test_hash_contact():
     email = 'test@test.at'
     salt = 'TEST_SALT'
-    assert hash_email(email, salt) == '095BBE'
+    assert hash_contact(email, salt) == '095BBE'

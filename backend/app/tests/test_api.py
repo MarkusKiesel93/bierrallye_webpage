@@ -3,7 +3,7 @@ from pathlib import Path
 import random
 import pandas as pd
 
-from app.hashing import hash_email
+from app.hashing import hash_contact
 
 
 TEST_DATA_PATH = Path('./app/tests/data/input.csv')
@@ -63,7 +63,7 @@ def test_create_verify_delete(client: TestClient):
     # deregistration
     for team in test_teams:
         contact = team['contact']
-        response = client.delete(f'team/{contact}/{hash_email(contact)}')
+        response = client.delete(f'team/{contact}/{hash_contact(contact)}')
         assert response.status_code == 200
         # todo: test if email or sms correct
 

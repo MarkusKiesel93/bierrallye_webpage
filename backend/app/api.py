@@ -8,7 +8,7 @@ from app import crud, schemas, notify
 from app.config import settings, bier_settings
 from app.database import get_db
 from app.notify import get_fm, get_twilio_client
-from app.hashing import hash_email
+from app.hashing import hash_contact
 
 router = APIRouter()
 
@@ -58,7 +58,7 @@ async def verify_contact(
 @router.post('/verify/check/', status_code=status.HTTP_200_OK)
 async def verify_check_contact(
         verify_check: schemas.VerifyCheck):
-    if not hash_email(verify_check.to) == verify_check.hash:
+    if not hash_contact(verify_check.to) == verify_check.hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail='Verifizierungsnummer falsch')
@@ -70,7 +70,8 @@ def create_team(
         team: schemas.Team,
         background_tasks: BackgroundTasks,
         db: Session = Depends(get_db),
-        fm: FastMail = Depends(get_fm)):
+        fm: FastMail = Depends(get_fm),
+        client: Client = Depends(get_twilio_client)):
 
     db_team = crud.get_team_by_contact(db, team.contact)
     if db_team:
@@ -80,7 +81,8 @@ def create_team(
     new_team = crud.create_team(db, team)
     if new_team.channel == 'email':
         background_tasks.add_task(notify.registration_mail, fm, new_team)
-    # todo: background task for sms
+    if new_team.channel == 'sms':
+        background_tasks.add_task(notify.registration_sms, client, new_team)
     return new_team
 
 
@@ -105,7 +107,7 @@ def delete_team(
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f'Kein Team mit unter {contact} ist registriert.')
-    if not hash_email(contact) == hash:
+    if not hash_contact(contact) == hash:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=f'Stornonummer nicht gültig! Überprüfe die Nummer die wir dir an {db_team.contact} gesendet haben.')

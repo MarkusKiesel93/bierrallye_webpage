@@ -31,12 +31,11 @@ class Settings(BaseSettings):
         MAIL_SSL=False,
     )
 
-    # todo change to lower case
-    TWILIO_SMS_FROM: str
-    TWILIO_SID: str
-    TWILIO_TOKEN: str
-    TWILIO_TEST_SID: str
-    TWILIO_TEST_TOKEN: str
+    twilio_sms_from: str
+    twilio_sid: str
+    twilio_token: str
+    twilio_test_sid: str
+    twilio_test_token: str
 
     secret_key: str
 

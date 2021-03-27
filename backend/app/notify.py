@@ -3,7 +3,7 @@ from twilio.rest import Client
 
 from app.schemas import Team
 from app.config import settings
-from app.hashing import hash_email
+from app.hashing import hash_contact
 
 
 def get_fm() -> FastMail:
@@ -12,8 +12,7 @@ def get_fm() -> FastMail:
 
 
 def get_twilio_client() -> Client:
-    # todo: change to real token
-    client = Client(settings.TWILIO_SID, settings.TWILIO_TOKEN)
+    client = Client(settings.twilio_sid, settings.twilio_token)
     yield client
 
 
@@ -31,13 +30,13 @@ async def send_sms(client: Client, sms_to: str, body: str):
     # todo: rate_limits
     message = client.messages.create(
         to=sms_to,
-        from_=settings.TWILIO_SMS_FROM,
+        from_=settings.twilio_sms_from,
         body=body)
     return message
 
 
 async def verification_email(fm: FastMail, to: str):
-    hash = hash_email(to)
+    hash = hash_contact(to)
     subject = 'Verifizierung: Bierrallye Irnfritz 2021'
     body = (
         f'<h3> Dein Sicherheitscode für die Bierrallye Irnfritz 2021: </h3>'
@@ -48,13 +47,13 @@ async def verification_email(fm: FastMail, to: str):
 
 
 async def verification_sms(client: Client, to: str):
-    hash = hash_email(to)
+    hash = hash_contact(to)
     body = f'Dein Sicherheitscode für die Bierrallye Irnfritz 2021:\n\n{hash}'
     await send_sms(client, to, body)
 
 
 async def registration_mail(fm: FastMail, team: Team):
-    hash = hash_email(team.contact)
+    hash = hash_contact(team.contact)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     subject = 'Anmeldung: Bierrallye Irnfritz 2021'
     body = (
@@ -74,7 +73,7 @@ async def registration_mail(fm: FastMail, team: Team):
 
 
 def registration_sms(client: Client, team: Team):
-    hash = hash_email(team.contact)
+    hash = hash_contact(team.contact)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     body = (
         f'Hallo {team.first_name_player_1} und {team.first_name_player_2},\n\n'
