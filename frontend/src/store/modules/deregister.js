@@ -28,7 +28,7 @@ export default {
   getters: {
     contact: function(state) {
       let contact = state.channel === 'email' ? state.email : state.phoneNumber
-      return contact.replace(' ', '')
+      return contact.replace(/\s/g,'')
     },
     info: function(state) {
       let items = [

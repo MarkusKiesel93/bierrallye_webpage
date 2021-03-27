@@ -33,6 +33,7 @@
           :value="alert"
           :message="alertMessage"
         />
+        <LoadingCircle :show="loading" />
         <ButtonsSubmitCancel
           v-on:click-submit="verifyNext()"
           v-on:click-cancel="$emit('click-cancel')"
@@ -52,6 +53,7 @@ import InputContact from '@/components/InputContact'
 import InputCode from '@/components/InputCode'
 import ButtonsSubmitCancel from '@/components/ButtonsSubmitCancel'
 import AlertField from '@/components/AlertField'
+import LoadingCircle from '@/components/LoadingCircle'
 
 export default {
   name: 'RegisterFormContactInfo',
@@ -61,6 +63,7 @@ export default {
     InputCode,
     ButtonsSubmitCancel,
     AlertField,
+    LoadingCircle,
   },
    data: () => ({
     invalid: null,
@@ -73,6 +76,7 @@ export default {
       phoneNumber: state => state.verifyContact.phoneNumber,
       hash: state => state.verifyContact.hash,
       success: state => state.verifyContact.success,
+      loading: state => state.verifyContact.loading,
       alert: state => state.verifyContact.alert,
       alertType: state => state.verifyContact.alertType,
       alertMessage: state => state.verifyContact.alertMessage,

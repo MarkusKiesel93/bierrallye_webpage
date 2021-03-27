@@ -11,7 +11,7 @@ export default {
 
     success: false,
 
-    laoding: false,
+    loading: false,
 
     alert: false,
     alertType: 'success',
@@ -21,7 +21,7 @@ export default {
   getters: {
     contact: function(state) {
       let contact = state.channel === 'email' ? state.email : state.phoneNumber
-      return contact.replace(' ', '')
+      return contact.replace(/\s/g,'')
     },
     notifyData: function(state, getters) {
       return {
@@ -49,7 +49,7 @@ export default {
       state.email = value
     },
     setHash: function(state, value) {
-      state.hash = value
+      state.hash = value.toUpper()
     },
 
     NOTIFIED: function(state, response) {
