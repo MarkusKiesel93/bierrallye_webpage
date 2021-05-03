@@ -41,6 +41,11 @@ const routes = [
     component: () => import('@/views/DeregisterViewSuccess.vue'),
   },
   {
+    path: '/covid',
+    name: 'CovidConceptView',
+    component: () => import('@/views/CovidConceptView.vue'),
+  },
+  {
     path: '*',
     name: 'PageErrorView',
     component: () => import('@/views/PageErrorView.vue'),
