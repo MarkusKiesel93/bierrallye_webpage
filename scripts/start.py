@@ -21,6 +21,8 @@ PATH_SERVICES = {
 parser = ap.ArgumentParser(prog='Run Webpage', description='Script to run development or production server')
 parser.add_argument('-dev', '--development', action='store_true', help='run development server')
 parser.add_argument('-prod', '--production', action='store_true', help='run production server')
+parser.add_argument('-prodatt', '--production_attached', action='store_true',
+                    help='run production server without detetch')
 parser.add_argument('-b', '--backend', action='store_true', help='run backend seperately')
 parser.add_argument('-f', '--frontend', action='store_true', help='run frontend seperately')
 parser.add_argument('-s', '--stop', action='store_true', help='stop all docker containers')
@@ -44,8 +46,11 @@ for service_path in PATH_SERVICES.values():
 
 try:
     if args.production:
-        print(f'RUN PRODUCTION SERVER FOR: {configs["project_name"]}')
+        print(f'RUN PRODUCTION SERVER DETACHED FOR: {configs["project_name"]}')
         sp.run(['docker-compose', '--env-file', '.env', 'up', '--build', '--detach'])
+    elif args.production_attached:
+        print(f'RUN PRODUCTION SERVER FOR: {configs["project_name"]}')
+        sp.run(['docker-compose', '--env-file', '.env', 'up', '--build'])
     elif args.development:
         print(f'RUN DEVELOPMENT SERVER FOR: {configs["project_name"]}')
         sp.run(['npm', 'install'], cwd='./frontend/')
