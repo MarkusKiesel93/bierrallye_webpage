@@ -1,43 +1,72 @@
 <template>
-  <v-card>
-    <v-card-title>
-      Informationen
-    </v-card-title>
+  <div>
+    <v-card>
+      <h2 class="py-8 text-center"> Infos </h2>
 
-    <v-card-text>
-      <p>
-        Wann: 01.08.2021
-      </p>
-      <p>
-        Wo: Sportplatz Irnfritz
-      </p>
-      <p>Freie Plätze: {{ placesFree }}</p>
-      <p>
-        Beschreibung: Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-        sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Eget
-        arcu dictum varius duis at consectetur lorem. A pellentesque sit amet
-        porttitor eget dolor morbi. Ut faucibus pulvinar elementum integer enim
-        neque volutpat ac. Mattis molestie a iaculis at erat pellentesque
-        adipiscing commodo. Fermentum posuere urna nec tincidunt praesent semper
-        feugiat nibh. Massa massa ultricies mi quis. Porttitor eget dolor morbi
-        non arcu risus quis varius quam. Morbi tristique senectus et netus et
-        malesuada fames ac turpis. Et leo duis ut diam quam nulla porttitor
-        massa. Sit amet purus gravida quis blandit. Auctor urna nunc id cursus.
-        Tempus urna et pharetra pharetra. Amet consectetur adipiscing elit ut
-        aliquam. Consequat id porta nibh venenatis cras sed felis. In fermentum
-        et sollicitudin ac orci phasellus egestas.
-      </p>
-    </v-card-text>
+      <v-card-text>
+        <h4> Liebe Freunde des Hopfens und der Rebe! </h4>
+        <p>
+          Die legendäre Irnfritzer Bierrallye geht (voraussichtlich) am 19.06.2021 am Sportplatz Irnfritz in die 3. Runde.
+        </p>
+        <h4> Hardfacts: </h4>
+        <p>
+          <ul>
+            <li> Startzeiten? </li>
+            <li>8 Stationen auf rund 5 km</li>
+            <li>2 Personen pro Team</li>
+            <li>Startgeld €50,00 / Team</li>
+            <li>Wegbegleiter</li>
+            <ul>
+              <li>Bier</li>
+              <li>Spritzer-Weiß</li>
+              <li>Alm-Weß</li>
+              <li>Frucade-Weiß</li>
+              <li>Cola-Weiß</li>
+              <li>Radler (Achtung: Aufpreis € 200,00 !!)</li>
+            </ul>
+            <li>pro Person 8x Bier 0,33l bzw. 1l Wein + gewünschtes Beigetränk</li>
+            <li>gemischte Kisten mögliche</li>
+            <li>verkleidete Teams bekommen einen Spritzer-Gutschein pro Person</li>
+          </ul>
+        </p>
 
-    <v-card-actions>
-      <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
-        Anmelden
-      </v-btn>
-      <v-btn class="my-4" :to="{ name: 'DeregisterView' }">
-        Abmelden
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+        <p>
+          Die Veranstaltung wird unter Berücksichtigung der aktuellen Lage und damit auch nach den Vorschriften der Regierung durchgeführt. <br>
+          Siehe: <router-link :to="{ name: 'CovidConceptView' }"> Covid 19 Präventinskonzept </router-link>
+        </p>
+
+        <p>
+          Wenn dir alles klar ist, ab zur Anmeldung <br>
+          Wir freuen uns auf Euer Kommen!
+        </p>
+      
+      </v-card-text>
+    </v-card>
+    <v-card>
+      <h2 class="py-4 text-center"> Anmdelung & Abmeldung </h2>
+
+      <v-card-text>
+        <p>Freie Plätze: {{ placesFree }} Teams</p>
+        <p>
+          Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendigt, auch kurzfristig abgesagt werden kann! <br>
+          Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei Zwettl. 
+        </p>
+        <p>
+          Bitte vergesst nicht euch abzumelden wenn ihr doch nicht kommen könnt, damit wir den Platz an ein wartendes Team vergeben können. <br>
+          Bei Fragen oder Problemen meldet euch gerne per Email unter <a href="mailto:bierrallye.irnfritz@gmail.com">bierrallye.irnfritz@gmail.com</a> 
+        </p>
+      </v-card-text>
+
+      <v-card-actions>
+        <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
+          Anmelden
+        </v-btn>
+        <v-btn class="my-4" :to="{ name: 'DeregisterView' }">
+          Abmelden
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </div>
 </template>
 
 <script>

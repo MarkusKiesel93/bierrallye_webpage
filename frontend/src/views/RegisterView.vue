@@ -1,5 +1,7 @@
 <template>
   <v-stepper v-model="step">
+  <h2 class="py-4 text-center"> Anmeldung </h2>
+
     <v-stepper-header>
       <v-stepper-step step="1" :complete="step > 1"> Kontakt </v-stepper-step>
       <v-divider></v-divider>
@@ -12,6 +14,7 @@
       <v-stepper-step step="4"> Anmeldung abschicken </v-stepper-step>
     </v-stepper-header>
 
+    <v-stepper-items>
       <v-stepper-content step="1">
         <RegisterFormPlayer 
           v-on:click-submit="nextStep"
@@ -26,7 +29,6 @@
         />
       </v-stepper-content>
 
-      <v-stepper-items>
       <v-stepper-content step="3">
         <RegisterFormContactInfo
           v-on:click-submit="nextStep"

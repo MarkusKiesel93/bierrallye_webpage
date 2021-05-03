@@ -1,5 +1,7 @@
 <template>
   <v-stepper v-model="step">
+  <h2 class="py-4 text-center"> Abmeldung </h2>
+    
     <v-stepper-header>
       <v-stepper-step step="1" :complete="step > 1">
         Abmeldung angeben
