@@ -4,12 +4,14 @@ Frontend
     winner list
         activated when data is accessible
     margin on stepper content
+    2 mal drücken gibt fehlermeldung am sschluss bei der anmeldung da weiterleiten auf eine geschafft seite
     
 Backend
     get csv only with password
     read in csv and create winner list
 
 Deploy
+    select between detatch on production
     static files
 
 Tests
