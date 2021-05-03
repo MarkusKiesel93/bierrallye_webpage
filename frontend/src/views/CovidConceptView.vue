@@ -112,5 +112,11 @@
           </li>
       </ul>
     </v-card-text>
+
+    <v-card-actions>
+      <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
+      Startseite
+      </v-btn>
+    </v-card-actions>
   </v-card>
 </template>
