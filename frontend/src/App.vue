@@ -61,8 +61,8 @@ export default {
     }),
     headerHeight () {
       switch (this.$vuetify.breakpoint.name) {
-        case 'xs': return 240
-        case 'sm': return 300
+        case 'xs': return 300
+        case 'sm': return 350
         case 'md': return 400
         case 'lg': return 500
         case 'xl': return 600
