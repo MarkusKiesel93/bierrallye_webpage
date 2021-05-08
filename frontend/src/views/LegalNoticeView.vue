@@ -25,5 +25,10 @@
       <p style='margin-top:0.5cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;text-align:justify;'>Hyperlinks auf bierrallye-irnfritz.at sind willkommen. Jede Einbindung einzelner Seiten unseres Angebotes in fremde Frames ist zu unterlassen.</p>
       <p style='margin-top:0cm;margin-right:0cm;margin-bottom:0cm;margin-left:0cm;line-height:107%;font-size:15px;font-family:"Calibri",sans-serif;'>&nbsp;</p>
     </v-card-text>
+    <v-card-actions>
+      <v-btn color="primary" @click="$router.push({ name: 'HomeView' })">
+        Startseite
+      </v-btn>
+      </v-card-actions>
   </v-card>
 </template>
