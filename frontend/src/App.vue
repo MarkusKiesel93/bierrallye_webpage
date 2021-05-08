@@ -12,7 +12,7 @@
       </router-link>
     </v-app-bar>
     <!-- Header -->
-    <ImageCarousel :images="headerImages" :height="400" :cycle="true">
+    <ImageCarousel :images="headerImages" :height="headerHeight" :cycle="true">
     </ImageCarousel>
 
     <!-- Content -->
@@ -40,7 +40,10 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+
 import ImageCarousel from '@/components/ImageCarousel'
+
 
 export default {
   name: 'App',
@@ -51,29 +54,22 @@ export default {
     ccName: 'Jugend Irnfritz',
     year: new Date().getFullYear(),
     dialog: false,
-    headerImages: [
-      {
-        id: 1,
-        src: 'https://picsum.photos/seed/1/1920/1080',
-      },
-      {
-        id: 2,
-        src: 'https://picsum.photos/seed/2/1920/1080',
-      },
-      {
-        id: 3,
-        src: 'https://picsum.photos/seed/3/1920/1080',
-      },
-      {
-        id: 4,
-        src: 'https://picsum.photos/seed/4/1920/1080',
-      },
-      {
-        id: 5,
-        src: 'https://picsum.photos/seed/5/1920/1080',
-      },
-    ],
   }),
+  computed: {
+    ...mapGetters({
+      headerImages: 'images/headerImages',
+    }),
+    headerHeight () {
+      switch (this.$vuetify.breakpoint.name) {
+        case 'xs': return 240
+        case 'sm': return 300
+        case 'md': return 400
+        case 'lg': return 500
+        case 'xl': return 600
+        default: return 300
+      }
+    },
+  },
 }
 </script>
 

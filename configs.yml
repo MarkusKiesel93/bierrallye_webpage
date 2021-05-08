@@ -8,6 +8,6 @@ production:
   backend_port: 8008
 development:
   frontend_domain: localhost:8080
-  backend_port: 8000
-  server_port: 8008
+  backend_port: 8008
+  server_port: 8000
   frontend_port: 8080
