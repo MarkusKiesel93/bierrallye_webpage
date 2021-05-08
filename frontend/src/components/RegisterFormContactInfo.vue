@@ -18,6 +18,7 @@
         >
           code zusenden
         </v-btn>
+        <h6 class="text-justify"> *) Mit click auf CODE ZUSENDEN stimmen Sie zu, dass wir Ihnen einen einmaligen Code zur Verifizierung zusenden. </h6>
       </validation-observer>
     </div>
     <div>
