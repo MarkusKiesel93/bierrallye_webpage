@@ -15,7 +15,7 @@
             <li>2 Personen pro Team</li>
             <li>Startgeld €50,00 / Team</li>
             <li>pro Person 8x Bier 0,33l bzw. 1l Wein + gewünschtes Beigetränk</li>
-            <li>gemischte Kisten mögliche</li>
+            <li>gemischte Kisten möglich</li>
             <li>Wegbegleiter</li>
             <ul>
               <li>Bier</li>
@@ -25,7 +25,7 @@
               <li>Cola-Weiß</li>
               <li>Radler (Achtung: Aufpreis € 200,00 !!)</li>
             </ul>
-            <li> Startzeiten </li>
+            <li> Anmeldezeit (vor Ort) </li>
             <ul>
               <li>Block A: 13:00</li>
               <li>Block B: 13:30</li>
@@ -41,7 +41,7 @@
 
         <p>
           Die Veranstaltung wird unter Berücksichtigung der aktuellen Lage und damit auch nach den Vorschriften der Regierung durchgeführt. <br>
-          Siehe: <router-link :to="{ name: 'CovidConceptView' }"> Covid 19 Präventinskonzept </router-link>
+          Siehe: <router-link :to="{ name: 'CovidConceptView' }"> Covid-19 Präventionskonzept </router-link>
         </p>
 
         <p>
@@ -52,13 +52,13 @@
       </v-card-text>
     </v-card>
     <v-card>
-      <h2 class="py-4 text-center"> Anmdelung & Abmeldung </h2>
+      <h2 class="py-4 text-center"> Anmeldung & Abmeldung </h2>
 
       <v-card-text>
         <p>Freie Plätze: {{ placesFree }} Teams</p>
         <p>
           Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendigt, auch kurzfristig abgesagt werden kann! <br>
-          Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei Zwettl. 
+          Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei
         </p>
         <p>
           Bitte vergesst nicht euch abzumelden wenn ihr doch nicht kommen könnt, damit wir den Platz an ein wartendes Team vergeben können. <br>

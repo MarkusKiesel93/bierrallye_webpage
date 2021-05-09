@@ -1,7 +1,7 @@
 <template>
   <v-card>
     <v-card-title>
-      Covid 19 Präventinskonzept
+      Covid-19 Präventionskonzept
     </v-card-title>
     <v-card-text>
       <p style="margin-bottom: 0cm;line-height: 100%;text-align: left;background: transparent;">In Bezugnahme auf &sect; 10 Abs 5 Covid-19-LV werden vom Veranstalter folgende Ma&szlig;nahmen zur Verhinderung einer &Uuml;bertragung von Covid-19 getroffen:<br>&nbsp;</p>
