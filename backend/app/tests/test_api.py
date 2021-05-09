@@ -47,11 +47,6 @@ def test_create_verify_delete(client: TestClient):
     response = client.post('/team/', json=test_teams[0])
     assert response.status_code == 409
 
-    # check registerd csv
-    response = client.get('/registered/csv/')
-    assert response.status_code == 200
-    check_csv(5, 7)
-
     # deregister wrong email
     response = client.delete('team/not_exising@test.com/ASDFJK')
     assert response.status_code == 400
@@ -100,10 +95,3 @@ def free_places(client: TestClient):
     response = client.get('/places/free/')
     assert response.status_code == 200
     return response.json()
-
-
-def check_csv(rows, cols):
-    CSV_PATH = Path('./static/registrierte_nutzer.csv')
-    df = pd.read_csv(CSV_PATH)
-    assert df.shape[0] == rows
-    assert df.shape[1] == cols
