@@ -52,9 +52,6 @@ services:
       - backend
       - server
 
-volumes:
-  static:
-
 networks:
   proxy:
     external: true
