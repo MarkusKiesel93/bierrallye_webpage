@@ -11,10 +11,11 @@
         <h4> Hardfacts: </h4>
         <p>
           <ul>
-            <li> Startzeiten? </li>
             <li>8 Stationen auf rund 5 km</li>
             <li>2 Personen pro Team</li>
             <li>Startgeld €50,00 / Team</li>
+            <li>pro Person 8x Bier 0,33l bzw. 1l Wein + gewünschtes Beigetränk</li>
+            <li>gemischte Kisten mögliche</li>
             <li>Wegbegleiter</li>
             <ul>
               <li>Bier</li>
@@ -24,8 +25,16 @@
               <li>Cola-Weiß</li>
               <li>Radler (Achtung: Aufpreis € 200,00 !!)</li>
             </ul>
-            <li>pro Person 8x Bier 0,33l bzw. 1l Wein + gewünschtes Beigetränk</li>
-            <li>gemischte Kisten mögliche</li>
+            <li> Startzeiten </li>
+            <ul>
+              <li>Block A: 13:00</li>
+              <li>Block B: 13:30</li>
+              <li>Block C: 14:00</li>
+              <li>Block D: 14:30</li>
+              <li>Block E: 15:00</li>
+              <li>Block F: 15:30</li>
+            </ul>
+            
             <li>verkleidete Teams bekommen einen Spritzer-Gutschein pro Person</li>
           </ul>
         </p>
