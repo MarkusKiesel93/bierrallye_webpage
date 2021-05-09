@@ -61,6 +61,10 @@ class BierrallyeSettings(BaseSettings):
       'Wein + Frucade',
     ]
 
+    def get_start_time(self, start_block):
+        i = self.start_blocks.index(start_block)
+        return self.times[i]
+
 
 settings = Settings()
 bier_settings = BierrallyeSettings()
