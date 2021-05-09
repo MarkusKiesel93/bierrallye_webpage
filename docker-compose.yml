@@ -9,7 +9,6 @@ services:
     # set volume for staticfiles to be deployed by nginx
     volumes:
       - ./backend/db:/code/db:rw
-      - static:/code/static:rw
     env_file:
       - ./.env
     command: ['./scripts/start.sh']
@@ -23,11 +22,8 @@ services:
     build:
       context: backend
       dockerfile: deploy/Dockerfile_server
-    # brauche ich das wirklich ?
     expose:
       - ${BACKEND_PORT}
-    volumes:
-      - static:/files/static/
     depends_on:
       - backend
     environment:
