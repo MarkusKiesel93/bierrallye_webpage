@@ -46,6 +46,11 @@ const routes = [
     component: () => import('@/views/CovidConceptView.vue'),
   },
   {
+    path: '/data-privacy',
+    name: 'DataProtectionView',
+    component: () => import('@/views/DataProtectionView.vue'),
+  },
+  {
     path: '*',
     name: 'PageErrorView',
     component: () => import('@/views/PageErrorView.vue'),
