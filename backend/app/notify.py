@@ -68,7 +68,7 @@ async def registration_mail(fm: FastMail, team: Team):
         '<p> Ihr habt euch erfolgreich für die Bierrallye Irnfritz 2021 angemeldet. </p>'
         '<p> Hier nochmals die Eckdaten: </p>'
         '<ul>'
-        f'<li> Wann: 19.06.2021, {start_time}</li>'
+        f'<li> Anmeldezeit (vor Ort): {start_time}</li>'
         '<li> Wo: Sportplatz Irnfritz</li>'
         '<li> Stargeld: 50€ per Team </li>'
         '</ul>'
@@ -82,11 +82,12 @@ async def registration_mail(fm: FastMail, team: Team):
 
 async def registration_sms(client: TwilioClient, team: Team):
     hash = hash_contact(team.contact)
+    start_time = bier_settings.get_start_time(team.start_block)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     body = (
-        'Ihr habt euch erfolgreich für die Bierrallye Irnfritz angemeldet.\n\n'
-        'Abmeldung unter:\n'
-        f'Link: {deregistration_link}\n'
+        'Ihr habt euch erfolgreich für die Bierrallye Irnfritz angemeldet.\n'
+        f'Anmeldezeit (vor Ort): {start_time}\n'
+        f'Abmeldung unter: {deregistration_link}\n'
         f'Stornonummer: {hash}'
     )
     await send_sms(client, team.contact, body)
