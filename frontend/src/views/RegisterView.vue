@@ -3,13 +3,11 @@
   <h2 class="py-4 text-center"> Anmeldung </h2>
 
     <v-stepper-header>
-      <v-stepper-step step="1" :complete="step > 1"> Kontakt </v-stepper-step>
+      <v-stepper-step step="1" :complete="step > 1"> Spieler </v-stepper-step>
       <v-divider></v-divider>
-      <v-stepper-step step="2" :complete="step > 2"> Spieler </v-stepper-step>
+      <v-stepper-step step="2" :complete="step > 2"> Startzeit </v-stepper-step>
       <v-divider></v-divider>
-      <v-stepper-step step="3" :complete="step > 3">
-        Startzeit
-      </v-stepper-step>
+      <v-stepper-step step="3" :complete="step > 3"> Kontakt </v-stepper-step>
       <v-divider></v-divider>
       <v-stepper-step step="4"> Anmeldung abschicken </v-stepper-step>
     </v-stepper-header>

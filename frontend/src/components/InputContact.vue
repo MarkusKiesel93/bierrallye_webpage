@@ -5,10 +5,10 @@
         label="E-Mail"
         value="email"
       ></v-radio>
-      <v-radio
+      <!-- <v-radio
         label="SMS"
         value="sms"
-      ></v-radio>
+      ></v-radio> -->
     </v-radio-group>
     <InputEmail
       v-if="channelValue==='email'"

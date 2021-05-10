@@ -1,7 +1,7 @@
 general:
   project_name: bierrallye
-  app_name: Bierreallye Irnfritz
-  version: 0.1
+  app_name: Bierrallye Irnfritz
+  version: 1.0
 production:
   backend_domain: api.bierrallye-irnfritz.at
   frontend_domain: bierrallye-irnfritz.at

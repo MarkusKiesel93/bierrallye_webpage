@@ -57,7 +57,7 @@
       <v-card-text>
         <p>Freie Plätze: {{ placesFree }} Teams</p>
         <p>
-          Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendigt, auch kurzfristig abgesagt werden kann! <br>
+          Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendig, auch kurzfristig abgesagt werden kann! <br>
           Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei
         </p>
         <p>
