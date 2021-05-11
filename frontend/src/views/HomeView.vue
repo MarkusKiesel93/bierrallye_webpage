@@ -55,7 +55,9 @@
       <h2 class="py-4 text-center"> Anmeldung & Abmeldung </h2>
 
       <v-card-text>
-        <p>Freie Plätze: {{ placesFree }} Teams</p>
+        <!-- <p>Freie Plätze: {{ placesFree }} Teams</p> -->
+        <h3> Unglaublich aber wahr: leider sind schon alle Startplätze vergeben! <br> Natürlich würden wir uns auch über viele motivierte Zuschauer freuen, Bier gibt es auch abseits der Laufstrecke genügend. </h3>
+        <p></p>
         <p>
           Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendig, auch kurzfristig abgesagt werden kann! <br>
           Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei
@@ -67,9 +69,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
+        <!-- <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
           Anmelden
-        </v-btn>
+        </v-btn> -->
         <v-btn class="my-4" :to="{ name: 'DeregisterView' }">
           Abmelden
         </v-btn>
