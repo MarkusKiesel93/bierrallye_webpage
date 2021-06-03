@@ -91,3 +91,37 @@ async def registration_sms(client: TwilioClient, team: Team):
         f'Stornonummer: {hash}'
     )
     await send_sms(client, team.contact, body)
+
+
+async def send_mass_mail(fm: FastMail, teams: list, type: str):
+    for team in teams:
+        subject, body = get_message_by_type(
+            type,
+            team.contact,
+            hash_contact(team.contact),
+            team.first_name_player_1,
+            team.first_name_player_2)
+        if team.contact = 'markus.kiesel@tuta.io':
+            await send_email(fm, team.contact, subject, body)
+
+
+def get_message_by_type(type: str, email: str, hash: str, name1: str, name2: str):
+    deregistration_link = f'https://{settings.frontend_domain}/deregister/email/{email}/{hash}'
+    if type == 'data_change':
+        subject = 'VERSCHOBEN Bier Rallye der JVP Irnfritz'
+        body = (
+        f'<h3> Hallo {name1} und {name2}, </h3>'
+        '<p></p>'
+        '<p>Wie ihr vielleicht schon auf Facebook oder Instagram gelesen habt, wurde unsere Bier-Rallye auf den 17. Juli 2021 verschoben. Eure Anmeldung, der Startblock und die Startzeit bleiben natürlich aufrecht. </p>'
+        
+        '<p> WICHTIG: Solltet ihr bereits wissen, dass ihr am 17. Juli keine Zeit habt, seid bitte so fair und meldet euch unter folgendem Link ab, damit wir den Platz an eines der wartenden Teams vergeben können: '
+        f'<a href="{deregistration_link}" target="_blank">Abmelden</a><br>'
+        f'Link: {deregistration_link} <br>'
+        f'Stornonummer: {hash} </p>'
+        '<p></p>'
+        '<p>Bei Fragen meldet euch gerne bei uns! Wir freuen uns auf euch :) </p>'
+        '<p></p>'
+        '<p>Prost,<br>'
+        'die JVP Irnfritz</p>'
+    )
+    return subject, body

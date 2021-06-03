@@ -92,3 +92,7 @@ def create_registered_csv(db: Session):
     csv_path = settings.static_path / 'registrierte_nutzer.csv'
     df.to_csv(csv_path, index=False)
     return csv_path
+
+
+def get_teams_email(db: Session):
+    return db.query(models.Team).filter(models.Team.channel == 'email').all()

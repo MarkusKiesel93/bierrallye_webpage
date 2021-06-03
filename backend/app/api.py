@@ -9,6 +9,7 @@ from app.database import get_db
 from app.notify import get_fm, TwilioClient, get_twilio_client
 from app.hashing import hash_contact
 
+
 router = APIRouter()
 
 
@@ -148,3 +149,9 @@ def get_free_places(db: Session = Depends(get_db)):
 @router.post('/registered/csv/')
 def get_registered_csv(db: Session = Depends(get_db)):
     crud.create_registered_csv(db)
+
+
+@router.post('/send/mass/mails/{type}')
+async def send_mails(type: str, db: Session = Depends(get_db), fm: FastMail = Depends(get_fm)):
+    teams = crud.get_teams_email(db)
+    await notify.send_mass_mail(fm, teams, type)
