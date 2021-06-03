@@ -101,7 +101,7 @@ async def send_mass_mail(fm: FastMail, teams: list, type: str):
             hash_contact(team.contact),
             team.first_name_player_1,
             team.first_name_player_2)
-        if team.contact = 'markus.kiesel@tuta.io':
+        if team.contact == 'markus.kiesel@tuta.io':
             await send_email(fm, team.contact, subject, body)
 
 
