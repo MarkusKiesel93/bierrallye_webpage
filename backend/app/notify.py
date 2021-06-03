@@ -101,13 +101,12 @@ async def send_mass_mail(fm: FastMail, teams: list, type: str):
             hash_contact(team.contact),
             team.first_name_player_1,
             team.first_name_player_2)
-        if team.contact == 'markus.kiesel@tuta.io':
-            await send_email(fm, team.contact, subject, body)
+        await send_email(fm, team.contact, subject, body)
 
 
 def get_message_by_type(type: str, email: str, hash: str, name1: str, name2: str):
     deregistration_link = f'https://{settings.frontend_domain}/deregister/email/{email}/{hash}'
-    if type == 'data_change':
+    if type == 'date_change':
         subject = 'VERSCHOBEN Bier Rallye der JVP Irnfritz'
         body = (
         f'<h3> Hallo {name1} und {name2}, </h3>'
