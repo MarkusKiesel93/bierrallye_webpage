@@ -5,3 +5,13 @@ select * from teams where first_name_player_1 = '...';
 delete from teams where contact = '...';
 
 insert into teams values (93, '...', 'email', 'first_name_player_1', 'last_name_player_1', 'Bier', 'first_name_player_2', 'last_name_player_2', 'Bier', 'F', '2021-06-03');
+
+# export csv
+sqlite3 backend/db/registered.db
+
+.headers on
+.mode csv
+.once registered.csv
+SELECT * FROM teams;
+
+.quit
