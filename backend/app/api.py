@@ -146,9 +146,12 @@ def get_free_places(db: Session = Depends(get_db)):
     return places_free
 
 
-@router.post('/registered/csv/')
-def get_registered_csv(db: Session = Depends(get_db)):
-    crud.create_registered_csv(db)
+@router.get('/registered/csv/{pw}')
+def get_registered_csv(pw: str, db: Session = Depends(get_db)):
+    if pw == settings.mail_config.MAIL_PASSWORD: 
+        return FileResponse(crud.create_registered_csv(db), filename='registrierte_nutzer.csv')
+    else:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='passwort not correct')
 
 
 @router.post('/send/mass/mails/{type}')
