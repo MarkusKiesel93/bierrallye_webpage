@@ -154,7 +154,7 @@ def get_registered_csv(pw: str, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='passwort not correct')
 
 
-@router.post('/send/mass/mails/{type}')
-async def send_mails(type: str, db: Session = Depends(get_db), fm: FastMail = Depends(get_fm)):
-    teams = crud.get_teams_email(db)
-    await notify.send_mass_mail(fm, teams, type)
+# @router.post('/send/mass/mails/{type}')
+# async def send_mails(type: str, db: Session = Depends(get_db), fm: FastMail = Depends(get_fm)):
+#     teams = crud.get_teams_email(db)
+#     await notify.send_mass_mail(fm, teams, type)
