@@ -15,11 +15,11 @@ const routes = [
     name: 'LegalNoticeView',
     component: () => import('@/views/LegalNoticeView.vue'),
   },
-  // {
-  //   path: '/register',
-  //   name: 'RegisterView',
-  //   component: () => import('@/views/RegisterView.vue'),
-  // },
+  {
+    path: '/register',
+    name: 'RegisterView',
+    component: () => import('@/views/RegisterView.vue'),
+  },
   {
     path: '/register/success',
     name: 'RegisterViewSuccess',
