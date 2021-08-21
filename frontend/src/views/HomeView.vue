@@ -69,9 +69,9 @@
       </v-card-text>
 
       <v-card-actions>
-        <!-- <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
+        <v-btn v-if="placesFree>0" color="primary" class="my-4 mr-4" :to="{ name: 'RegisterView' }">
           Anmelden
-        </v-btn> -->
+        </v-btn>
         <v-btn class="my-4" :to="{ name: 'DeregisterView' }">
           Abmelden
         </v-btn>
