@@ -19,13 +19,13 @@ class Settings(BaseSettings):
     database: str = './db/registered.db'
 
     static_path: DirectoryPath = Path('./static/')
-
+    
     mail_config: object = ConnectionConfig(
         MAIL_USERNAME=os.getenv('EMAIL_ADDRESS'),
         MAIL_PASSWORD=os.getenv('EMAIL_PASSWORD'),
         MAIL_FROM=os.getenv('EMAIL_ADDRESS'),
         MAIL_PORT=587,
-        MAIL_SERVER='smtp.gmail.com',
+        MAIL_SERVER='mail.gmx.com',
         MAIL_FROM_NAME='Bierrallye Irnfritz',
         MAIL_TLS=True,
         MAIL_SSL=False,
