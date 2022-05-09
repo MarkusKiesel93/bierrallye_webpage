@@ -13,7 +13,7 @@ class Settings(BaseSettings):
         f'http://{os.getenv("FRONTEND_DOMAIN")}',
         f'https://{os.getenv("FRONTEND_DOMAIN")}',
     ]
-    cors_allowed_methods: list = ['POST', 'DELETE']
+    cors_allowed_methods: list = ['GET', 'POST', 'DELETE']
     cors_allowed_headers: list = ['*']
 
     database: str = './db/registered.db'
