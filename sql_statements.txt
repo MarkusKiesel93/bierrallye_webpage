@@ -1,14 +1,17 @@
 select count(*) from teams;
 
-select * from teams where first_name_player_1 = 'Andre';
+select * from teams where first_name_player_1 = '...';
 
-delete from teams where contact = 'asindlgruber@gmail.com';
+delete from teams where contact = '...';
 
-insert into teams values (93, 'Nico.heilig.1999@icloud.com', 'email', 'Nico', 'Heilig', 'Bier', 'Michael', 'Litschauer', 'Bier', 'F', '2021-06-03');
+insert into teams values (93, '...', 'email', 'first_name_player_1', 'last_name_player_1', 'Bier', 'first_name_player_2', 'last_name_player_2', 'Bier', 'F', '2021-06-03');
 
-insert into teams values (23, 'markus.kiesel@tuta.io', 'email', 'Markus', 'Kiesel', 'Bier', 'Hannes', 'Bauer', 'Bier', 'D', '2021-05-10');
+# export csv
+sqlite3 backend/db/registered.db
 
-insert into teams values (30, 'louisa.schuecker@gmx.at', 'email', 'Louisa', 'Schuecker', 'Wein + Mineral', 'Michael', 'Wälzl', 'Wein + Almdudler', 'D', '2021-05-10');
+.headers on
+.mode csv
+.once registered.csv
+SELECT * FROM teams;
 
-
-30|louisa.schuecker@gmx.at|email|Louisa|Schuecker |Wein + Mineral|Marlene|Schuecker|Wein + Almdudler|D|2021-05-10
+.quit

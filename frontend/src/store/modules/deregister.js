@@ -45,7 +45,7 @@ export default {
         {
           id: 3,
           label: 'Spieler 2',
-          row1: `${state.team.firstNamePlayer1} ${state.team.lastNamePlayer1}`,
+          row1: `${state.team.firstNamePlayer2} ${state.team.lastNamePlayer2}`,
         },
         {
           id: 4,

@@ -6,7 +6,7 @@
       <v-card-text>
         <h4> Liebe Freunde des Hopfens und der Rebe! </h4>
         <p>
-          Die legendäre Irnfritzer Bierrallye geht (voraussichtlich) am 19.06.2021 am Sportplatz Irnfritz in die 3. Runde.
+          Die legendäre Irnfritzer Bierrallye geht am 11.09.2021 am Sportplatz Irnfritz in die 3. Runde.
         </p>
         <h4> Hardfacts: </h4>
         <p>
@@ -55,7 +55,9 @@
       <h2 class="py-4 text-center"> Anmeldung & Abmeldung </h2>
 
       <v-card-text>
-        <p>Freie Plätze: {{ placesFree }} Teams</p>
+        <p> Freie Plätze: {{ placesFree }} Teams</p>
+        <!-- <h3> Unglaublich aber wahr: leider sind schon alle Startplätze vergeben! <br> Natürlich würden wir uns auch über viele motivierte Zuschauer freuen, Bier gibt es auch abseits der Laufstrecke genügend. </h3> -->
+        <p></p>
         <p>
           Wir bitten um euer Verständns, dass die Bierrallye, wenn notwendig, auch kurzfristig abgesagt werden kann! <br>
           Was uns abhalten kann: Wetter, Corona, Atomkrieg, Konkurs der Brauerei
