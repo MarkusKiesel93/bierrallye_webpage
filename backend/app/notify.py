@@ -61,16 +61,16 @@ async def registration_mail(fm: FastMail, team: Team):
     hash = hash_contact(team.contact)
     deregistration_link = f'https://{settings.frontend_domain}/deregister/{team.channel}/{team.contact}/{hash}'
     start_time = bier_settings.get_start_time(team.start_block)
-    subject = 'Anmeldung: Bierrallye Irnfritz 2021'
+    subject = 'Anmeldung: Bierrallye Irnfritz 2022'
     body = (
         f'<h3> Hallo {team.first_name_player_1} und {team.first_name_player_2}, </h3>'
         '<p></p>'
-        '<p> Ihr habt euch erfolgreich für die Bierrallye Irnfritz 2021 angemeldet. </p>'
+        '<p> Ihr habt euch erfolgreich für die Bierrallye Irnfritz 2022 angemeldet. </p>'
         '<p> Hier nochmals die Eckdaten: </p>'
         '<ul>'
         f'<li> Anmeldezeit (vor Ort): {start_time}</li>'
         '<li> Wo: Sportplatz Irnfritz</li>'
-        '<li> Stargeld: 50€ per Team </li>'
+        '<li> Startgeld: 50€ per Team </li>'
         '</ul>'
         '<p> Falls ihr doch keine Zeit habt dann bitte vor der Veranstaltung '
         f'<a href="{deregistration_link}" target="_blank">Abmelden</a></p>'
@@ -111,7 +111,7 @@ def get_message_by_type(type: str, email: str, hash: str, name1: str, name2: str
         body = (
             f'<h3> Hallo {name1} und {name2}, </h3>'
             '<p></p>'
-            '<p>Wie ihr vielleicht schon auf Facebook oder Instagram gelesen habt, wurde unsere Bier-Rallye auf den 17. Juli 2021 verschoben. Eure Anmeldung, der Startblock und die Startzeit bleiben natürlich aufrecht. </p>'
+            '<p>Wie ihr vielleicht schon auf Facebook oder Instagram gelesen habt, wurde unsere Bier-Rallye auf den 17. Juli 2022 verschoben. Eure Anmeldung, der Startblock und die Startzeit bleiben natürlich aufrecht. </p>'
 
             '<p> WICHTIG: Solltet ihr bereits wissen, dass ihr am 17. Juli keine Zeit habt, seid bitte so fair und meldet euch unter folgendem Link ab, damit wir den Platz an eines der wartenden Teams vergeben können: '
             f'<a href="{deregistration_link}" target="_blank">Abmelden</a><br>'
