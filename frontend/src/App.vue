@@ -3,7 +3,7 @@
     <v-app-bar app color="primary">
       <router-link :to="{ name: 'HomeView' }">
         <v-app-bar-title class="white--text">
-          Bierrallye Irnfritz 2021
+          Bierrallye Irnfritz 2022
         </v-app-bar-title>
       </router-link>
       <v-spacer> </v-spacer>
