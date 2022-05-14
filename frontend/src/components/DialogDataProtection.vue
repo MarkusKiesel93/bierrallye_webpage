@@ -11,7 +11,7 @@
       </v-btn>
     </template>
     <v-card>
-      <h2 class="pt-4 text-center"> Datenschutzerkl&auml;rung Bier-Rallye 2021 </h2> 
+      <h2 class="pt-4 text-center"> Datenschutzerkl&auml;rung Bier-Rallye 2022 </h2> 
       <h3 class="pb-4 text-center"> gem&auml;&szlig; der Datenschutz-Grundverordnung (EU) 2016/679 </h3>
       <v-card-text>
         <p style='margin-top:0cm;margin-right:0cm;margin-bottom:10.0pt;margin-left:0cm;line-height:115%;font-size:15px;font-family:"Calibri",sans-serif;'><strong>&nbsp;</strong></p>

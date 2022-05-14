@@ -6,7 +6,7 @@
       <v-card-text>
         <h4> Liebe Freunde des Hopfens und der Rebe! </h4>
         <p>
-          Die legendäre Irnfritzer Bierrallye geht am 11.09.2021 am Sportplatz Irnfritz in die 3. Runde.
+          Die legendäre Irnfritzer Bierrallye geht am 11.09.2022 am Sportplatz Irnfritz in die 3. Runde.
         </p>
         <h4> Hardfacts: </h4>
         <p>
